@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('formateurs', function (Blueprint $table) {
+        Schema::create('groupes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('prenom');
+            $table->string('nom_groupe')->unique();
+            $table->string('Mode_de_formation');
+            $table->string('Niveau');
+            $table->unsignedBigInteger('filiere_id');
+            $table->foreign('filiere_id')->references('id')->on('filieres')->onUpdate('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

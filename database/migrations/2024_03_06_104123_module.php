@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('formateurs', function (Blueprint $table) {
+        Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('prenom');
+            $table->string('nom_module')->unique();
+            $table->string('intitule');
+            $table->string('masse horaire');
+            $table->unsignedBigInteger('formateur_id');
+            $table->foreign('formateur_id')->references('id')->on('formateurs')->onUpdate('cascade');
             $table->timestamps();
         });
     }

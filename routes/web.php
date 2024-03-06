@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pages;
+use App\Http\Controllers\gerer_emploi;
 use App\Http\Controllers\FormateurController;
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,5 @@ use App\Http\Controllers\FormateurController;
 Route::get("/",[pages::class,'index']);
 Route::get("/formateurs",[pages::class,'afficher_formateurs']);
 Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
+Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seance;
 use Illuminate\Http\Request;
 
 class gerer_emploi extends Controller
@@ -9,12 +10,7 @@ class gerer_emploi extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function ajouter_emploi(Request $request)
-    {
-           
-            return response()->json(["message"=>"hu"]);
-    }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -34,7 +30,7 @@ class gerer_emploi extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(seance $seance)
     {
         //
     }
@@ -42,7 +38,7 @@ class gerer_emploi extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(seance $seance)
     {
         //
     }
@@ -50,7 +46,7 @@ class gerer_emploi extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, seance $seance)
     {
         //
     }
@@ -58,7 +54,7 @@ class gerer_emploi extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(seance $seance)
     {
         //
     }

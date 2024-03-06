@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('formateurs', function (Blueprint $table) {
+        Schema::create('filieres', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('prenom');
+            $table->string('nom_filier')->unique();
             $table->timestamps();
         });
     }

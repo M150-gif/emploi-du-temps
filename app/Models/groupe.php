@@ -4,19 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\filiere;
 use App\Models\seance;
-use App\Models\module;
-
-class formateur extends Model
+class groupe extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'name',
-        'id'
+        'nom_groupe',
+        'Mode_de_formation',
+        'Niveau',
+        'filiere_id',
     ];
-    public function modules():HasMany
+    public function filiere():BelongsTo
     {
-        $this->hasMany(modules::class);
+        $this->belongsTo(filiere::class);
     }
     public function seance():HasMany
     {
