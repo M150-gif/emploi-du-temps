@@ -29,12 +29,13 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="{{asset('assets/cssMaster/pe-icon-7-stroke.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="{{asset('assets/img/sidebar-5.jpg')}}">
+    <div class="sidebar" data-color="blue" data-image="{{asset('assets/img/sidebar-4.jpg')}}">
 
     <!--
 
@@ -112,14 +113,14 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               <p>Account</p>
+                            <a href="">
+                                <p style="color: black !important;"><i class="fa-solid fa-user"></i>  Account</p>
                             </a>
                         </li>
 
                         <li>
                             <a href="#">
-                                <p>Log out</p>
+                                <p style="color: red !important;"> <i class="fa-solid fa-right-from-bracket"></i>  Log out</p>
                             </a>
                         </li>
 						<li class="separator hidden-lg"></li>
