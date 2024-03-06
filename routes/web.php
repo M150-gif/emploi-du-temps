@@ -17,6 +17,5 @@ use App\Http\Controllers\FormateurController;
 Route::get("/",[pages::class,'index']);
 Route::get("/formateurs",[pages::class,'afficher_formateurs']);
 Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
-Route::get('/master',[masterController::class,'master'])->name('master');
 Route::get('/test',[masterController::class,'test'])->name('test');
 
