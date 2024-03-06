@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pages;
 use App\Http\Controllers\gerer_emploi;
 use App\Http\Controllers\FormateurController;
+use App\Http\Controllers\masterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
