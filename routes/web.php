@@ -18,10 +18,7 @@ use App\Http\Controllers\masterController;
 Route::get("/",[pages::class,'index']);
 Route::get("/formateurs",[pages::class,'afficher_formateurs']);
 Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
-<<<<<<< HEAD
 Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
-// balon door a5oya gheda n9ssedha
-=======
 Route::get('/test',[masterController::class,'test'])->name('test');
 
->>>>>>> f69dfd4ba06ef024a9085787f63f9d9a7d3f52b7
+
