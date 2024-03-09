@@ -8,7 +8,8 @@ use App\Models\formateur;
 use App\Models\salle;
 use App\Models\groupe;
 use App\Models\emploi;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class seance extends Model
 {
     use HasFactory;
@@ -23,21 +24,23 @@ class seance extends Model
         'id_groupe',
         'id_emploi',
         'type_seance'
-    ];
-    public function formateur():BelongsTo
-        {
-            $this->belongsTo(formateur::class);
-        }
+];
+
+public function formateur():BelongsTo
+{
+    return $this->belongsTo(formateur::class,"id_formateur");
+}
+        
         public function salle():BelongsTo
         {
-            $this->belongsTo(salle::class);
+           return $this->belongsTo(salle::class,"id_salle");
         }
         public function emploi():BelongsTo
         {
-            $this->belongsTo(emploi::class);
+            $this->belongsTo(emploi::class,"id_emploi");
         }
         public function groupe():BelongsTo
         {
-            $this->belongsTo(groupe::class);
+          return  $this->belongsTo(groupe::class,"id_groupe");
         }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\emploi;
 
 class gerer_emploi extends Controller
 {
@@ -11,8 +12,15 @@ class gerer_emploi extends Controller
      */
     public function ajouter_emploi(Request $request)
     {
-           
-            return response()->json(["message"=>"hu"]);
+        $validate=$request->validate([
+            "date_debu"=>"required|unique:emplois,date_debu",
+            "date_fin"=>"required|unique:emplois,date_fin"
+        ]);
+            emploi::create([
+                "date_debu" => $validate['date_debu'],
+                 "date_fin" => $validate['date_fin']
+            ]);
+            return response()->json(["message"=>"success"],200);
     }
 
     /**

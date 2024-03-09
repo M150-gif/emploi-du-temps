@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\groupe;
 class gerer_groupe extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function ajouter_groupe(Request $request)
     {
-        //
+        $validate=$request->validate([
+            "nom_groupe"=>"required",
+            "Mode_de_formation"=>"required",
+            "Niveau"=>"required",
+            "filiere_id"=>"required",
+        ]);
+        $groupes=groupe::create($validate);
+        return back()->with('success', 'Groupe ajouté avec succès');
     }
-
     /**
      * Show the form for creating a new resource.
      */

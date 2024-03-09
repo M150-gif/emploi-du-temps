@@ -14,7 +14,8 @@ class FormateurController extends Controller
     public function ajouter_formateur(Request $request)
     {
         $validate=$request->validate([
-            "name"=>"required|unique:formateurs"
+            "name"=>"required|unique:formateurs",
+            "prenom"=>"required"
         ]);
         $formateur=formateur::create($validate);
         if($formateur){
