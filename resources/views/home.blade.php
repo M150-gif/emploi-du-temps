@@ -124,7 +124,7 @@
                                     <option selected  value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$derniereEmploi->id)->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
                                     $groupe_has_no_seance = $groupe->seance->isEmpty();                                    
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
@@ -136,7 +136,7 @@
                                       <option selected value="">choisissez la salle</option>
                                      @foreach($salles as $salle)
                                      @php
-                                        $salle_occupe=$salle->seance->where('day','==',$jour)->where('order_seance','==',$seance_order);
+                                        $salle_occupe=$salle->seance->where('id_emploi','==',$derniereEmploi->id)->where('day','==',$jour)->where('order_seance','==',$seance_order);
                                         $salle_has_no_seance=$salle->seance->isEmpty();
                                      @endphp
                                      @if($salle_occupe->count()===0 || $salle_has_no_seance)
