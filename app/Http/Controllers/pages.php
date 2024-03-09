@@ -14,7 +14,7 @@ class pages extends Controller
     /**
      * Display a listing of the resource.
      */
-   
+
     public function home()
     {
         //    ->join('salles', 'seances.id_salle', '=', 'salles.id')
@@ -42,7 +42,7 @@ class pages extends Controller
         return view('formateurs',compact('formateurs'));
     }
     /**
-     * Store a newly created resource in storage. nom_filier 
+     * Store a newly created resource in storage. nom_filier
      */
     public function groupes()
     {
