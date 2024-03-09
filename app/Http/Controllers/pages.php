@@ -17,6 +17,7 @@ class pages extends Controller
     }
     /**
      * Show the form for creating a new resource.
+     * hello changes
      */
     public function afficher_formateurs()
     {
