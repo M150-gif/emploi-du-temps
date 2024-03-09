@@ -16,8 +16,11 @@ class EmploiFactory extends Factory
      */
     public function definition(): array
     {
+        $dateDebu = fake()->dateTimeThisMonth('next Monday')->format('Y-m-d');
+        $dateFin = date('Y-m-d', strtotime($dateDebu . ' + 6 days'));
         return [
-            //
+            "date_debu"=>$dateDebu,
+            "date_fin"=>$dateFin
         ];
     }
 }
