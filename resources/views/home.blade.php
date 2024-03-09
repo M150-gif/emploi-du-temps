@@ -10,7 +10,6 @@
         $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
         $part_of_day=['Matin','A.Midi'];
         $seances_order=['s1','s2','s3','s4'];
-        
     ?>
 </head>
 <body>
@@ -28,7 +27,6 @@
         </ul>
     </div>
 @endif
-
 <form  id="form1" class="container-sm w-50 mb-2" action="{{route('ajouter_emploi')}}" method="post">
     @csrf
   <div class="mb-3">
@@ -51,12 +49,12 @@
         @if($loop->first)
         <a href=""><option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option></a>
         @else
-        <option value="{{$emploi->id}}"><a href="https://chat.openai.com">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></option>
+        <option value="{{$emploi->id}}"><a href="{{route('afficher_emploi')}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></option>
         @endif
     @endforeach
 </select>
 </div>
-       <table class="table table-bordered table-bordered-dark text-center">
+       <table class="table table-bordered table-bordered-dark text-center w-100vw">
         <thead>
             <tr>
                 <th rowspan="3">Formateur</th>
