@@ -86,4 +86,7 @@ class pages extends Controller
     {
         //
     }
+    public function changes_see(){
+        
+    }
 }
