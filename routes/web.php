@@ -29,7 +29,7 @@ Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajo
 // -------------------------------------------
 
 Route::controller(masterController::class)->group(function(){
-    
+
     Route::middleware('auth')->group(function(){
         Route::prefix('test')->group(function(){
 
@@ -110,5 +110,4 @@ Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name(
 Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
 Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
 // balon door a5oya gheda n9ssedha
-Route::get('/test',[masterController::class,'test'])->name('test');
 
