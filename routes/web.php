@@ -24,13 +24,14 @@ Route::get("/groupes",[pages::class,'groupes'])->name('groupes');
 Route::get("/formateurs",[pages::class,'afficher_formateurs']);
 Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
 Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
+
 // -------------------------------------------
 // -------------------------------------------
-Route::prefix('test')->group(function(){
 
-    Route::controller(masterController::class)->group(function(){
-
-        Route::middleware('auth')->group(function(){
+Route::controller(masterController::class)->group(function(){
+    
+    Route::middleware('auth')->group(function(){
+        Route::prefix('test')->group(function(){
 
             Route::get('/','test')->name('test');
 
@@ -105,6 +106,7 @@ Route::controller(authController::class)->group(function(){
 
 Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
 Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
+Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
 Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
 Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
 // balon door a5oya gheda n9ssedha

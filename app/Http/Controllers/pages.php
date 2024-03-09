@@ -24,7 +24,7 @@ class pages extends Controller
         // return view('home',compact("formateurs",'emplois','seances','groupes','salles'));
         $formateurs=formateur::all();
         $emplois= emploi::orderBy('date_debu', 'desc')->get();
-        $derniereEmploi = Emploi::latest()->first();
+        $derniereEmploi = emploi::latest()->first();
         // Récupérer toutes les séances associées à la dernière emploi
         $seances = seance::where('id_emploi',$derniereEmploi->id)
         ->get();

@@ -49,9 +49,9 @@
 <select class="form-select" aria-label="Default select example" autocomplete="off">
     @foreach($emplois as $emploi)
         @if($loop->first)
-        <option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option>
+        <a href=""><option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option></a>
         @else
-        <option value="{{$emploi->id}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option>
+        <option value="{{$emploi->id}}"><a href="https://chat.openai.com">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></option>
         @endif
     @endforeach
 </select>
@@ -201,6 +201,11 @@
                                      <option value="efm">efm</option>
                                 </select>
                                 <button type="submit" class="btn btn-success">update</button>
+                            </form>
+                            <form action="{{route('supprimer_seance')}}" method="post">
+                                @csrf
+                            <input type="text" name="seance_id" value="{{$seance->id}}" hidden>
+                              <button type="submit" class="btn btn-danger">supprimer</button>
                             </form>
                             </div>
                           </div>
