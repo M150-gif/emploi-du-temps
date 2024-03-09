@@ -23,15 +23,15 @@ class pages extends Controller
         //    ->select('seances.*', 'formateurs.name  as formateur_name','salles.nom_salle  as salle_nom','salles.id  as salle_id', 'groupes.nom_groupe as groupe_nom')
         // return view('home',compact("formateurs",'emplois','seances','groupes','salles'));
         $formateurs=formateur::all();
-        $emplois= emploi::orderBy('date_debu', 'desc')->get();
-        $derniereEmploi = Emploi::latest()->first();
+        $emplois= emploi::orderBy('date_debu','desc')->get();
+        $derniereEmploi = emploi::latest()->first();
         // Récupérer toutes les séances associées à la dernière emploi
-        $seances = seance::where('id_emploi',$derniereEmploi->id)
-        ->get();
+        // $seances = seance::where('id_emploi',$derniereEmploi->id)
+        // ->get();
         $groupes=groupe::all();
         $salles=salle::all();
         $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
-        return view('home',compact("formateurs",'emplois','seances','groupes','salles'));
+        return view('home',compact("formateurs",'emplois','derniereEmploi','seances','groupes','salles'));
     }
     /**
      * Show the form for creating a new resource.

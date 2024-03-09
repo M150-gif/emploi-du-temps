@@ -9,8 +9,7 @@
     <?php 
         $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
         $part_of_day=['Matin','A.Midi'];
-        $seances_order=['s1','s2','s3','s4'];
-        
+        $seances_order=['s1','s2','s3','s4']; 
     ?>
 </head>
 <body>
@@ -28,7 +27,6 @@
         </ul>
     </div>
 @endif
-
 <form  id="form1" class="container-sm w-50 mb-2" action="{{route('ajouter_emploi')}}" method="post">
     @csrf
   <div class="mb-3">
@@ -119,7 +117,7 @@
                                 @csrf 
                                 <input name="day" type="text" hidden value="{{$jour}}">
                                 <input name="partie_jour" type="text" hidden value="{{$part}}">
-                                <input name="id_emploi" type="text" hidden value="12">
+                                <input name="id_emploi" type="text" hidden value="{{$derniereEmploi->id}}">
                                 <input name="order_seance" type="text" hidden value="{{$seance_order}}">
                                 <input name="id_formateur" type="text" hidden value="{{$formateur->id}}">
                                 <select name="id_groupe" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
