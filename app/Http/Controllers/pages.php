@@ -19,6 +19,14 @@ class pages extends Controller
      $derniereEmploi = emploi::latest()->first();
       return $this->afficher_emploi_par_id($derniereEmploi->id);
     }
+    public function afficher_emploi_par_id($id_emploi){
+        $formateurs=formateur::all();
+        $emplois= emploi::orderBy('date_debu','desc')->get();
+        $groupes=groupe::all();
+        $salles=salle::all();
+        $seances = seance::where('id_emploi', $id_emploi)->get();
+        return view('home',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
+    }
     /**
      * Show the form for creating a new resource.
     */
