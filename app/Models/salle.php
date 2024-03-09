@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\seance;
 class salle extends Model
 {
@@ -13,6 +14,6 @@ class salle extends Model
     ];
     public function seance():HasMany
     {
-        $this->hasMany(seance::class);
+      return  $this->hasMany(seance::class,'id_salle');
     }
 }

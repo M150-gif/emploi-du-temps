@@ -50,6 +50,9 @@
     <label for="exampleInputEmail1" class="form-label">nom formateur</label>
     <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text"></div>
+    <label for="exampleInputEmail1" class="form-label">prenom formateur</label>
+    <input type="text" name="prenom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text"></div>
   </div>
   <div class="modal-footer">
         <button type="submit" class="btn btn-primary">ajouter</button>

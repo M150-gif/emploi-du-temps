@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('emplois', function (Blueprint $table) {
-            $table->id();
-            $table->date('date_debu')->unique();
-            $table->date('date_fin')->unique();
-            $table->timestamps();
+        Schema::table('seances', function (Blueprint $table) {
+            $table->dropColumn("date_debut");
+            $table->dropColumn("date_fin");
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::table('seances', function (Blueprint $table) {
+            //
+        });
     }
 };

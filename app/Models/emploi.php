@@ -11,12 +11,11 @@ class emploi extends Model
 
     use HasFactory;
     protected $fillable=[
-        'nom_emploi',
-        'date_debut',
+        'date_debu',
         'date_fin'
     ];
     public function seance():HasMany
     {
-        $this->hasMany(seance::class);
+       return $this->hasMany(seance::class);
     }
 }

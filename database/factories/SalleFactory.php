@@ -17,7 +17,7 @@ class SalleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom_salle' => fake()->unique()->numberBetween(1,1000)
         ];
     }
 }
