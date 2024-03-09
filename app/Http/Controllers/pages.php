@@ -17,17 +17,9 @@ class pages extends Controller
    
     public function home()
     {
-        //    ->join('salles', 'seances.id_salle', '=', 'salles.id')
-        //    ->join('formateurs','seances.id_formateur', '=', 'formateurs.id')
-        //    ->join('groupes', 'seances.id_groupe', '=', 'groupes.id')
-        //    ->select('seances.*', 'formateurs.name  as formateur_name','salles.nom_salle  as salle_nom','salles.id  as salle_id', 'groupes.nom_groupe as groupe_nom')
-        // return view('home',compact("formateurs",'emplois','seances','groupes','salles'));
         $formateurs=formateur::all();
         $emplois= emploi::orderBy('date_debu','desc')->get();
         $derniereEmploi = emploi::latest()->first();
-        // Récupérer toutes les séances associées à la dernière emploi
-        // $seances = seance::where('id_emploi',$derniereEmploi->id)
-        // ->get();
         $groupes=groupe::all();
         $salles=salle::all();
         $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
@@ -36,6 +28,15 @@ class pages extends Controller
     /**
      * Show the form for creating a new resource.
     */
+    public function afficher_emploi($id_emploi){
+        $formateurs=formateur::all();
+        $emplois= emploi::orderBy('date_debu','desc')->get();
+        $derniereEmpldoi = emploi::latest()->first();
+        $groupes=groupe::all();
+        $salles=salle::all();
+        $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
+        return view('home',compact("formateurs",'emplois','derniereEmploi','seances','groupes','salles'));
+    }
     public function afficher_formateurs()
     {
         $formateurs=formateur::all();
