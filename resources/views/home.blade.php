@@ -9,7 +9,8 @@
     <?php 
         $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
         $part_of_day=['Matin','A.Midi'];
-        $seances_order=['s1','s2','s3','s4']; 
+        $seances_order=['s1','s2','s3','s4'];
+        
     ?>
 </head>
 <body>
@@ -47,14 +48,14 @@
 <select class="form-select" aria-label="Default select example" autocomplete="off">
     @foreach($emplois as $emploi)
         @if($loop->first)
-        <option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option>
+        <a href=""><option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option></a>
         @else
-        <option value="{{$emploi->id}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option>
+        <option value="{{$emploi->id}}"><a href="{{route('afficher_emploi')}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></option>
         @endif
     @endforeach
 </select>
 </div>
-       <table class="table table-bordered table-bordered-dark text-center">
+       <table class="table table-bordered table-bordered-dark text-center w-100vw">
         <thead>
             <tr>
                 <th rowspan="3">Formateur</th>
@@ -199,6 +200,11 @@
                                      <option value="efm">efm</option>
                                 </select>
                                 <button type="submit" class="btn btn-success">update</button>
+                            </form>
+                            <form action="{{route('supprimer_seance')}}" method="post">
+                                @csrf
+                            <input type="text" name="seance_id" value="{{$seance->id}}" hidden>
+                              <button type="submit" class="btn btn-danger">supprimer</button>
                             </form>
                             </div>
                           </div>

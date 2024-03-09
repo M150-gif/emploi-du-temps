@@ -53,15 +53,25 @@ class gerer_seance extends Controller
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
         }  
+        $seance->save();
         return back()->with("success update!");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(seance $seance)
+    public function supprimer_seance(Request $request)
     {
-        //
+        $validate=$request->validate([
+            "seance_id"=>"required"
+        ]);
+        $seance=seance::find($request->seance_id);
+    if(!$seance){
+        return back()->with("error", "La séance n'existe pas.");
+        }else{
+            $seance->delete();
+            return back()->with("la seance a supprimer");
+        }
     }
 
     /**

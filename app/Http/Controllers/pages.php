@@ -14,12 +14,15 @@ class pages extends Controller
     /**
      * Display a listing of the resource.
      */
-   
+
     public function home()
     {
         $formateurs=formateur::all();
-        $emplois= emploi::orderBy('date_debu','desc')->get();
-        $derniereEmploi = emploi::latest()->first();
+        $emplois= emploi::orderBy('date_debu', 'desc')->get();
+        $derniereEmploi = Emploi::latest()->first();
+        // Récupérer toutes les séances associées à la dernière emploi
+        $seances = seance::where('id_emploi',$derniereEmploi->id)
+        ->get();
         $groupes=groupe::all();
         $salles=salle::all();
         $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
@@ -43,7 +46,7 @@ class pages extends Controller
         return view('formateurs',compact('formateurs'));
     }
     /**
-     * Store a newly created resource in storage. nom_filier 
+     * Store a newly created resource in storage. nom_filier
      */
     public function groupes()
     {
