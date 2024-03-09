@@ -27,7 +27,7 @@ Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajo
 Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
 Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
 Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
-Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
+Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
 Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
 Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher_emploi');
 
@@ -35,7 +35,7 @@ Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher
 // -------------------------------------------
 
 Route::controller(masterController::class)->group(function(){
-    
+
     Route::middleware('auth')->group(function(){
         Route::prefix('test')->group(function(){
 
@@ -111,5 +111,4 @@ Route::controller(authController::class)->group(function(){
 // -------------------------------------------
 
 // balon door a5oya gheda n9ssedha
-Route::get('/test',[masterController::class,'test'])->name('test');
 

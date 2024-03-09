@@ -10,6 +10,7 @@
         $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
         $part_of_day=['Matin','A.Midi'];
         $seances_order=['s1','s2','s3','s4'];
+        
     ?>
 </head>
 <body>
@@ -44,15 +45,16 @@
   <button type="submit"  class="btn btn-primary d-block mx-auto">creer emploi</button>
 </form>
 <div class="container-sm w-50 mb-2">
-<select class="form-select" aria-label="Default select example" autocomplete="off">
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    choisir une emploi 
+  </button>
+  <ul class="dropdown-menu">
     @foreach($emplois as $emploi)
-        @if($loop->first)
-        <a href=""><option value="{{$emploi->id}}" selected>date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</option></a>
-        @else
-        <option value="{{$emploi->id}}"><a href="{{route('afficher_emploi')}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></option>
-        @endif
+        <li><a class="dropdown-item" href="{{ route('afficher_emploi_par_id',['id_emploi' => $emploi->id])}}">date_debu:{{$emploi->date_debu}} | date_fin:{{$emploi->date_fin}}</a></li>
     @endforeach
-</select>
+  </ul>
+</div>
 </div>
        <table class="table table-bordered table-bordered-dark text-center w-100vw">
         <thead>
@@ -117,14 +119,14 @@
                                 @csrf 
                                 <input name="day" type="text" hidden value="{{$jour}}">
                                 <input name="partie_jour" type="text" hidden value="{{$part}}">
-                                <input name="id_emploi" type="text" hidden value="12">
+                                <input name="id_emploi" type="text" hidden value="{{$id_emploi}}">
                                 <input name="order_seance" type="text" hidden value="{{$seance_order}}">
                                 <input name="id_formateur" type="text" hidden value="{{$formateur->id}}">
                                 <select name="id_groupe" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
                                     <option selected  value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
                                     $groupe_has_no_seance = $groupe->seance->isEmpty();                                    
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
@@ -136,7 +138,7 @@
                                       <option selected value="">choisissez la salle</option>
                                      @foreach($salles as $salle)
                                      @php
-                                        $salle_occupe=$salle->seance->where('day','==',$jour)->where('order_seance','==',$seance_order);
+                                        $salle_occupe=$salle->seance->where('id_emploi','==',$id_emploi)->where('day','==',$jour)->where('order_seance','==',$seance_order);
                                         $salle_has_no_seance=$salle->seance->isEmpty();
                                      @endphp
                                      @if($salle_occupe->count()===0 || $salle_has_no_seance)
@@ -173,7 +175,7 @@
                                     <option selected value="{{$seance->groupe->id }}">{{$seance->groupe->nom_groupe}}</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
                                     $groupe_has_no_seance = $groupe->seance->isEmpty();                                    
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
@@ -185,7 +187,7 @@
                                       <option selected value="{{$seance->salle->id }}">{{ $seance->salle->nom_salle }}</option>
                                      @foreach($salles as $salle)
                                      @php
-                                        $salle_occupe=$salle->seance->where('day','==',$jour)->where('order_seance','==',$seance_order);
+                                        $salle_occupe=$salle->seance->where('id_emploi','==',$id_emploi)->where('day','==',$jour)->where('order_seance','==',$seance_order);
                                         $salle_has_no_seance=$salle->seance->isEmpty();
                                      @endphp
                                      @if($salle_occupe->count()===0 || $salle_has_no_seance)
