@@ -14,31 +14,21 @@ class pages extends Controller
     /**
      * Display a listing of the resource.
      */
-
     public function home()
     {
-        $formateurs=formateur::all();
-        $emplois= emploi::orderBy('date_debu', 'desc')->get();
-        $derniereEmploi = Emploi::latest()->first();
-        // Récupérer toutes les séances associées à la dernière emploi
-        $seances = seance::where('id_emploi',$derniereEmploi->id)
-        ->get();
-        $groupes=groupe::all();
-        $salles=salle::all();
-        $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
-        return view('home',compact("formateurs",'emplois','derniereEmploi','seances','groupes','salles'));
+     $derniereEmploi = emploi::latest()->first();
+      return $this->afficher_emploi_par_id($derniereEmploi->id);
     }
     /**
      * Show the form for creating a new resource.
     */
-    public function afficher_emploi($id_emploi){
+    public function afficher_emploi_par_id($id_emploi){
         $formateurs=formateur::all();
         $emplois= emploi::orderBy('date_debu','desc')->get();
-        $derniereEmpldoi = emploi::latest()->first();
         $groupes=groupe::all();
         $salles=salle::all();
-        $seances = seance::where('id_emploi', $derniereEmploi->id)->get();
-        return view('home',compact("formateurs",'emplois','derniereEmploi','seances','groupes','salles'));
+        $seances = seance::where('id_emploi', $id_emploi)->get();
+        return view('home',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
     public function afficher_formateurs()
     {
@@ -51,11 +41,6 @@ class pages extends Controller
     public function groupes()
     {
         $groupes = groupe::with('filiere')->get();
-
-        // $groupes = groupe::all()
-        //    ->join('filiers', 'groupe.filiere_id', '=', 'filiers.id')
-        //    ->select('groupes.*', 'filiers.nom_filier   as nom_filier ')
-        // ->get();
         $filieres=filiere::all();
         return view('groupes',compact('groupes',"filieres"));
     }
