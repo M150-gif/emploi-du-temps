@@ -40,7 +40,8 @@ Route::controller(masterController::class)->group(function(){
         Route::prefix('test')->group(function(){
 
             Route::get('/','test')->name('test');
-
+            Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
+            Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::prefix('/settings')->group(function(){
 
                 Route::get('/','settingsShow')->name('settingsShow');

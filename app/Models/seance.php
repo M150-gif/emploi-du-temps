@@ -17,8 +17,6 @@ class seance extends Model
         'day',
         'partie_jour',
         'order_seance',
-        'date_debut',
-        'date_fin',
         'id_salle',
         'id_formateur',
         'id_groupe',
