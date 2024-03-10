@@ -61,6 +61,10 @@ class masterController extends Controller
             return response()->json(["message"=>"create emploi and seances successfully"]);
         }
     }
+    public function afficher_emploi_par_formateurs(){
+        $emplois=emploi::all();
+        return view('emplois_formateurs',compact('emplois'));
+    }
     public function settingsShow(){
         return view('settings');
     }
