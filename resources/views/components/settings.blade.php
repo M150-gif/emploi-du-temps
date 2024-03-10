@@ -40,8 +40,6 @@
             <div class="d-flex" style="height: 70vh;">
                 {{$slot}}
             </div>
-
-
         </div>
     </div>
 </div>

@@ -49,7 +49,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-info" href="#">
+          <a class="nav-link text-white active bg-gradient-info" href="{{route('afficher_ajouter_emploi')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -57,7 +57,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <!-- emploi_formateurs -->
+          <a class="nav-link text-white " href="{{route('emplois_formateurs')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
