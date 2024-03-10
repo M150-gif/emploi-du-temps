@@ -25,14 +25,11 @@ class masterController extends Controller
         $formateurs = formateur::paginate(121111111);
         return view('gererFormateur',compact('formateurs'));
     }
-    public function showAddFormateur(){
-        $formateurs = formateur::paginate(1111111);
-        return view('addFormateur',compact('formateurs'));
-    }
     public function addFormateur(Request $request){
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255', // Adjust validation rules as needed
+        'prenom' => 'required|string|max:255',
         // Add more validation rules for other form fields if necessary
     ]);
 
@@ -54,7 +51,8 @@ class masterController extends Controller
     }
     public function updateFormateur(Request $request,formateur $formateur){
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255', // Adjust validation rules as needed
+            'name' => 'required|string|max:255',// Adjust validation rules as needed
+            'prenom' => 'required|string|max:255',
             // Add more validation rules for other form fields if necessary
         ]);
         $formateur->fill($validatedData)->save();
@@ -144,5 +142,21 @@ class masterController extends Controller
     public function deleteFiliere(filiere $filiere){
         $filiere->delete();
         return redirect()->route('gererFiliere');
+    }
+    public function showGererGroupe(){
+        $groupes = groupe::paginate(1112);
+        $filieres = filiere::paginate(11111);
+        return view('gererGroupe',compact('groupes','filieres'));
+    }
+    public function addGroupe(Request $request)
+    {
+        $validate=$request->validate([
+            "nom_groupe"=>"required",
+            "Mode_de_formation"=>"required",
+            "Niveau"=>"required",
+            "filiere_id"=>"required",
+        ]);
+        $groupes=groupe::create($validate);
+        return back()->with('success', 'Groupe ajouté avec succès');
     }
 }

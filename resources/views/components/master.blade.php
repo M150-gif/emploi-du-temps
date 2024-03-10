@@ -10,6 +10,7 @@
   <title>
     {{$title}}
   </title>
+  {{-- bootstrap --}}
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -235,9 +236,6 @@
   <script src="{{asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js')}}"></script>
   <script src="{{asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js')}}"></script>
   <script src="{{asset('assets/masterAssets/js/plugins/chartjs.min.js')}}"></script>
-  <script>
-  </script>
-
 
   <script src="{{asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
 </body>

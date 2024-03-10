@@ -8,6 +8,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">prenom</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -24,6 +25,13 @@
                                         <input type="text" class="form-control" name="name" value="{{$formateur->name}}">
                                     @else
                                     {{$formateur->name}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($formateur->id == $idFormateur)
+                                        <input type="text" class="form-control" name="prenom" value="{{$formateur->prenom}}" onclick="event.stopPropagation()">
+                                    @else
+                                    {{$formateur->prenom}}
                                     @endif
                                 </td>
                                 <td><button type="button" class="btn btn-success">Active</button></td>
