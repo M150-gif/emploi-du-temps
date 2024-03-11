@@ -123,7 +123,7 @@
       <div class="mx-3">
         <a class="btn btn-outline-light mt-4 w-100" href="#" type="button">Validé et Exporter</a>
         <a class="btn text-dark bg-light w-100"
-         href="{{route('settingsShow')}}"
+         href="{{route('gererUser')}}"
           type="button"
           >Settings</a>
       <!-- Modal -->

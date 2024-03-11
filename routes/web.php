@@ -44,7 +44,6 @@ Route::controller(masterController::class)->group(function(){
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
             Route::prefix('/settings')->group(function(){
-                Route::get('/','settingsShow')->name('settingsShow');
                 Route::prefix('/gererFormateur')->group(function(){
                     Route::get('/','showGererFormateur')->name('showGereFormateur');
                     Route::post('/addFormateur','addFormateur')->name('addFormateur');

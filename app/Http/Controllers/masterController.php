@@ -65,9 +65,6 @@ class masterController extends Controller
         $emplois=emploi::all();
         return view('emplois_formateurs',compact('emplois'));
     }
-    public function settingsShow(){
-        return view('settings');
-    }
     public function showGererFormateur(){
         $formateurs = formateur::paginate(121111111);
         return view('gererFormateur',compact('formateurs'));
