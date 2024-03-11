@@ -1,3 +1,7 @@
+@php
+    use App\Models\emploi;
+    $dates = emploi::all();
+    @endphp
 <!DOCTYPE html>
 <html lang="en">
 
