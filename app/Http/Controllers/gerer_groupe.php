@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\groupe;
+use App\Models\filiere;
+use Illuminate\Http\Request;
+
 class gerer_groupe extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function ajouter_groupe(Request $request)
-    {
+    public function gererGroupe(){
+        $groupes = Groupe::with('filiere')->paginate(99999);
+        $filieres = Filiere::all(); // Assuming you want to show all filières in the dropdown
+        return view('gererGroupe', compact('groupes', 'filieres'));
+    }
+    public function addGroupe(Request $request){
         $validate=$request->validate([
             "nom_groupe"=>"required",
             "Mode_de_formation"=>"required",
@@ -18,8 +24,38 @@ class gerer_groupe extends Controller
             "filiere_id"=>"required",
         ]);
         $groupes=groupe::create($validate);
-        return back()->with('success', 'Groupe ajouté avec succès');
+        return to_route('gererGroupe');
     }
+    public function deleteGroupe(Request $request){
+        $id = $request->id;
+        $groupe = groupe::findOrFail($id); // Retrieve the emploi instance based on the ID
+        $groupe->delete(); // Delete the emploi
+        return redirect()->route('gererGroupe'); // Redirect to the desired route
+    }
+    public function showUpdateGroupe(groupe $groupe){
+        $idGroupe = $groupe->id;
+        $groupes = Groupe::with('filiere')->paginate(99999);
+        $filieres = Filiere::all(); // Assuming you want to show all filières in the dropdown
+        return view('showUpdateGroupe',compact('groupes', 'filieres','idGroupe'));
+    }
+
+    public function updateGroupe(Request $request, groupe $groupe)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'nom_groupe' => 'required',
+            'Mode_de_formation' => 'required',
+            'Niveau' => 'required',
+            'filiere_id' => 'required',
+        ]);
+
+        // Update the groupe instance with the validated data
+        $groupe->update($validatedData);
+
+        // Redirect to the desired route after successful update
+        return redirect()->route('gererGroupe')->with('success', 'Groupe updated successfully');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

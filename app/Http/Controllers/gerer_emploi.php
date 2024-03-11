@@ -22,7 +22,18 @@ class gerer_emploi extends Controller
             ]);
             return response()->json(["message"=>"success"],200);
     }
+    public function gererSemaine(){
+        $emplois = emploi::paginate(999999);
+        return view('gererSemaine',compact('emplois'));
+    }
 
+
+    public function deleteSemaine(Request $request){
+        $id = $request->id;
+        $emploi = Emploi::findOrFail($id); // Retrieve the emploi instance based on the ID
+        $emploi->delete(); // Delete the emploi
+        return redirect()->route('gererSemaine'); // Redirect to the desired route
+    }
     /**
      * Show the form for creating a new resource.
      */

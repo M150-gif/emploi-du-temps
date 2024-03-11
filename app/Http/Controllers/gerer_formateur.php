@@ -2,63 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\formateur;
 use Illuminate\Http\Request;
 
 class gerer_formateur extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function showGererFormateur(){
+        $formateurs = formateur::paginate(121111111);
+        return view('gererFormateur',compact('formateurs'));
+    }
+    public function addFormateur(Request $request){
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255', // Adjust validation rules as needed
+        'prenom' => 'required|string|max:255',
+        // Add more validation rules for other form fields if necessary
+    ]);
+    // Create a new formateur using the validated data
+    formateur::create($validatedData);
+
+    // Redirect to the appropriate route after creating the formateur
+    return redirect()->route('showGereFormateur');
+    }
+    public function deleteFormateur(formateur $formateur){
+        $formateur->delete();
+        return redirect()->route('showGereFormateur');
+
+    }
+    public function showUpdateFormateur(formateur $formateur){
+        $idFormateur = $formateur->id;
+        $formateurs = formateur::paginate(121111111);
+        return view('showUpdateFormateur',compact('formateurs','idFormateur', 'formateur'));
+    }
+    public function updateFormateur(Request $request,formateur $formateur){
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',// Adjust validation rules as needed
+            'prenom' => 'required|string|max:255',
+            // Add more validation rules for other form fields if necessary
+        ]);
+        $formateur->fill($validatedData)->save();
+        return redirect()->route('showGereFormateur');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

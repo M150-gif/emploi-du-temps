@@ -19,8 +19,8 @@
                                     <td>{{$filiere->nom_filier}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{route('showUpdateFiliere',$filiere->id)}}" class="btn btn-info me-2">Update</a>{{--{{route('showUpdateFiliere',$filliere->id)}}--}}
-                                            <form action="{{route('deleteFiliere',$filiere->id)}}" method="post">{{--{{route('deleteFiliere',$filliere->id)}}--}}
+                                            <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#updateModal{{$filiere->id}}">Update</button>
+                                            <form action="{{route('deleteFiliere',$filiere->id)}}" method="post">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button onclick="return confirm('Voulez-vous vraiment supprimer cette filière?')" type="submit" class="btn btn-danger">Delete</button>
@@ -41,36 +41,64 @@
         </div>
     </x-settings>
 </x-master>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector("a.ajouter").addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent the default action of the link
-        // Hide the "Ajouter Formateur" button
-        this.style.display = "none";
 
-        // Get the parent container
-        var container = document.querySelector(".col-md-12.text-center.mt-3");
-
-        // Append the provided HTML code to the parent container
-        container.insertAdjacentHTML("afterend", `
-            <form action="{{route('addFiliere')}}" method="POST" class="d-inline">
-                @csrf <!-- Include CSRF token for Laravel forms -->
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter nom de filière" aria-label="Enter nom de filière" aria-describedby="name-addon" name="nom_filier">
-                    <button style="border-top-left-radius:5px;border-bottom-left-radius:5px" class="btn btn-success me-2" type="submit" id="button-addon2">Ajouter</button>
-                    <button class="btn btn-danger" style="border-top-left-radius:5px;border-bottom-left-radius:5px;" type="button" id="cancelButton">Cancel</button>
+@foreach ($filieres as $filiere)
+<div class="modal fade" id="updateModal{{$filiere->id}}" tabindex="-1" aria-labelledby="updateModalLabel{{$filiere->id}}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel{{$filiere->id}}">Update Filière</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('updateFiliere', $filiere->id)}}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nom_filier{{$filiere->id}}" class="form-label">Nom de filière</label>
+                        <input type="text" class="form-control border" style="padding: 5px;" id="nom_filier{{$filiere->id}}" name="nom_filier" value="{{$filiere->nom_filier}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save changes</button>
                 </div>
             </form>
-        `);
+        </div>
+    </div>
+</div>
+@endforeach
 
-        // Add event listener to the cancel button
-        document.getElementById("cancelButton").addEventListener("click", function() {
-            // Show the "Ajouter Formateur" button
-            document.querySelector("a.ajouter").style.display = "block";
-            // Remove the form
-            this.parentNode.parentNode.remove(); // Remove the parent element of the cancel button (i.e., the form)
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector("a.ajouter").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default action of the link
+            // Hide the "Ajouter Filière" button
+            this.style.display = "none";
+
+            // Get the parent container
+            var container = document.querySelector(".col-md-12.text-center.mt-3");
+
+            // Append the provided HTML code to the parent container
+            container.insertAdjacentHTML("afterend", `
+                <form action="{{route('addFiliere')}}" method="POST" class="d-inline">
+                    @csrf <!-- Include CSRF token for Laravel forms -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter nom de filière" aria-label="Enter nom de filière" aria-describedby="name-addon" name="nom_filier">
+                        <button style="border-top-left-radius:5px;border-bottom-left-radius:5px" class="btn btn-success me-2" type="submit" id="button-addon2">Ajouter</button>
+                        <button class="btn btn-danger" style="border-top-left-radius:5px;border-bottom-left-radius:5px;" type="button" id="cancelButton">Cancel</button>
+                    </div>
+                </form>
+            `);
+
+            // Add event listener to the cancel button
+            document.getElementById("cancelButton").addEventListener("click", function() {
+                // Show the "Ajouter Filière" button
+                document.querySelector("a.ajouter").style.display = "block";
+                // Remove the form
+                this.parentNode.parentNode.remove(); // Remove the parent element of the cancel button (i.e., the form)
+            });
         });
     });
-});
 
 </script>

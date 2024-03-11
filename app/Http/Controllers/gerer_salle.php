@@ -2,63 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\salle;
 use Illuminate\Http\Request;
 
 class gerer_salle extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function gererSalle(){
+        $salles = salle::paginate(1111111);
+        return view('gererSalle',compact('salles'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function showAddSalle(){
+        $salles = salle::paginate(11111111);
+        return view('addSalle',compact('salles'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function addSalle(Request $request){
+        $validatedData = $request->validate([
+            'nom_salle' => 'required', // Adjust validation rules as needed
+            // Add more validation rules for other form fields if necessary
+        ]);
+        salle::create($validatedData);
+        return redirect()->route('showAddSalle');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function deleteSalle(salle $salle){
+        $salle->delete();
+        return redirect()->route('gererSalle');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function showUpdateSalle(salle $salle){
+        $idSalle = $salle->id;
+        $salles = salle::paginate(111111);
+        return view('showUpdateSalle',compact('salle','salles','idSalle'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function updateSalle(Request $request,salle $salle){
+        $validatedData = $request->validate([
+            'nom_salle' => 'required', // Adjust validation rules as needed
+            // Add more validation rules for other form fields if necessary
+        ]);
+        $salle->fill($validatedData)->save();
+        return redirect()->route('gererSalle');
     }
 }
