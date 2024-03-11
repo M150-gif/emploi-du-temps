@@ -37,8 +37,8 @@ Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher
 Route::controller(masterController::class)->group(function(){
 
     Route::middleware('auth')->group(function(){
+        Route::get('/emploi','emploi')->name('emploi');
         Route::prefix('test')->group(function(){
-            Route::post('/emploi','emploi')->name('emploi');
             Route::get('/','test')->name('test');
             Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');

@@ -56,6 +56,18 @@
             <span class="nav-link-text ms-1">Nouveau Emploi</span>
           </a>
         </li>
+        {{-- DROP DOWN --}}
+       <div class="dropdown d-flex align-items-center justify-content-center my-3">
+  <a class="btn bg-gradient-info dropdown-toggle shadow-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown link
+  </a>
+  <ul class="dropdown-menu ms-4">
+    @foreach ($dates as $date)
+    <li><a class="dropdown-item" href="">{{$date->date_debu}}</a></li>
+    @endforeach
+  </ul>
+</div>
+        {{-- DROP DOWN --}}
         <li class="nav-item">
           <!-- emploi_formateurs -->
           <a class="nav-link text-white " href="{{route('emplois_formateurs')}}">

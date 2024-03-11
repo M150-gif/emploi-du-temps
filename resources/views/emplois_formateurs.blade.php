@@ -1,7 +1,7 @@
 <x-master title="emplois_formateurs">
    <div class="container">
   <button class="btn btn-primary dropdown-toggle w-50 mx-auto" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    choisir une emploi 
+    choisir une emploi
   </button>
   <ul class="dropdown-menu w-100 h-50">
     @foreach($emplois as $emploi)

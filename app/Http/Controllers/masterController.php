@@ -18,7 +18,12 @@ class masterController extends Controller
 {
     public function test(){
         $formateur = formateur::paginate(100000000);
-        return view('test',compact('formateur'));
+        $dates = emploi::all();
+        return view('test',compact('formateur','dates'));
+    }
+    public function emploi(){
+        $dates = emploi::all();
+        return view('components.master',compact($dates));
     }
     public function afficher_ajouter_emploi(){
         $emplois= emploi::orderBy('date_debu','desc')->get();
@@ -195,4 +200,5 @@ class masterController extends Controller
     public function emploi_formateurs(){
 
     }
+
 }
