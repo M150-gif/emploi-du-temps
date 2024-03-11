@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/masterAssets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('assets/masterAssets/img/favicon.png')}}">
+  <link href="{{asset('assets/css/app.css')}}" rel="stylesheet">
   <title>
     {{$title}}
   </title>
+  
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -163,7 +165,7 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-        {{$slot}}
+      {{$slot}}
     </div>
   </main>
   <div class="fixed-plugin">
@@ -238,9 +240,8 @@
   <script src="{{asset('assets/masterAssets/js/plugins/chartjs.min.js')}}"></script>
   <script>
   </script>
-
-
   <script src="{{asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0')}}"></script>
+  <script src="{{ asset('assets/css/app.js') }}"></script>
 </body>
 
 </html>

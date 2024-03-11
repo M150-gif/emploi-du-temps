@@ -15,7 +15,7 @@
                <input id="date_fin" style="pointer-events: none;" type="date" name="date_fin" class="form-control" id="exampleInputPassword1"autocomplete="off">
              </div>
              <div class="mb-3 form-check">
-               <input name="base_sur_emploi" type="checkbox" class="form-check-input" id="exampleCheck1" autocomplete="off">
+               <input name="base_sur_emploi" type="checkbox" class="form-check-input " id="exampleCheck1" autocomplete="off">
                <label class="form-check-label" for="exampleCheck1">base sur emploi</label>
              </div>
               <select name="emploi_temps_ancienne" class="form-select mb-2 px-2 w-100 mx-auto" style="display:none;" aria-label="Default select example" autocomplete="off">
@@ -25,7 +25,7 @@
               @endforeach
              </select>
              <div id="select_erreur" style="color:red;"> </div>              
-             <button type="submit" class="btn btn-primary d-block mx-auto">creer emploi</button>
+             <button type="submit" class="btn btn-info d-block mx-auto">creer emploi</button>
            </form>
             </div>
         </div>
