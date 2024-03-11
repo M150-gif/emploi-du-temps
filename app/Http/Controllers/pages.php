@@ -75,5 +75,5 @@ class pages extends Controller
     {
         //
     }
-   
+
 }

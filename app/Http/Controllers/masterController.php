@@ -193,6 +193,6 @@ class masterController extends Controller
         return redirect()->route('gererFiliere');
     }
     public function emploi_formateurs(){
-        
+
     }
 }

@@ -18,7 +18,9 @@ class EmploiFactory extends Factory
     {
         $dateDebu = fake()->dateTimeThisMonth('next Monday')->format('Y-m-d');
         $dateFin = date('Y-m-d', strtotime($dateDebu . ' + 6 days'));
+        $nomEmploi = $this->faker->name;
         return [
+            "nom_emploi"=>$nomEmploi,
             "date_debu"=>$dateDebu,
             "date_fin"=>$dateFin
         ];
