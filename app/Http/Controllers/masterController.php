@@ -55,15 +55,20 @@ class masterController extends Controller
                     "id_groupe"=>$seance->id_groupe,
                     "id_emploi"=>$nouveau_emploi->id,
                     "type_seance"=>$seance->type_seance,
-
                 ]);
             };
             return response()->json(["message"=>"create emploi and seances successfully"]);
         }
     }
     public function afficher_emploi_par_formateurs(){
-        $emplois=emploi::all();
-        return view('emplois_formateurs',compact('emplois'));
+        $derniereEmploi = emploi::latest()->first();
+        $formateurs=formateur::all();
+        $emplois= emploi::orderBy('date_debu','desc')->get();
+        $groupes=groupe::all();
+        $salles=salle::all();
+        $id_emploi=$derniereEmploi->id;
+        $seances = seance::where('id_emploi', $id_emploi)->get();
+        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
     public function showGererFormateur(){
         $formateurs = formateur::paginate(121111111);
@@ -76,7 +81,6 @@ class masterController extends Controller
         'prenom' => 'required|string|max:255',
         // Add more validation rules for other form fields if necessary
     ]);
-
     // Create a new formateur using the validated data
     formateur::create($validatedData);
 
