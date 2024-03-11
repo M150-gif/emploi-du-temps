@@ -1,5 +1,5 @@
 <x-master title="Update Salle">
-    <x-settings>
+    <x-settings widthUser="100%" widthFormateur="100%" widthFiliere="100%" widthGroupe="100%" widthSemaine="100%" widthSalle="99%">
         <div class="container">
             <div class="row">
                 <div style="width: 100%; height: 60vh; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">

@@ -77,14 +77,11 @@ class masterController extends Controller
         $formateurs = formateur::paginate(121111111);
         return view('gererFormateur',compact('formateurs'));
     }
-    public function showAddFormateur(){
-        $formateurs = formateur::paginate(1111111);
-        return view('addFormateur',compact('formateurs'));
-    }
     public function addFormateur(Request $request){
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255', // Adjust validation rules as needed
+        'prenom' => 'required|string|max:255',
         // Add more validation rules for other form fields if necessary
     ]);
     // Create a new formateur using the validated data
@@ -105,7 +102,8 @@ class masterController extends Controller
     }
     public function updateFormateur(Request $request,formateur $formateur){
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255', // Adjust validation rules as needed
+            'name' => 'required|string|max:255',// Adjust validation rules as needed
+            'prenom' => 'required|string|max:255',
             // Add more validation rules for other form fields if necessary
         ]);
         $formateur->fill($validatedData)->save();
@@ -196,7 +194,33 @@ class masterController extends Controller
         $filiere->delete();
         return redirect()->route('gererFiliere');
     }
-    public function emploi_formateurs(){
-        
+    public function gererGroupe(){
+        $groupes = groupe::paginate(99999);
+        $filieres = filiere::paginate(11111111);
+        return view('gererGroupe',compact('groupes','filieres'));
     }
+    public function addGroupe(Request $request){
+        $validate=$request->validate([
+            "nom_groupe"=>"required",
+            "Mode_de_formation"=>"required",
+            "Niveau"=>"required",
+            "filiere_id"=>"required",
+        ]);
+        $groupes=groupe::create($validate);
+        return to_route('gererGroupe');
+    }
+    public function gererSemaine(){
+        $emplois = emploi::paginate(999999);
+        return view('gererSemaine',compact('emplois'));
+    }
+
+
+    public function deleteSemaine(Request $request){
+        $id = $request->id;
+        $emploi = Emploi::findOrFail($id); // Retrieve the emploi instance based on the ID
+        $emploi->delete(); // Delete the emploi
+        return redirect()->route('gererSemaine'); // Redirect to the desired route
+    }
+
+
 }
