@@ -210,10 +210,13 @@ class masterController extends Controller
         return view('gererSemaine',compact('emplois'));
     }
 
-    public function deleteSemaine(emploi $emploi){
-        $emploi->delete();
-        // dd($emploi);
-        return redirect()->route('gererSemaine');
+
+    public function deleteSemaine(Request $request){
+        $id = $request->id;
+        $emploi = Emploi::findOrFail($id); // Retrieve the emploi instance based on the ID
+        $emploi->delete(); // Delete the emploi
+        return redirect()->route('gererSemaine'); // Redirect to the desired route
     }
+
 
 }

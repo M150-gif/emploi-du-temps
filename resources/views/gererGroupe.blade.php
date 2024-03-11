@@ -1,5 +1,5 @@
 <x-master title="Formateur">
-    <x-settings>
+    <x-settings widthUser="100%" widthFormateur="100%" widthFiliere="100%" widthGroupe="99%" widthSemaine="100%" widthSalle="100%">
         <style>
             /* Modal Styles */
             .modal {

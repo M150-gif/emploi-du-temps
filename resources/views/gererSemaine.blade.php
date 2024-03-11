@@ -1,5 +1,5 @@
 <x-master title="Formateur">
-    <x-settings>
+    <x-settings widthUser="100%" widthFormateur="100%" widthFiliere="100%" widthGroupe="100%" widthSemaine="99%" widthSalle="100%">
         <div class="container">
             <div class="row">
                 <div style="width: 100%; height: 60vh; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
@@ -21,7 +21,11 @@
                                 <td>
                                     <div class="d-flex">
                                         <a href="#" type="button" class="btn btn-info me-2">Confirmer</a>{{--{{route('showUpdateFormateur',$emploi->id)}}--}}
-                                        <a href="{{route('deleteSemaine',$emploi->id)}}" class="btn btn-danger">Delete</a>
+                                        <form action="{{route('deleteSemaine')}}" method="post">{{--{{route('deleteFormateur',$emploi->id)}}--}}
+                                            @csrf
+                                            <input type="text" value="{{$emploi->id}}" name="id"hidden>
+                                            <button onclick="return confirm('Voulez Vous vraiment Supprimer cette semaine?')" type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

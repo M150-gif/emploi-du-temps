@@ -90,7 +90,7 @@ Route::controller(masterController::class)->group(function(){
                 });
 
                 Route::get('/gereSemaine','gererSemaine')->name('gererSemaine');
-                Route::get('/gereSemaine/{semaine}','deleteSemaine')->name('deleteSemaine');
+                Route::post('/gereSemaine','deleteSemaine')->name('deleteSemaine');
             });
         });
     });
