@@ -46,7 +46,6 @@ Route::controller(masterController::class)->group(function(){
                 Route::get('/','settingsShow')->name('settingsShow');
                 Route::prefix('/gererFormateur')->group(function(){
                     Route::get('/','showGererFormateur')->name('showGereFormateur');
-                    Route::get('/addFormateur','showAddFormateur')->name('showAddFormateur');
                     Route::post('/addFormateur','addFormateur')->name('addFormateur');
                     Route::delete('/{formateur}','deleteFormateur')->name('deleteFormateur');
                     Route::get('/updateFormateur/{formateur}','showUpdateFormateur')->name('showUpdateFormateur');
@@ -75,7 +74,6 @@ Route::controller(masterController::class)->group(function(){
                 Route::prefix('/gererFiliere')->group(function(){
 
                     Route::get('/','gereFiliere')->name('gererFiliere');
-                    Route::get('/addFiliere','showAddFiliere')->name('showAddFiliere');
                     Route::post('/addFiliere','addFiliere')->name('addFiliere');
                     Route::get('/updateFiliere/{filiere}','showUpdateFiliere')->name('showUpdateFiliere');
                     Route::put('/updateFiliere/{filiere}','updateFiliere')->name('updateFiliere');
@@ -83,6 +81,15 @@ Route::controller(masterController::class)->group(function(){
 
                 });
 
+                Route::prefix('/gererGroupe')->group(function(){
+
+                    Route::get('/','gererGroupe')->name('gererGroupe');
+                    Route::post('/addGroupe','addGroupe')->name('addGroupe');
+
+                });
+
+                Route::get('/gereSemaine','gererSemaine')->name('gererSemaine');
+                Route::post('/gereSemaine','deleteSemaine')->name('deleteSemaine');
             });
         });
     });
@@ -107,6 +114,3 @@ Route::controller(authController::class)->group(function(){
 });
 // -------------------------------------------
 // -------------------------------------------
-
-// balon door a5oya gheda n9ssedha
-

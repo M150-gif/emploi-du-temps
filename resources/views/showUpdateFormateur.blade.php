@@ -1,5 +1,5 @@
 <x-master title="Update Formateur">
-    <x-settings>
+    <x-settings widthUser="100%" widthFormateur="99%" widthFiliere="100%" widthGroupe="100%" widthSemaine="100%" widthSalle="100%">
         <div class="container">
             <div class="row">
                 <div style="width: 100%; height: 60vh; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
@@ -8,6 +8,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">prenom</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -24,6 +25,13 @@
                                         <input type="text" class="form-control" name="name" value="{{$formateur->name}}">
                                     @else
                                     {{$formateur->name}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($formateur->id == $idFormateur)
+                                        <input type="text" class="form-control" name="prenom" value="{{$formateur->prenom}}" onclick="event.stopPropagation()">
+                                    @else
+                                    {{$formateur->prenom}}
                                     @endif
                                 </td>
                                 <td><button type="button" class="btn btn-success">Active</button></td>
@@ -47,9 +55,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-12 text-center mt-3"> <!-- Added Bootstrap classes for centering -->
-                    <a href="{{route('showAddFormateur')}}" class="btn btn-success">Ajouter Formateur</a>
-                </div>
             </div>
         </div>
     </x-settings>
@@ -66,4 +71,5 @@
             }
         });
     });
+
 </script>

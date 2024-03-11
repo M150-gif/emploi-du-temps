@@ -55,15 +55,20 @@ class masterController extends Controller
                     "id_groupe"=>$seance->id_groupe,
                     "id_emploi"=>$nouveau_emploi->id,
                     "type_seance"=>$seance->type_seance,
-
                 ]);
             };
             return response()->json(["message"=>"create emploi and seances successfully"]);
         }
     }
     public function afficher_emploi_par_formateurs(){
-        $emplois=emploi::all();
-        return view('emplois_formateurs',compact('emplois'));
+        $derniereEmploi = emploi::latest()->first();
+        $formateurs=formateur::all();
+        $emplois= emploi::orderBy('date_debu','desc')->get();
+        $groupes=groupe::all();
+        $salles=salle::all();
+        $id_emploi=$derniereEmploi->id;
+        $seances = seance::where('id_emploi', $id_emploi)->get();
+        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
     public function settingsShow(){
         return view('settings');
@@ -72,17 +77,13 @@ class masterController extends Controller
         $formateurs = formateur::paginate(121111111);
         return view('gererFormateur',compact('formateurs'));
     }
-    public function showAddFormateur(){
-        $formateurs = formateur::paginate(1111111);
-        return view('addFormateur',compact('formateurs'));
-    }
     public function addFormateur(Request $request){
     // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255', // Adjust validation rules as needed
+        'prenom' => 'required|string|max:255',
         // Add more validation rules for other form fields if necessary
     ]);
-
     // Create a new formateur using the validated data
     formateur::create($validatedData);
 
@@ -101,7 +102,8 @@ class masterController extends Controller
     }
     public function updateFormateur(Request $request,formateur $formateur){
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255', // Adjust validation rules as needed
+            'name' => 'required|string|max:255',// Adjust validation rules as needed
+            'prenom' => 'required|string|max:255',
             // Add more validation rules for other form fields if necessary
         ]);
         $formateur->fill($validatedData)->save();
@@ -192,8 +194,33 @@ class masterController extends Controller
         $filiere->delete();
         return redirect()->route('gererFiliere');
     }
-    public function emploi_formateurs(){
-
+    public function gererGroupe(){
+        $groupes = groupe::paginate(99999);
+        $filieres = filiere::paginate(11111111);
+        return view('gererGroupe',compact('groupes','filieres'));
     }
+    public function addGroupe(Request $request){
+        $validate=$request->validate([
+            "nom_groupe"=>"required",
+            "Mode_de_formation"=>"required",
+            "Niveau"=>"required",
+            "filiere_id"=>"required",
+        ]);
+        $groupes=groupe::create($validate);
+        return to_route('gererGroupe');
+    }
+    public function gererSemaine(){
+        $emplois = emploi::paginate(999999);
+        return view('gererSemaine',compact('emplois'));
+    }
+
+
+    public function deleteSemaine(Request $request){
+        $id = $request->id;
+        $emploi = Emploi::findOrFail($id); // Retrieve the emploi instance based on the ID
+        $emploi->delete(); // Delete the emploi
+        return redirect()->route('gererSemaine'); // Redirect to the desired route
+    }
+
 
 }

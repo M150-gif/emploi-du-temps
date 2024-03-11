@@ -51,7 +51,7 @@
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav overflow-y-auto">
         <li class="nav-item">
           <a class="nav-link text-white active bg-gradient-info" href="{{route('afficher_ajouter_emploi')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,7 +62,7 @@
         </li>
         {{-- DROP DOWN --}}
        <div class="dropdown d-flex align-items-center justify-content-center my-3">
-  <a class="btn bg-gradient-info dropdown-toggle shadow-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 220px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown link
   </a>
   <ul class="dropdown-menu ms-4">
