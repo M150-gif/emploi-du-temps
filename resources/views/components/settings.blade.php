@@ -15,10 +15,10 @@
                         <a href="{{route('gererFiliere')}}" type="button" class="btn btn-dark" name="GererFormarteurs"  style="width: 100%;">Gérer les filères</a>
                     </li>
                     <li class="list-group-item border-0">
-                        <a href="{{route('showGererGroupe')}}" type="button" class="btn btn-dark" name="GererGroupes" style="width: 100%;">Gérer les groupes</a>
+                        <a href="{{route('gererGroupe')}}" type="button" class="btn btn-dark" name="GererGroupes" style="width: 100%;">Gérer les groupes</a>
                     </li>
                     <li class="list-group-item border-0">
-                        <button type="button" class="btn btn-dark" name="GererSemaines" style="width: 100%;">Gérer les semaines</button>
+                        <a href="{{route('gererSemaine')}}" type="button" class="btn btn-dark" name="GererSemaines" style="width: 100%;">Gérer les semaines</a>
                     </li>
                     <li class="list-group-item border-0">
                         <a href="{{route('gererSalle')}}" type="button" class="btn btn-dark" name="GererSalles"  style="width: 100%;">Gérer les salles</a>

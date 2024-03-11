@@ -55,9 +55,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-12 text-center mt-3"> <!-- Added Bootstrap classes for centering -->
-                    <a href="{{route('showAddFormateur')}}" class="btn btn-success">Ajouter Formateur</a>
-                </div>
             </div>
         </div>
     </x-settings>
@@ -74,4 +71,5 @@
             }
         });
     });
+    
 </script>

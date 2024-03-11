@@ -82,8 +82,15 @@ Route::controller(masterController::class)->group(function(){
 
                 });
 
-                Route::get('/gererGroupe','showGererGroupe')->name('showGererGroupe');
-                Route::post('/addGroupe','addGroupe')->name('addGroupe');
+                Route::prefix('/gererGroupe')->group(function(){
+
+                    Route::get('/','gererGroupe')->name('gererGroupe');
+                    Route::post('/addGroupe','addGroupe')->name('addGroupe');
+
+                });
+
+                Route::get('/gereSemaine','gererSemaine')->name('gererSemaine');
+                Route::get('/gereSemaine/{semaine}','deleteSemaine')->name('deleteSemaine');
             });
         });
     });
@@ -108,6 +115,3 @@ Route::controller(authController::class)->group(function(){
 });
 // -------------------------------------------
 // -------------------------------------------
-
-// balon door a5oya gheda n9ssedha
-

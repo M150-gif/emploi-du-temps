@@ -190,4 +190,30 @@ class masterController extends Controller
         $filiere->delete();
         return redirect()->route('gererFiliere');
     }
+    public function gererGroupe(){
+        $groupes = groupe::paginate(99999);
+        $filieres = filiere::paginate(11111111);
+        return view('gererGroupe',compact('groupes','filieres'));
+    }
+    public function addGroupe(Request $request){
+        $validate=$request->validate([
+            "nom_groupe"=>"required",
+            "Mode_de_formation"=>"required",
+            "Niveau"=>"required",
+            "filiere_id"=>"required",
+        ]);
+        $groupes=groupe::create($validate);
+        return to_route('gererGroupe');
+    }
+    public function gererSemaine(){
+        $emplois = emploi::paginate(999999);
+        return view('gererSemaine',compact('emplois'));
+    }
+
+    public function deleteSemaine(emploi $emploi){
+        $emploi->delete();
+        // dd($emploi);
+        return redirect()->route('gererSemaine');
+    }
+
 }
