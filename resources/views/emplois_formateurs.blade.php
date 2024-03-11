@@ -2,7 +2,7 @@
 @php
   $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
   $part_of_day=['Matin','A.Midi'];
-  $seances_order=['s1','s2','s3','s4'];  
+  $seances_order=['s1','s2','s3','s4'];
 @endphp
 
 <table class="table table-dark table-striped-columns">
@@ -51,7 +51,7 @@
                                 <span>{{ $seance->salle->nom_salle }}</span>
                               </td>
                             @else
-                            
+
                             <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                             @endif
@@ -65,7 +65,7 @@
                             </div>
                             <div class="modal-body">
                             <form action="{{route('ajouter_seance')}}" method="post">
-                                @csrf 
+                                @csrf
                                 <input name="day" type="text" hidden value="{{$jour}}">
                                 <input name="partie_jour" type="text" hidden value="{{$part}}">
                                 <input name="id_emploi" type="text" hidden value="{{$id_emploi}}">
@@ -75,8 +75,8 @@
                                     <option selected  value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
-                                    $groupe_has_no_seance = $groupe->seance->isEmpty();                                    
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order);
+                                    $groupe_has_no_seance = $groupe->seance->isEmpty();
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
                                     <option value="{{$groupe->id}}">{{$groupe->nom_groupe}}</option>
@@ -124,8 +124,8 @@
                                     <option selected value="{{$seance->groupe->id }}">{{$seance->groupe->nom_groupe}}</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order); 
-                                    $groupe_has_no_seance = $groupe->seance->isEmpty();                                    
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order);
+                                    $groupe_has_no_seance = $groupe->seance->isEmpty();
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
                                     <option value="{{$groupe->id}}">{{$groupe->nom_groupe}}</option>
