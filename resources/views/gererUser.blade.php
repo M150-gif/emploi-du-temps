@@ -1,5 +1,5 @@
 <x-master title="gerer User">
-    <x-settings>
+    <x-settings widthUser="99%" widthFormateur="100%" widthFiliere="100%" widthGroupe="100%" widthSemaine="100%" widthSalle="100%">
         <div class="container mt-5">
             <!-- Single Row for Table and Form -->
             <div class="row justify-content-center align-items-center">
