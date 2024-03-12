@@ -17,7 +17,12 @@ class ModuleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom_module' => $this->faker->unique()->word,
+            'intitule' => $this->faker->sentence(),
+            'masse horaire' => $this->faker->randomNumber(2),
+            'formateur_id' => function () {
+                return \App\Models\Formateur::factory()->create()->id;
+            },
         ];
     }
 }
