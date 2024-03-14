@@ -58,7 +58,7 @@ class masterController extends Controller
                     "type_seance"=>$seance->type_seance,
                 ]);
             };
-            return response()->json(["message"=>"create emploi and seances successfully"]);
+            return to_route('emplois_formateurs');
         }
     }
     public function afficher_emploi_par_formateurs(){
