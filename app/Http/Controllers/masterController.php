@@ -223,4 +223,18 @@ class masterController extends Controller
     }
 
 
+    public function filterGroups(Request $request)
+    {
+        // Retrieve the school year from the request
+        $schoolYear = $request->input('school_year');
+
+        // Query the database to retrieve groups based on the provided school year
+        $query = Groupe::query()->where('Niveau', $schoolYear);
+
+        // Retrieve the filtered groups
+        $filteredGroups = $query->get();
+
+        // Return the filtered groups as JSON response
+        return response()->json($filteredGroups);
+    }
 }

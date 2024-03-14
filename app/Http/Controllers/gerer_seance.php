@@ -27,7 +27,7 @@ class gerer_seance extends Controller
         ]);
         // return response()->json(["message","hi"]);
         $seance=seance::create($validate);
-        return back()->with('success', 'Séance créée avec succès');    
+        return back()->with('success', 'Séance créée avec succès');
     }
     /**
      * Store a newly created resource in storage.
@@ -46,13 +46,13 @@ class gerer_seance extends Controller
         }
         if($seance->id_groupe != $request->id_groupe){
             $seance->id_groupe=$request->id_groupe;
-        }   
+        }
         if($seance->id_salle != $request->id_salle){
             $seance->id_salle = $request->id_salle;
-        }  
+        }
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
-        }  
+        }
         $seance->save();
         return back()->with("success update!");
     }
