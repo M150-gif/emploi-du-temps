@@ -14,8 +14,6 @@
   <title>
     {{$title}}
   </title>
-
-=======
   {{-- bootstrap --}}
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -63,7 +61,7 @@
           </a>
         </li>
         {{-- DROP DOWN --}}
-       <div class="dropdown d-flex align-items-center justify-content-center my-3">
+       {{-- <div class="dropdown d-flex align-items-center justify-content-center my-3">
   <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 220px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Dropdown link
   </a>
@@ -72,8 +70,12 @@
     <li><a class="dropdown-item" href="">{{$date->date_debu}}</a></li>
     @endforeach
   </ul>
-</div>
+</div> --}}
         {{-- DROP DOWN --}}
+        <div class="mt-4 text-center" style="width: 100%"> <!-- Add 'text-center' class here -->
+            <a href="{{ route('showBackUp') }}" class="btn btn-info">Back Up</a>
+        </div>
+        
         <li class="nav-item">
           <!-- emploi_formateurs -->
           <a class="nav-link text-white " href="{{route('emplois_formateurs')}}">
@@ -84,7 +86,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white " href="{{route('emplois_groupes')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
@@ -141,7 +143,7 @@
       <div class="mx-3">
         <a class="btn btn-outline-light mt-4 w-100" href="#" type="button">Validé et Exporter</a>
         <a class="btn text-dark bg-light w-100"
-         href="{{route('settingsShow')}}"
+         href="{{route('gererUser')}}"
           type="button"
           >Settings</a>
       <!-- Modal -->

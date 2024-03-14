@@ -1,8 +1,6 @@
-<x-master title="emplois_formateurs">
-
+<x-master title="emplois_groupes">
 
     <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
-        @include('includes.tableFormateurs')
+        @include('includes.tableGroupes')
     </div>
-
 </x-master>

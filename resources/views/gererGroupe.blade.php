@@ -85,25 +85,66 @@
                     </table>
                 </div>
                 <div class="col-md-12 text-center mt-3">
-                    <!-- Button to open modal -->
-                    <button id="openModalButton" type="button" class="btn btn-success">
+                    <!-- Button to open Add Groupe modal -->
+                    <button id="openAddGroupeModalButton" type="button" class="btn btn-success">
                         Ajouter Groupe
                     </button>
                 </div>
 
-                <!-- Modal -->
-                <div id="staticBackdrop" class="modal">
+                <!-- Add Groupe Modal -->
+                <div id="addGroupeModal" class="modal">
                     <div class="modal-dialog">
                         <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Ajouter un groupe</h1>
+                                <button id="closeAddGroupeModalButton" class="btn-close" aria-label="Close"></button>
+                            </div>
+                            <!-- Modal Body -->
+                            <form id="addGroupeForm" class="modal-body" action="{{ route('addGroupe') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="nomGroupe" class="form-label">Nom Groupe</label>
+                                    <input type="text" name="nom_groupe" class="form-control border" id="nomGroupe" aria-describedby="emailHelp" placeholder="Enter le nom du groupe">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modeFormation" class="form-label">Mode de Formation</label>
+                                    <input type="text" name="Mode_de_formation" class="form-control border" id="modeFormation" aria-describedby="emailHelp" placeholder="Enter le mode de formation">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="niveau" class="form-label">Niveau</label>
+                                    <input type="text" name="Niveau" class="form-control border" id="niveau" aria-describedby="emailHelp" placeholder="Enter le niveau">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="filiere" class="form-label">Filière</label>
+                                    <select name="filiere_id" class="form-select border" id="filiere" aria-label="Default select example">
+                                        <option selected>Choisissez la filière</option>
+                                        @foreach($filieres as $filiere)
+                                            <option value="{{ $filiere->id }}">{{ $filiere->nom_filier }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Groupe Modal -->
+                <div id="updateGroupeModal" class="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5">Modifier un groupe</h1>
-                                <button id="closeModalButton" class="btn-close" aria-label="Close"></button>
+                                <button id="closeUpdateGroupeModalButton" class="btn-close" aria-label="Close"></button>
                             </div>
-                            <form id="modalForm" class="modal-body" action="{{ route('updateGroupe', ['groupe' => $groupe->id]) }}" method="POST">
+                            <!-- Modal Body -->
+                            <form id="updateGroupeForm" class="modal-body" action="{{ route('updateGroupe', ['groupe' => ':id']) }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="_method" value="PUT">
-                                <input type="hidden" id="updateGroupId" name="id">
+                                @method('PUT')
                                 <div class="mb-3">
+                                    <input type="hidden" name="id" id="updateGroupeId">
                                     <label for="updateNomGroupe" class="form-label">Nom Groupe</label>
                                     <input type="text" name="nom_groupe" class="form-control border" id="updateNomGroupe" aria-describedby="emailHelp" placeholder="Enter le nom du groupe">
                                 </div>
@@ -126,7 +167,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-info">Save</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -134,33 +174,58 @@
         </div>
 
         <script>
+            // JavaScript for showing and hiding modals
             document.addEventListener("DOMContentLoaded", function() {
-                const openModalButton = document.getElementById("openModalButton");
-                const closeModalButton = document.getElementById("closeModalButton");
-                const modal = document.getElementById("staticBackdrop");
+                const openAddGroupeModalButton = document.getElementById("openAddGroupeModalButton");
+                const closeAddGroupeModalButton = document.getElementById("closeAddGroupeModalButton");
+                const addGroupeModal = document.getElementById("addGroupeModal");
 
-                openModalButton.addEventListener("click", function() {
-                    modal.style.display = "block";
+                openAddGroupeModalButton.addEventListener("click", function() {
+                    addGroupeModal.style.display = "block";
                 });
 
-                closeModalButton.addEventListener("click", function() {
-                    modal.style.display = "none";
+                closeAddGroupeModalButton.addEventListener("click", function() {
+                    addGroupeModal.style.display = "none";
                 });
 
                 window.addEventListener("click", function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
+                    if (event.target == addGroupeModal) {
+                        addGroupeModal.style.display = "none";
+                    }
+                });
+
+                const openUpdateGroupeModalButton = document.getElementById("openUpdateGroupeModalButton");
+                const closeUpdateGroupeModalButton = document.getElementById("closeUpdateGroupeModalButton");
+                const updateGroupeModal = document.getElementById("updateGroupeModal");
+
+                openUpdateGroupeModalButton.addEventListener("click", function() {
+                    updateGroupeModal.style.display = "block";
+                });
+
+                closeUpdateGroupeModalButton.addEventListener("click", function() {
+                    updateGroupeModal.style.display = "none";
+                });
+
+                window.addEventListener("click", function(event) {
+                    if (event.target == updateGroupeModal) {
+                        updateGroupeModal.style.display = "none";
                     }
                 });
             });
 
             function openUpdateModal(id, nom_groupe, Mode_de_formation, Niveau, filiere_id) {
-                document.getElementById('updateGroupId').value = id;
+                document.getElementById('updateGroupeId').value = id;
                 document.getElementById('updateNomGroupe').value = nom_groupe;
                 document.getElementById('updateModeFormation').value = Mode_de_formation;
                 document.getElementById('updateNiveau').value = Niveau;
                 document.getElementById('updateFiliere').value = filiere_id;
-                document.getElementById('staticBackdrop').style.display = "block";
+                document.getElementById('updateGroupeModal').style.display = "block";
+
+                 // Set the form action URL dynamically with the group ID
+                document.getElementById('updateGroupeForm').action = "{{ route('updateGroupe', ['groupe' => ':id']) }}".replace(':id', id);
+
+                // Display the update modal
+                document.getElementById('updateGroupeModal').style.display = "block";
             }
         </script>
     </x-settings>

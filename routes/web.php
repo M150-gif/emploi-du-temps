@@ -30,6 +30,7 @@ Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'
 Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
 Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
 Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
+Route::post("/modifier_seance_groupe",[gerer_seance::class,'modifier_seance_groupe'])->name('modifier_seance_groupe');
 Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
 Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
 Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
@@ -123,7 +124,11 @@ Route::controller(masterController::class)->group(function(){
             Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
+            Route::get('/emplois_groupes','afficher_emploi_par_groupes')->name('emplois_groupes');
+            Route::get('/backup','showBackUp')->name('showBackUp');
+            Route::match(['get', 'post'],'/bp','backup')->name('backup');
             Route::prefix('/settings')->group(function(){
+
             });
         });
     });

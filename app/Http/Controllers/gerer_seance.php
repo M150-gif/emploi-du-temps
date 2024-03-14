@@ -27,7 +27,7 @@ class gerer_seance extends Controller
         ]);
         // return response()->json(["message","hi"]);
         $seance=seance::create($validate);
-        return back()->with('success', 'Séance créée avec succès');    
+        return back()->with('success', 'Séance créée avec succès');
     }
     /**
      * Store a newly created resource in storage.
@@ -46,13 +46,38 @@ class gerer_seance extends Controller
         }
         if($seance->id_groupe != $request->id_groupe){
             $seance->id_groupe=$request->id_groupe;
-        }   
+        }
         if($seance->id_salle != $request->id_salle){
             $seance->id_salle = $request->id_salle;
-        }  
+        }
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
-        }  
+        }
+        $seance->save();
+        return back()->with("success update!");
+    }
+
+    public function modifier_seance_groupe(Request $request)
+    {
+        $validate=$request->validate([
+                "seance_id"=>"required",
+                "id_formateur"=>"required",
+                "id_salle"=>"required",
+                "type_seance"=>"required"
+        ]);
+        $seance=seance::find($request->seance_id);
+        if(!$seance){
+          return back()->with('no seance existe');
+        }
+        if($seance->id_formateur != $request->id_formateur){
+            $seance->id_formateur=$request->id_formateur;
+        }
+        if($seance->id_salle != $request->id_salle){
+            $seance->id_salle = $request->id_salle;
+        }
+        if($seance->type_seance != $request->type_seance){
+            $seance->type_seance = $request->type_seance;
+        }
         $seance->save();
         return back()->with("success update!");
     }

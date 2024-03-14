@@ -18,7 +18,7 @@ class formateur extends Model
     ];
     public function seance():HasMany
     {
-       return $this->hasMany(seance::class);
+       return $this->hasMany(seance::class, 'id_formateur', 'id');
     }
     public function modules():HasMany
     {
