@@ -125,6 +125,8 @@ Route::controller(masterController::class)->group(function(){
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
             Route::get('/emplois_groupes','afficher_emploi_par_groupes')->name('emplois_groupes');
+            Route::get('/emplois_formateur','afficher_emploi_par_formateur')->name('emploi_formateur');
+            Route::get('/emploi_groupe','afficher_emploi_par_groupe')->name('emploi_groupe');
             Route::get('/backup','showBackUp')->name('showBackUp');
             Route::match(['get', 'post'],'/bp','backup')->name('backup');
             Route::prefix('/settings')->group(function(){

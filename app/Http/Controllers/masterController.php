@@ -36,7 +36,7 @@ class masterController extends Controller
                 "date_debu"=>$request->date_debu,
                 "date_fin"=>$request->date_fin,
             ]);
-            return back()->with('emploi created');
+            return to_route('emplois_formateurs');
             // return redirect(route('home'))->with('success_emploi', 'Emploi créé avec succès.');
         }
         // creer nouveau emploi base sur ancienne
@@ -71,6 +71,34 @@ class masterController extends Controller
         $seances = seance::where('id_emploi', $id_emploi)->get();
         return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
+
+    public function afficher_emploi_par_formateur(Request $request){
+        $formateurId = $request->input('formateur_id');
+        $derniereEmploi = emploi::latest()->first();
+        $id_emploi = $derniereEmploi->id;
+        $groupes = groupe::all();
+        $formateurs = formateur::all();
+        $salles = salle::all();
+
+        // Get the selected formateur
+        $selectedFormateur = null;
+        if ($formateurId) {
+            $selectedFormateur = formateur::findOrFail($formateurId);
+        }
+
+        // Get seances data based on selected formateur
+        $seances = [];
+        if ($selectedFormateur) {
+            $seances = seance::where('id_emploi', $id_emploi)
+                ->where('id_formateur', $formateurId)
+                ->get();
+        }
+
+        return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur'));
+    }
+
+
+
     public function afficher_emploi_par_groupes(){
         $derniereEmploi = emploi::latest()->first();
         $formateurs=formateur::all();
@@ -81,6 +109,35 @@ class masterController extends Controller
         $seances = seance::where('id_emploi', $id_emploi)->get();
         return view('emplois_groupes',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
+    public function afficher_emploi_par_groupe(Request $request)
+{
+    $groupeId = $request->input('groupe_id');
+    $derniereEmploi = emploi::latest()->first();
+    $id_emploi = $derniereEmploi->id;
+    $groupes = groupe::all();
+    $formateurs = formateur::all();
+    $salles = salle::all();
+
+    // Initialize selected groupe variable
+    $selectedGroupe = null;
+    if ($groupeId) {
+        $selectedGroupe = groupe::findOrFail($groupeId);
+    }
+
+    // Retrieve seances data based on selected groupe
+    $seances = [];
+    if ($selectedGroupe) {
+        $seances = seance::where('id_emploi', $id_emploi)
+            ->where('id_groupe', $groupeId)
+            ->get();
+    }
+
+    // Pass the data to the view for rendering
+    return view('emploi_groupe', compact('formateurs', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedGroupe'));
+}
+
+
+
 
     public function showBackUp()
     {
@@ -105,6 +162,7 @@ class masterController extends Controller
 
     public function backup(Request $request)
     {
+
         // Get the selected date from the request
         $selectedDate = $request->input('selected_date');
 

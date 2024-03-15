@@ -14,21 +14,22 @@ class gerer_seance extends Controller
      * Show the form for creating a new resource.
      */
     public function ajouter_seance(Request $request)
-    {
-        $validate=$request->validate([
-            "day"=>"required",
-            "partie_jour"=>"required",
-            "order_seance"=>"required",
-            "type_seance"=>"required",
-            "id_salle"=>"required",
-            "id_groupe"=>"required",
-            "id_emploi"=>"required",
-            "id_formateur"=>"required",
-        ]);
-        // return response()->json(["message","hi"]);
-        $seance=seance::create($validate);
-        return back()->with('success', 'Séance créée avec succès');
-    }
+{
+    $validate = $request->validate([
+        "day" => "required",
+        "partie_jour" => "required",
+        "order_seance" => "required",
+        "type_seance" => "required",
+        "id_salle" => "required",
+        "id_groupe" => "required",
+        "id_emploi" => "required",
+        "id_formateur" => "required",
+    ]);
+
+    $seance = Seance::create($validate);
+    return back()->with('success', 'Séance créée avec succès');
+}
+
     /**
      * Store a newly created resource in storage.
      */
@@ -123,3 +124,4 @@ class gerer_seance extends Controller
         //
     }
 }
+

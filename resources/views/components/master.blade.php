@@ -75,7 +75,7 @@
         <div class="mt-4 text-center" style="width: 100%"> <!-- Add 'text-center' class here -->
             <a href="{{ route('showBackUp') }}" class="btn btn-info">Back Up</a>
         </div>
-        
+
         <li class="nav-item">
           <!-- emploi_formateurs -->
           <a class="nav-link text-white " href="{{route('emplois_formateurs')}}">
@@ -94,7 +94,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white " href="{{route('emploi_formateur')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">view_in_ar</i>
             </div>
@@ -102,7 +102,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white " href="{{route('emploi_groupe')}}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
             </div>
