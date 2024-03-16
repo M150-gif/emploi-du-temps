@@ -5,13 +5,11 @@
     @endphp
 <x-master title="emplois_formateurs">
 
-<<<<<<< HEAD
 
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
+    {{-- <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
         @include('includes.tableFormateurs')
-    </div>
+    </div> --}}
 
-=======
     <table class="table table-dark table-striped-columns">
         <thead>
             <tr>
@@ -189,7 +187,6 @@
             @endforeach
         </tbody>
     </table>
->>>>>>> yassine
 </x-master>
 
 

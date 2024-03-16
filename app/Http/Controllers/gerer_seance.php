@@ -53,7 +53,6 @@ class gerer_seance extends Controller
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
         }
-<<<<<<< HEAD
         $seance->save();
         return back()->with("success update!");
     }
@@ -79,8 +78,6 @@ class gerer_seance extends Controller
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
         }
-=======
->>>>>>> yassine
         $seance->save();
         return back()->with("success update!");
     }

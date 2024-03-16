@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\salle;
+use App\Models\emploi;
 use App\Models\groupe;
+use App\Models\seance;
 use App\Models\filiere;
 use App\Models\formateur;
-use App\Models\emploi;
-use App\Models\seance;
 use Illuminate\Http\Request;
 use App\Http\Requests\forRequests;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class masterController extends Controller
 {
