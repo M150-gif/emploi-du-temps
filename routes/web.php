@@ -124,9 +124,15 @@ Route::controller(masterController::class)->group(function(){
             Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
+<<<<<<< HEAD
             Route::get('/emplois_groupes','afficher_emploi_par_groupes')->name('emplois_groupes');
             Route::get('/backup','showBackUp')->name('showBackUp');
             Route::match(['get', 'post'],'/bp','backup')->name('backup');
+=======
+            //groupe fetch
+            Route::get('/filter-groups', [masterController::class, 'filterGroups'])->name('filter-groups');
+            //groupe fetch
+>>>>>>> yassine
             Route::prefix('/settings')->group(function(){
 
             });

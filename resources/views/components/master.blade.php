@@ -61,11 +61,16 @@
           </a>
         </li>
         {{-- DROP DOWN --}}
+<<<<<<< HEAD
        {{-- <div class="dropdown d-flex align-items-center justify-content-center my-3">
   <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 220px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+=======
+       <div class="dropdown d-flex align-items-center justify-content-center my-3">
+  <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 205px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+>>>>>>> yassine
     Dropdown link
   </a>
-  <ul class="dropdown-menu ms-4">
+  <ul class="dropdown-menu ms-4 overflow-x-auto" style="height:100px;width:200px">
     @foreach ($dates as $date)
     <li><a class="dropdown-item" href="">{{$date->date_debu}}</a></li>
     @endforeach
