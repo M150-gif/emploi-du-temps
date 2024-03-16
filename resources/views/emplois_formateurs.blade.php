@@ -41,17 +41,18 @@
                                 });
                             @endphp
                             @php
-                                $modalId_update = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."update";
-                                $modalId_ajouter = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."ajouter";
+                                $modalId_update = $jour.'_'.$seance_order .'_'.$formateur->id.'_'."update_" . $loop->index;
+                                $modalId_ajouter = $jour.'_'. $seance_order .'_'.$formateur->id.'_'."ajouter_" . $loop->index;
+
                             @endphp
                             @if($seance)
-                                <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                                <td class="cellule" id="{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                     <span>{{ $seance->groupe->nom_groupe }}</span> <br>
                                     <span>{{ $seance->type_seance }}</span> <br>
                                     <span>{{ $seance->salle->nom_salle }}</span>
                                 </td>
                             @else
-                                <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                                <td class="cellule" id="{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                                 </td>
                             @endif
                             <!-- form_qui_ajouter_un_seance -->
@@ -70,7 +71,7 @@
                                                 <input name="id_emploi" type="text" hidden value="{{$id_emploi}}">
                                                 <input name="order_seance" type="text" hidden value="{{$seance_order}}">
                                                 <input name="id_formateur" type="text" hidden value="{{$formateur->id}}">
-                                                <select name="id_groupe" id="groupSelect" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
+                                                <select name="id_groupe" id="groupSelectAdd" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
                                                     <option selected  value="">choisissez un groupe</option>
                                                     @foreach($groupes as $groupe)
                                                         @php
@@ -101,12 +102,13 @@
                                                     <option value="efm">efm</option>
                                                 </select>
                                                 {{-- la selection par l'annee scolaire --}}
-                                                <select id="schoolYearSelect" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
-                                                    <option selected>Choose the school year</option>
+                                                <select id="schoolYearSelectAdd" name="school_year" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
+                                                    <option selected disabled>Choose the school year</option>
                                                     <option value="Premier cycle">Premier cycle</option>
                                                     <option value="Deuxième cycle">Deuxième cycle</option>
                                                     <option value="Troisième cycle">Troisième cycle</option>
                                                 </select>
+
                                                 {{-- la selection par l'annee scolaire --}}
                                                 <button type="submit" class="btn btn-primary">ajouter seance</button>
                                             </form>
@@ -156,7 +158,7 @@
                                                         <option value="team">team</option>
                                                         <option value="efm">efm</option>
                                                     </select>
-                                                            <select id="schoolYearSelectUpdate" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
+                                                            <select id="schoolYearSelectUpdate" name="school_year" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
                                                                     <option selected>Choose the school year</option>
                                                                     <option value="Premier cycle">Premier cycle</option>
                                                                     <option value="Deuxième cycle">Deuxième cycle</option>
@@ -186,85 +188,63 @@
 
 
 {{-- //////////////////////////// --}}
-<!-- HTML -->
-<select id="groupSelect" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
-    <option selected value="">Choose a group</option>
-</select>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('schoolYearSelect').addEventListener('change', function() {
-        var selectedSchoolYear = this.value;
+    function populateGroupSelect(selectId, schoolYear) {
+        var fetchUrl = '{{ route("filter-groups") }}?school_year=' + encodeURIComponent(schoolYear);
 
-        // Construct the URL for fetching groups based on the selected school year
-        var fetchUrl = '{{ route("filter.groups") }}?school_year=' + encodeURIComponent(selectedSchoolYear);
-
-        // Make an AJAX request to fetch groups based on the selected school year
-        fetch(fetchUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+        fetch(fetchUrl)
         .then(response => response.json())
         .then(data => {
-            // Handle the JSON response data
-            console.log(data);
+            var groupSelect = document.getElementById(selectId);
+            groupSelect.innerHTML = '';
 
-            // Populate the group select element with the fetched groups
-            var groupSelect = document.getElementById('groupSelect');
-            groupSelect.innerHTML = ''; // Clear previous options
-
-            data.forEach(function(group) {
+            if (data.length === 0) {
                 var option = document.createElement('option');
-                option.value = group.id;
-                option.textContent = group.nom_groupe;
+                option.textContent = 'No groups available';
                 groupSelect.appendChild(option);
-            });
+            } else {
+                data.forEach(function(group) {
+                    var option = document.createElement('option');
+                    option.value = group.id;
+                    option.textContent = group.nom_groupe;
+                    groupSelect.appendChild(option);
+                });
+            }
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-    });
+    }
 
-
-
-
-
-
-       document.getElementById('schoolYearSelectUpdate').addEventListener('change', function() {
+    // Event listeners for school year select elements in both add and update modals
+    var addModalSchoolYearSelect = document.getElementById('schoolYearSelectAdd');
+    addModalSchoolYearSelect.addEventListener('change', function() {
         var selectedSchoolYear = this.value;
-
-        // Construct the URL for fetching groups based on the selected school year
-        var fetchUrl = '{{ route("filter.groups") }}?school_year=' + encodeURIComponent(selectedSchoolYear);
-
-        // Make an AJAX request to fetch groups based on the selected school year
-        fetch(fetchUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the JSON response data
-            console.log(data);
-
-            // Populate the group select element with the fetched groups
-            var groupSelect = document.getElementById('groupSelectUpdate');
-            groupSelect.innerHTML = ''; // Clear previous options
-
-            data.forEach(function(group) {
-                var option = document.createElement('option');
-                option.value = group.id;
-                option.textContent = group.nom_groupe;
-                groupSelect.appendChild(option);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+        var selectId = this.getAttribute('data-group-select-id');
+        populateGroupSelect(selectId, selectedSchoolYear);
     });
+
+    var updateModalSchoolYearSelect = document.getElementById('schoolYearSelectUpdate');
+    updateModalSchoolYearSelect.addEventListener('change', function() {
+        var selectedSchoolYear = this.value;
+        var selectId = this.getAttribute('data-group-select-id');
+        populateGroupSelect(selectId, selectedSchoolYear);
+    });
+
+    // Initial population of group select elements based on default school year selection
+    var defaultSchoolYearAdd = document.getElementById('schoolYearSelectAdd').value;
+    var defaultGroupSelectIdAdd = document.getElementById('groupSelectAdd').getAttribute('data-group-select-id');
+    populateGroupSelect(defaultGroupSelectIdAdd, defaultSchoolYearAdd);
+
+    var defaultSchoolYearUpdate = document.getElementById('schoolYearSelectUpdate').value;
+    var defaultGroupSelectIdUpdate = document.getElementById('groupSelectUpdate').getAttribute('data-group-select-id');
+    populateGroupSelect(defaultGroupSelectIdUpdate, defaultSchoolYearUpdate);
 });
+
 </script>
+
+
+
+
 

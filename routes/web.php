@@ -43,7 +43,7 @@ Route::controller(masterController::class)->group(function(){
             Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
             Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
             //groupe fetch
-            Route::get('/filter-groups', [masterController::class, 'filterGroups'])->name('filter.groups');
+            Route::get('/filter-groups', [masterController::class, 'filterGroups'])->name('filter-groups');
             //groupe fetch
             Route::prefix('/settings')->group(function(){
                 Route::get('/','settingsShow')->name('settingsShow');

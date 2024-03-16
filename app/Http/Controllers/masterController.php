@@ -225,6 +225,11 @@ class masterController extends Controller
 
     public function filterGroups(Request $request)
     {
+        // Validate the request
+        $request->validate([
+            'school_year' => 'required|string', // Adjust the validation rule based on your expected format
+        ]);
+
         // Retrieve the school year from the request
         $schoolYear = $request->input('school_year');
 
@@ -234,7 +239,14 @@ class masterController extends Controller
         // Retrieve the filtered groups
         $filteredGroups = $query->get();
 
+        // Check if any groups are found
+        if ($filteredGroups->isEmpty()) {
+            // If no groups are found, return an empty array or an appropriate response
+            return response()->json([]);
+        }
+
         // Return the filtered groups as JSON response
         return response()->json($filteredGroups);
     }
+
 }
