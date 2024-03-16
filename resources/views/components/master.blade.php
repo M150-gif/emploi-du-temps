@@ -61,13 +61,8 @@
           </a>
         </li>
         {{-- DROP DOWN --}}
-<<<<<<< HEAD
        {{-- <div class="dropdown d-flex align-items-center justify-content-center my-3">
   <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 220px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-=======
-       <div class="dropdown d-flex align-items-center justify-content-center my-3">
-  <a class="btn bg-gradient-info dropdown-toggle shadow-none" style="width: 205px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
->>>>>>> yassine
     Dropdown link
   </a>
   <ul class="dropdown-menu ms-4 overflow-x-auto" style="height:100px;width:200px">
@@ -80,7 +75,7 @@
         <div class="mt-4 text-center" style="width: 100%"> <!-- Add 'text-center' class here -->
             <a href="{{ route('showBackUp') }}" class="btn btn-info">Back Up</a>
         </div>
-        
+
         <li class="nav-item">
           <!-- emploi_formateurs -->
           <a class="nav-link text-white " href="{{route('emplois_formateurs')}}">
