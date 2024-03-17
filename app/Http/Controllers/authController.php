@@ -39,8 +39,9 @@ class AuthController extends Controller
         $credentials = ['email' => $request->email , 'password' => $request->password];
 
         if (Auth::attempt($credentials)) {
+            
             $request->session()->regenerate();
-            return redirect()->route('test');
+            return redirect()->route('home');
         }else{
             return back()->withErrors([
                 'email' => 'Email ou mot de passe est incorrect. '

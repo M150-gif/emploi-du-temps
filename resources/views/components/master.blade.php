@@ -8,6 +8,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {{-- file excel --}}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.js"></script>
+  {{-- file excel --}}
+
   <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/masterAssets/img/apple-icon.png')}}">
   <link rel="icon" type="image/png" href="{{asset('assets/masterAssets/img/favicon.png')}}">
   <link href="{{asset('assets/css/app.css')}}" rel="stylesheet">
@@ -44,7 +49,7 @@
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href="{{route('test')}}">
+      <a class="navbar-brand m-0" href="{{route('afficher_ajouter_emploi')}}">
         <img src="{{asset('assets/masterAssets/img/iconofppt.png')}}" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold text-white">Gérer l'emploi</span>
       </a>

@@ -3,7 +3,7 @@
     $part_of_day=['Matin','A.Midi'];
     $seances_order=['s1','s2','s3','s4'];
 @endphp
-<table class="table table-dark table-striped-columns">
+<table  class="table table-dark table-striped-columns">
     <thead>
         <tr>
             <th rowspan="3">Formateur</th>
@@ -69,7 +69,13 @@
                                 <input name="id_emploi" type="text" hidden value="{{$id_emploi}}">
                                 <input name="order_seance" type="text" hidden value="{{$seance_order}}">
                                 <input name="id_formateur" type="text" hidden value="{{$formateur->id}}">
-                                <select name="id_groupe" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
+                                <select class="form-select schoolYearSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                    <option selected value="">choisissez une année</option>
+                                    <option value="1">Premier cycle</option>
+                                    <option value="2">Deuxième cycle</option>
+                                    <option value="3">Troisième cycle</option>
+                                </select>
+                                <select name="id_groupe" class="form-select groupSelect" style="margin-bottom:10px;" aria-label="Default select example">
                                     <option selected  value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php

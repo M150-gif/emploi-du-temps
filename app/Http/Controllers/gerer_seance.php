@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Seance;
+use App\Models\seance;
 use Illuminate\Http\Request;
 
 class gerer_seance extends Controller

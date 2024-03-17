@@ -21,7 +21,7 @@ class gerer_salle extends Controller
             // Add more validation rules for other form fields if necessary
         ]);
         salle::create($validatedData);
-        return redirect()->route('showAddSalle');
+        return redirect()->route('gererSalle');
     }
     public function deleteSalle(salle $salle){
         $salle->delete();

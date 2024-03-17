@@ -23,23 +23,23 @@ use App\Http\Controllers\FormateurController;
 | be assigned to the "web" middleware group. Make something great!
 |formateursa jouter_groupe modifier_seance
 */
-Route::get("/",[pages::class,'home']);
-Route::get("/groupes",[pages::class,'groupes'])->name('groupes');
-Route::get("/formateurs",[pages::class,'afficher_formateurs']);
-Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
-Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
-Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
-Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
-Route::post("/modifier_seance_groupe",[gerer_seance::class,'modifier_seance_groupe'])->name('modifier_seance_groupe');
-Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
-Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
-Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
-Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher_emploi');
+
 
 // -------------------------------------------
 // -------------------------------------------
 
 Route::middleware('auth')->group(function(){
+
+// SEANCE  ///////////////////////////////////////////////////////////////////////////////////
+
+    Route::controller(gerer_seance::class)->group(function(){
+
+        Route::post("/ajouter_seance",'ajouter_seance')->name('ajouter_seance');
+        Route::post("/modifier_seance",'modifier_seance')->name('modifier_seance');
+        Route::post("/modifier_seance_groupe",'modifier_seance_groupe')->name('modifier_seance_groupe');
+        Route::post("/supprimer_seance",'supprimer_seance')->name('supprimer_seance');
+
+    });
 // FORMATEUR ///////////////////////////////////////////////////////////////////////////////////
     Route::controller(gerer_formateur::class)->group(function(){
 
@@ -113,25 +113,22 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/gereSemaine','gererSemaine')->name('gererSemaine');
         Route::post('/gereSemaine','deleteSemaine')->name('deleteSemaine');
+        Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
+        Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
+        Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
+        Route::get('/emplois_groupes','afficher_emploi_par_groupes')->name('emplois_groupes');
+        Route::get('/emplois_formateur','afficher_emploi_par_formateur')->name('emploi_formateur');
+        Route::get('/emploi_groupe','afficher_emploi_par_groupe')->name('emploi_groupe');
 
     });
 });
 Route::controller(masterController::class)->group(function(){
-
     Route::middleware('auth')->group(function(){
-        Route::prefix('test')->group(function(){
-            Route::get('/','test')->name('test');
-            Route::get('/nouveau emploi','afficher_ajouter_emploi')->name('afficher_ajouter_emploi');
-            Route::post('/ajouter_emploi','ajouter_emploi')->name('ajouter_emploi');
-            Route::get('/emplois_formateurs','afficher_emploi_par_formateurs')->name('emplois_formateurs');
-            Route::get('/emplois_groupes','afficher_emploi_par_groupes')->name('emplois_groupes');
-            Route::get('/emplois_formateur','afficher_emploi_par_formateur')->name('emploi_formateur');
-            Route::get('/emploi_groupe','afficher_emploi_par_groupe')->name('emploi_groupe');
+        Route::prefix('/')->group(function(){
+            Route::get('/','home')->name('home');
             Route::get('/backup','showBackUp')->name('showBackUp');
             Route::match(['get', 'post'],'/bp','backup')->name('backup');
-            Route::prefix('/settings')->group(function(){
-
-            });
+            Route::get('/filter-groups','filterGroups')->name('filter.groups');
         });
     });
 });
