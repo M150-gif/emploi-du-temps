@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\salle;
+use App\Models\emploi;
 use App\Models\groupe;
+use App\Models\seance;
 use App\Models\filiere;
 use App\Models\formateur;
-use App\Models\emploi;
-use App\Models\seance;
 use Illuminate\Http\Request;
 use App\Http\Requests\forRequests;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class masterController extends Controller
 {
@@ -112,5 +112,31 @@ class masterController extends Controller
 
 
 
+
+    public function filterGroups(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'school_year' => 'required|string', // Adjust the validation rule based on your expected format
+        ]);
+
+        // Retrieve the school year from the request
+        $schoolYear = $request->input('school_year');
+
+        // Query the database to retrieve groups based on the provided school year
+        $query = Groupe::query()->where('Niveau', $schoolYear);
+
+        // Retrieve the filtered groups
+        $filteredGroups = $query->get();
+
+        // Check if any groups are found
+        if ($filteredGroups->isEmpty()) {
+            // If no groups are found, return an empty array or an appropriate response
+            return response()->json([]);
+        }
+
+        // Return the filtered groups as JSON response
+        return response()->json($filteredGroups);
+    }
 
 }

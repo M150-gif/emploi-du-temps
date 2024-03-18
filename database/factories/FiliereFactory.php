@@ -17,7 +17,7 @@ class FiliereFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom_filier' => $this->faker->unique()->word(),
         ];
     }
 }
