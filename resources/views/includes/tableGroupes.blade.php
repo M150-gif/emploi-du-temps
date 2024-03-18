@@ -3,34 +3,34 @@ $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 $part_of_day=['Matin','A.Midi'];
 $seances_order=['s1','s2','s3','s4'];
 @endphp
-<table class="table table-dark table-striped-columns">
+<table class="table border border-info ">
     <thead>
-        <tr>
-            <th rowspan="3">Groupe</th>
+        <tr >
+            <th rowspan="3" class="border border-info bg-grey">Groupe</th>
             @foreach($jours as $jour)
-                <th colspan="4">{{$jour}}</th>
+                <th colspan="4" class="border border-info">{{$jour}}</th>
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
                 @foreach($part_of_day as $part)
-                    <th colspan="2">{{$part}}</th>
+                    <th colspan="2" class="border border-info">{{$part}}</th>
                 @endforeach
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
-                <th>s1</th>
-                <th>s2</th>
-                <th>s3</th>
-                <th>s4</th>
+                <th class="border border-info">s1</th>
+                <th class="border border-info">s2</th>
+                <th class="border border-info">s3</th>
+                <th class="border border-info">s4</th>
             @endforeach
         </tr>
     </thead>
     <tbody>
         @foreach ($groupes as $groupe)
             <tr>
-                <td>{{ $groupe->nom_groupe }}</td>
+                <td class="border border-info">{{ $groupe->nom_groupe }}</td>
                 @foreach ($jours as $jour)
                     @foreach ($seances_order as $seance_order)
                         @php
@@ -43,13 +43,13 @@ $seances_order=['s1','s2','s3','s4'];
                             $modalId_ajouter = $jour.'_'. $seance_order . '_' .$groupe->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                            <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                            <td class="cellule text-info border border-info" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                 <span>{{ $seance->formateur->name }} {{ $seance->formateur->prenom }}</span> <br>
                                 <span>{{ $seance->type_seance }}</span> <br>
                                 <span>{{ $seance->salle->nom_salle }}</span>
                             </td>
                         @else
-                            <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                            <td class="cellule text-info border border-info" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
                         <!-- form_qui_ajouter_un_seance -->

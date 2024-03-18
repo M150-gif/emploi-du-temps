@@ -6,6 +6,7 @@ use App\Models\salle;
 use App\Models\emploi;
 use App\Models\groupe;
 use App\Models\seance;
+use App\Models\filiere;
 use App\Models\formateur;
 use Illuminate\Http\Request;
 
@@ -64,7 +65,8 @@ class gerer_emploi extends Controller
         $salles=salle::all();
         $id_emploi=$derniereEmploi->id;
         $seances = seance::where('id_emploi', $id_emploi)->get();
-        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
+        $filieres = filiere::all();
+        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles', 'filieres'));
     }
     public function afficher_emploi_par_groupes(){
         $derniereEmploi = emploi::latest()->first();

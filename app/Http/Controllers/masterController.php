@@ -34,11 +34,11 @@ class masterController extends Controller
         $id_emploi = $latestEmploi ? $latestEmploi->id : null;
         $seances = $latestEmploi ? Seance::where('id_emploi', $latestEmploi->id)->get() : collect();
         $selectedType = 'emploi_formateur'; // Set the default selected type
-
+        $filieres = filiere::all();
         // Store the selected date in the session
         session(['selected_date' => $selectedDate]);
 
-        return view('backup', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType'));
+        return view('backup', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType', 'filieres'));
     }
 
 
@@ -87,21 +87,21 @@ class masterController extends Controller
         // Pass selected date and type to the view
         return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType'));
     }
-    
-    public function filterGroups(Request $request)
-    {
-        // Retrieve the school year from the request
-        $schoolYear = $request->input('school_year');
 
-        // Query the database to retrieve groups based on the provided school year
-        $query = Groupe::query()->where('Niveau', $schoolYear);
+    // public function filterGroups(Request $request)
+    // {
+    //     // Retrieve the school year from the request
+    //     $schoolYear = $request->input('school_year');
 
-        // Retrieve the filtered groups
-        $filteredGroups = $query->get();
+    //     // Query the database to retrieve groups based on the provided school year
+    //     $query = Groupe::query()->where('Niveau', $schoolYear);
 
-        // Return the filtered groups as JSON response
-        return response()->json($filteredGroups);
-    }
+    //     // Retrieve the filtered groups
+    //     $filteredGroups = $query->get();
+
+    //     // Return the filtered groups as JSON response
+    //     return response()->json($filteredGroups);
+    // }
     // public function newFormateur(){
     //     $formateurs = formateur::paginate(1111111);
     //     return view('newFormateur',compact('formateurs'));

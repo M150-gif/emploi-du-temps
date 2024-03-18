@@ -3,34 +3,34 @@
     $part_of_day=['Matin','A.Midi'];
     $seances_order=['s1','s2','s3','s4'];
 @endphp
-<table  class="table table-dark table-striped-columns">
+<table  class="table border border-info ">
     <thead>
         <tr>
-            <th rowspan="3">Formateur</th>
+            <th rowspan="3" class="border border-info bg-grey">Formateur</th>
             @foreach($jours as $jour)
-            <th colspan="4">{{$jour}}</th>
+            <th colspan="4" class="border border-info">{{$jour}}</th>
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
                 @foreach($part_of_day as $part)
-                <th colspan="2">{{$part}}</th>
+                <th colspan="2" class="border border-info">{{$part}}</th>
                 @endforeach
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
-                <th>s1</th>
-                <th>s2</th>
-                <th>s3</th>
-                <th>s4</th>
+                <th class="border border-info">s1</th>
+                <th class="border border-info">s2</th>
+                <th class="border border-info">s3</th>
+                <th class="border border-info">s4</th>
             @endforeach
         </tr>
     </thead>
-    <tbody>
+    <tbody class="border border-info">
         @foreach ($formateurs as $formateur)
             <tr>
-                <td>{{ $formateur->name }} {{ $formateur->prenom }}</td>
+                <td class="border border-info">{{ $formateur->name }} {{ $formateur->prenom }}</td>
                 @foreach ($jours as $jour)
                         @foreach ($seances_order as $seance_order)
                         @php
@@ -39,18 +39,18 @@
                             });
                         @endphp
                         @php
-                            $modalId_update = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."update";
-                            $modalId_ajouter = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."ajouter";
+                            $modalId_update = $jour.''. $seance_order . '' .$formateur->id.'_'."update";
+                            $modalId_ajouter = $jour.''. $seance_order . '' .$formateur->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                        <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                        <td class="cellule text-info border border-info" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                             <span>{{ $seance->groupe->nom_groupe }}</span> <br>
                             <span>{{ $seance->type_seance }}</span> <br>
                             <span>{{ $seance->salle->nom_salle }}</span>
                         </td>
                         @else
 
-                        <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                        <td class="cellule border border-info" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                         </td>
                         @endif
                         <!-- form_qui_ajouter_un_seance -->
@@ -75,11 +75,19 @@
                                     <option value="2">Deuxième cycle</option>
                                     <option value="3">Troisième cycle</option>
                                 </select>
+                                <!-- HTML code: Add filiere select -->
+                                <select class="form-select filiereSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                    <option selected value="">Choose a filiere</option>
+                                    @foreach($filieres as $filier)
+                                        <option value="{{ $filier->id }}">{{ $filier->nom_filier }}</option>
+                                    @endforeach
+                                </select>
+
                                 <select name="id_groupe" class="form-select groupSelect" style="margin-bottom:10px;" aria-label="Default select example">
-                                    <option selected  value="">choisissez un groupe</option>
+                                    <option selected value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order);
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi',$id_emploi)->where('day', $jour)->where('order_seance',$seance_order);
                                     $groupe_has_no_seance = $groupe->seance->isEmpty();
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
@@ -87,6 +95,7 @@
                                     @endif
                                     @endforeach
                                 </select>
+
                                 <select name="id_salle" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
                                     <option selected value="">choisissez la salle</option>
                                     @foreach($salles as $salle)
