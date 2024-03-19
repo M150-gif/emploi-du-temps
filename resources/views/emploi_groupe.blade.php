@@ -3,17 +3,21 @@
     $part_of_day = ['Matin', 'A.Midi'];
     $seances_order = ['s1', 's2', 's3', 's4'];
 @endphp
-
+<style>
+    td{
+        cursor: pointer;
+    }
+</style>
 <x-master title="emplois_formateurs">
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh; border-radius: 10px">
-        <select id="groupeSelect" class="form-select mb-3" aria-label="Default select example">
-            <option value="">Choisissez un groupe</option>
-            @foreach($groupes as $groupe)
-                <option value="{{ $groupe->id }}" {{ $selectedGroupe && $selectedGroupe->id == $groupe->id ? 'selected' : '' }}>
-                    {{ $groupe->nom_groupe }}
-                </option>
-            @endforeach
-        </select>
+    <select id="groupeSelect" class="form-select mb-3" aria-label="Default select example">
+        <option value="">Choisissez un groupe</option>
+        @foreach($groupes as $groupe)
+        <option value="{{ $groupe->id }}" {{ $selectedGroupe && $selectedGroupe->id == $groupe->id ? 'selected' : '' }}>
+            {{ $groupe->nom_groupe }}
+        </option>
+        @endforeach
+    </select>
+    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh">
 
         <!-- Display the selected groupe's row -->
         @if($selectedGroupe)

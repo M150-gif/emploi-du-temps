@@ -3,16 +3,21 @@ $jours=['lundi','mardi','mercredi','jeudi','vendredi','samedi'];
 $part_of_day=['Matin','A.Midi'];
 $seances_order=['s1','s2','s3','s4'];
 @endphp
+<style>
+    td{
+        cursor: pointer;
+    }
+</style>
 <x-master title="emplois_formateurs">
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
-        <select id="formateurSelect" class="form-select mb-3" aria-label="Default select example">
-            <option value="">Choisissez un formateur</option>
-            @foreach($formateurs as $formateur)
-                <option value="{{$formateur->id}}" {{ $selectedFormateur && $selectedFormateur->id == $formateur->id ? 'selected' : '' }}>
-                    {{$formateur->name}} {{$formateur->prenom}}
-                </option>
-            @endforeach
-        </select>
+    <select id="formateurSelect" class="form-select mb-3" aria-label="Default select example">
+        <option value="">Choisissez un formateur</option>
+        @foreach($formateurs as $formateur)
+        <option value="{{$formateur->id}}" {{ $selectedFormateur && $selectedFormateur->id == $formateur->id ? 'selected' : '' }}>
+            {{$formateur->name}} {{$formateur->prenom}}
+        </option>
+        @endforeach
+    </select>
+    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh">
 
 
         <!-- Display the selected formateur's row -->

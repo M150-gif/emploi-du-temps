@@ -3,6 +3,11 @@
     $part_of_day=['Matin','A.Midi'];
     $seances_order=['s1','s2','s3','s4'];
 @endphp
+<style>
+    td{
+        cursor: pointer;
+    }
+</style>
 <table  class="table border border-info ">
     <thead>
         <tr>

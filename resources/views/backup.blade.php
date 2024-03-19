@@ -12,7 +12,6 @@
         }
     </style>
 
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh; border-radius: 10px;">
         <div class="row">
             <div class="col-md-6">
                 <form id="dateForm" action="{{ route('backup') }}" method="get" class="mb-3">
@@ -32,7 +31,7 @@
             <div class="col-md-6">
                 <form id="typeForm" action="{{ route('backup') }}" method="GET">
                     <label for="selected_type" class="form-label">Select Type:</label>
-                    <select name="selected_type" id="selected_type" class="form-select border border-dark p-2 cursor-pointer" onchange="this.form.submit()">
+                    <select name="selected_type" id="selected_type" class="form-select border border-dark p-2 cursor-pointer pr-1" onchange="this.form.submit()">
                         <option value="emploi_formateur" {{ $selectedType === 'emploi_formateur' ? 'selected' : '' }}>Emploi Formateur</option>
                         <option value="emploi_groupe" {{ $selectedType === 'emploi_groupe' ? 'selected' : '' }}>Emploi Groupe</option>
                     </select>
@@ -41,13 +40,14 @@
                 </form>
             </div>
         </div>
+        <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;">
 
-        @if ($selectedType === 'emploi_formateur')
+            @if ($selectedType === 'emploi_formateur')
             {{-- Include the content for emploi formateur --}}
             @include('includes.tableFormateurs')
-        @else
+            @else
             {{-- Include the content for emploi groupes --}}
             @include('includes.tableGroupes')
-        @endif
-    </div>
+            @endif
+        </div>
 </x-master>

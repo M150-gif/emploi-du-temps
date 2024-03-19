@@ -71,7 +71,7 @@
                                     <td>{{ $groupe->filiere->nom_filier }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <button onclick="openUpdateModal({{ $groupe->id }}, '{{ $groupe->nom_groupe }}', '{{ $groupe->Mode_de_formation }}', '{{ $groupe->Niveau }}', {{ $groupe->filiere->id }})" type="button" class="btn btn-info me-2">Update</button>
+                                            <button onclick="openUpdateModal({{ $groupe->id }}, '{{ $groupe->nom_groupe }}', '{{ $groupe->Mode_de_formation }}', '{{ $groupe->Niveau }}', {{ $groupe->filiere->id }})" type="button" class="btn btn-info me-2 open-update-modal">Update</button>
                                             <form action="{{ route('deleteGroupe') }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $groupe->id }}">
@@ -173,60 +173,63 @@
             </div>
         </div>
 
-        <script>
-            // JavaScript for showing and hiding modals
-            document.addEventListener("DOMContentLoaded", function() {
-                const openAddGroupeModalButton = document.getElementById("openAddGroupeModalButton");
-                const closeAddGroupeModalButton = document.getElementById("closeAddGroupeModalButton");
-                const addGroupeModal = document.getElementById("addGroupeModal");
 
-                openAddGroupeModalButton.addEventListener("click", function() {
-                    addGroupeModal.style.display = "block";
-                });
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Code for opening and closing the Add Groupe Modal
+    const openAddGroupeModalButton = document.getElementById("openAddGroupeModalButton");
+    const closeAddGroupeModalButton = document.getElementById("closeAddGroupeModalButton");
+    const addGroupeModal = document.getElementById("addGroupeModal");
 
-                closeAddGroupeModalButton.addEventListener("click", function() {
-                    addGroupeModal.style.display = "none";
-                });
+    openAddGroupeModalButton.addEventListener("click", function() {
+        addGroupeModal.style.display = "block";
+    });
 
-                window.addEventListener("click", function(event) {
-                    if (event.target == addGroupeModal) {
-                        addGroupeModal.style.display = "none";
-                    }
-                });
+    closeAddGroupeModalButton.addEventListener("click", function() {
+        addGroupeModal.style.display = "none";
+    });
 
-                const openUpdateGroupeModalButton = document.getElementById("openUpdateGroupeModalButton");
-                const closeUpdateGroupeModalButton = document.getElementById("closeUpdateGroupeModalButton");
-                const updateGroupeModal = document.getElementById("updateGroupeModal");
+    window.addEventListener("click", function(event) {
+        if (event.target === addGroupeModal) {
+            addGroupeModal.style.display = "none";
+        }
+    });
 
-                openUpdateGroupeModalButton.addEventListener("click", function() {
-                    updateGroupeModal.style.display = "block";
-                });
+    // Code for opening and closing the Update Groupe Modal
+    const openUpdateGroupeModalButtons = document.querySelectorAll(".open-update-modal");
+    const closeUpdateGroupeModalButton = document.getElementById("closeUpdateGroupeModalButton");
+    const updateGroupeModal = document.getElementById("updateGroupeModal");
 
-                closeUpdateGroupeModalButton.addEventListener("click", function() {
-                    updateGroupeModal.style.display = "none";
-                });
+    openUpdateGroupeModalButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            updateGroupeModal.style.display = "block";
+        });
+    });
 
-                window.addEventListener("click", function(event) {
-                    if (event.target == updateGroupeModal) {
-                        updateGroupeModal.style.display = "none";
-                    }
-                });
-            });
+    closeUpdateGroupeModalButton.addEventListener("click", function() {
+        updateGroupeModal.style.display = "none";
+    });
 
-            function openUpdateModal(id, nom_groupe, Mode_de_formation, Niveau, filiere_id) {
-                document.getElementById('updateGroupeId').value = id;
-                document.getElementById('updateNomGroupe').value = nom_groupe;
-                document.getElementById('updateModeFormation').value = Mode_de_formation;
-                document.getElementById('updateNiveau').value = Niveau;
-                document.getElementById('updateFiliere').value = filiere_id;
-                document.getElementById('updateGroupeModal').style.display = "block";
+    window.addEventListener("click", function(event) {
+        if (event.target === updateGroupeModal && !updateGroupeModal.contains(event.target)) {
+            // Check if the click target is outside the modal
+            updateGroupeModal.style.display = "none";
+        }
+    });
+});
 
-                 // Set the form action URL dynamically with the group ID
-                document.getElementById('updateGroupeForm').action = "{{ route('updateGroupe', ['groupe' => ':id']) }}".replace(':id', id);
+function openUpdateModal(id, nom_groupe, Mode_de_formation, Niveau, filiere_id) {
+    document.getElementById('updateGroupeId').value = id;
+    document.getElementById('updateNomGroupe').value = nom_groupe;
+    document.getElementById('updateModeFormation').value = Mode_de_formation;
+    document.getElementById('updateNiveau').value = Niveau;
+    document.getElementById('updateFiliere').value = filiere_id;
+    document.getElementById('updateGroupeModal').style.display = "block";
 
-                // Display the update modal
-                document.getElementById('updateGroupeModal').style.display = "block";
-            }
-        </script>
+    // Set the form action URL dynamically with the group ID
+    document.getElementById('updateGroupeForm').action = "{{ route('updateGroupe', ['groupe' => ':id']) }}".replace(':id', id);
+}
+</script>
+
     </x-settings>
 </x-master>
