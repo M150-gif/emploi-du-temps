@@ -66,7 +66,12 @@ class gerer_emploi extends Controller
         $filieres = filiere::all();
         $id_emploi=$derniereEmploi->id;
         $seances = seance::where('id_emploi', $id_emploi)->get();
+<<<<<<< HEAD
         return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles','filieres'));
+=======
+        $filieres = filiere::all();
+        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles', 'filieres'));
+>>>>>>> 43c3d593536f6e182cd65ed38ed9ffcd63b8d918
     }
     public function afficher_emploi_par_groupes(){
         $derniereEmploi = emploi::latest()->first();

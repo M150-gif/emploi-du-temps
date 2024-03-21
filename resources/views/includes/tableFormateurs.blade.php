@@ -3,34 +3,39 @@
     $part_of_day=['Matin','A.Midi'];
     $seances_order=['s1','s2','s3','s4'];
 @endphp
-<table  class="table table-dark table-striped-columns">
+<style>
+    td{
+        cursor: pointer;
+    }
+</style>
+<table  class="table border border-info ">
     <thead>
         <tr>
-            <th rowspan="3">Formateur</th>
+            <th rowspan="3" class="border border-info bg-grey">Formateur</th>
             @foreach($jours as $jour)
-            <th colspan="4">{{$jour}}</th>
+            <th colspan="4" class="border border-info">{{$jour}}</th>
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
                 @foreach($part_of_day as $part)
-                <th colspan="2">{{$part}}</th>
+                <th colspan="2" class="border border-info">{{$part}}</th>
                 @endforeach
             @endforeach
         </tr>
         <tr>
             @foreach ($jours as $jour)
-                <th>s1</th>
-                <th>s2</th>
-                <th>s3</th>
-                <th>s4</th>
+                <th class="border border-info">s1</th>
+                <th class="border border-info">s2</th>
+                <th class="border border-info">s3</th>
+                <th class="border border-info">s4</th>
             @endforeach
         </tr>
     </thead>
-    <tbody>
+    <tbody class="border border-info">
         @foreach ($formateurs as $formateur)
             <tr>
-                <td>{{ $formateur->name }} {{ $formateur->prenom }}</td>
+                <td class="border border-info">{{ $formateur->name }} {{ $formateur->prenom }}</td>
                 @foreach ($jours as $jour)
                         @foreach ($seances_order as $seance_order)
                         @php
@@ -39,18 +44,18 @@
                             });
                         @endphp
                         @php
-                            $modalId_update = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."update";
-                            $modalId_ajouter = $jour.'_'. $seance_order . '_' .$formateur->id.'_'."ajouter";
+                            $modalId_update = $jour.''. $seance_order . '' .$formateur->id.'_'."update";
+                            $modalId_ajouter = $jour.''. $seance_order . '' .$formateur->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                        <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                        <td class="cellule text-info border border-info" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                             <span>{{ $seance->groupe->nom_groupe }}</span> <br>
                             <span>{{ $seance->type_seance }}</span> <br>
                             <span>{{ $seance->salle->nom_salle }}</span>
                         </td>
                         @else
 
-                        <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                        <td class="cellule border border-info" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                         </td>
                         @endif
                         <!-- form_qui_ajouter_un_seance -->

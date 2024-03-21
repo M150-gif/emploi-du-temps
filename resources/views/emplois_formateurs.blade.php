@@ -6,11 +6,17 @@
 <x-master title="emplois_formateurs">
 
 
+<<<<<<< HEAD
     <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
         @include('includes.tableFormateurs')
     </div>
 
 
+=======
+    <div style="max-height: 85vh;">
+        @include('includes.tableFormateurs')
+    </div>
+>>>>>>> 43c3d593536f6e182cd65ed38ed9ffcd63b8d918
 </x-master>
 
 
