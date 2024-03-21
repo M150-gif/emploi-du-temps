@@ -9,11 +9,11 @@ $seances_order=['s1','s2','s3','s4'];
     }
 </style>
 <x-master title="emplois_formateurs">
-    <select id="formateurSelect" class="form-select mb-3" aria-label="Default select example">
+    <select id="formateurSelect" class="form-select mb-3 fs-6 text-black font-weight-bold" aria-label="Default select example">
         <option value="">Choisissez un formateur</option>
         @foreach($formateurs as $formateur)
         <option value="{{$formateur->id}}" {{ $selectedFormateur && $selectedFormateur->id == $formateur->id ? 'selected' : '' }}>
-            {{$formateur->name}} {{$formateur->prenom}}
+            {{$formateur->name}}
         </option>
         @endforeach
     </select>
@@ -25,30 +25,33 @@ $seances_order=['s1','s2','s3','s4'];
         <table class="table border border-info">
             <thead>
                 <tr>
-                    <th rowspan="3" class="border border-info bg-grey">Formateur</th>
+                    <th class=" border-info text-black text-center"><span class="fs-6 text-black" style="--bs-text-opacity: .5;">Le Nom : </span>{{ $selectedFormateur->name }}</th>
+                </tr>
+                <tr>
+                    {{-- <th rowspan="3" class="border border-info bg-grey text-black">Formateur</th> --}}
                     @foreach($jours as $jour)
-                    <th colspan="4" class="border border-info">{{$jour}}</th>
+                    <th colspan="4" class="border border-info text-black">{{$jour}}</th>
                     @endforeach
                 </tr>
                 <tr>
                     @foreach ($jours as $jour)
                         @foreach($part_of_day as $part)
-                        <th colspan="2" class="border border-info">{{$part}}</th>
+                        <th colspan="2" class="border border-info text-black">{{$part}}</th>
                         @endforeach
                     @endforeach
                 </tr>
                 <tr>
                     @foreach ($jours as $jour)
-                        <th class="border border-info">s1</th>
-                        <th class="border border-info">s2</th>
-                        <th class="border border-info">s3</th>
-                        <th class="border border-info">s4</th>
+                        <th class="border border-info text-black">s1</th>
+                        <th class="border border-info text-black">s2</th>
+                        <th class="border border-info text-black">s3</th>
+                        <th class="border border-info text-black">s4</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="border border-info">{{ $selectedFormateur->name }} {{ $selectedFormateur->prenom }}</td>
+                    {{-- <td class="border border-info fs-5 text-black font-weight-bold">{{ $selectedFormateur->name }}</td> --}}
                     @foreach ($jours as $jour)
                         @foreach($seances_order as $seance_order)
                         @php
