@@ -60,10 +60,24 @@
         color: #1a73e8;
         transition: all 0.3s ease;
     }
+    .toggle-sidebar{
+        display: none !important;
+    }
+    #toggleSidebarBtn{
+        left: 235px;
+        top: 50%;
+        z-index: 1000;
+        rotate: -180deg;
+        box-shadow: none;
+    }
+    #toggleSidebarBtn {
+    transition: left 0.3s ease; /* Add a transition effect to the left property */
+}
+
     </style>
 
 </head>
-
+    <button id="toggleSidebarBtn" class="btn  m-0 position-absolute" ><i class="fs-3 fa-solid fa-arrow-left text-info"></i></button>
 <body class="g-sidenav-show  bg-gray-200">
     <aside
         class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-light"
@@ -84,7 +98,7 @@
                     <a class="nav-link text-white active bg-gradient-info"
                         href="{{ route('afficher_ajouter_emploi') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">dashboard</i>
+                            <i class="material-icons opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Nouveau Emploi</span>
                     </a>
@@ -97,7 +111,7 @@
                     <!-- emploi_formateurs -->
                     <a class="nav-link decoration-blue-950 text-info {{ $path == '/emplois_formateurs' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emplois_formateurs') }}">
                         <div class="text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10 text-info">table_view</i>
+                            <i class="material-icons opacity-10 text-info"></i>
                         </div>
                         <span class="nav-link-text ms-1">Formateurs</span>
                     </a>
@@ -105,7 +119,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-info {{ $path == '/emplois_groupes' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emplois_groupes') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10 text-info">receipt_long</i>
+                            <i class="material-icons opacity-10 text-info"></i>
                         </div>
                         <span class="nav-link-text ms-1 ">Groupes</span>
                     </a>
@@ -113,7 +127,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-info {{ $path == '/emplois_formateur' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_formateur') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10 text-info">view_in_ar</i>
+                            <i class="material-icons opacity-10 text-info"></i>
                         </div>
                         <span class="nav-link-text ms-1 ">Par Fromateur</span>
                     </a>
@@ -121,7 +135,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-info {{ $path == '/emploi_groupe' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_groupe') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10 text-info">format_textdirection_r_to_l</i>
+                            <i class="material-icons opacity-10 text-info"></i>
                         </div>
                         <span class="nav-link-text ms-1 ">Par Groupe</span>
                     </a>
@@ -142,17 +156,16 @@
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-            data-scroll="true">
+        <nav class="navbar navbar-main navbar-expand-lg px-0  shadow-none border-radius-xl fixed-top w-100" id="navbarBlur"
+            data-scroll="true" >
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <!-- <h6 class="font-weight-bolder mb-0"></h6> -->
                     <img src="{{ asset('assets/masterAssets/img/ofpptLogo.png') }}"
-                        style="width: 70px;margin-left: 35vw;" alt="ofpptLogo">
+                        style="width: 70px;margin-left: 55vw;" alt="ofpptLogo">
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         @auth
@@ -169,7 +182,7 @@
             </div>
         </nav>
         <!-- End Navbar -->
-        <div class="container-fluid ">
+        <div class="container-fluid">
             {{ $slot }}
         </div>
     </main>
@@ -181,9 +194,33 @@
     <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script>
         <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <script></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const sidebar = document.getElementById('sidenav-main');
+    const mainContent = document.querySelector('.main-content');
+    const divInsideMaster = document.querySelector('x-master > div');
 
+    toggleSidebarBtn.addEventListener('click', function () {
+        sidebar.classList.toggle('toggle-sidebar');
+        if (sidebar.classList.contains('toggle-sidebar')) {
+            toggleSidebarBtn.style.left = '-20px'; // Slide the button to the left when the sidebar is toggled
+            mainContent.style.width = '100%'; // Expand the main content to full width when the sidebar is hidden
+            divInsideMaster.style.width = '100%'; // Expand the div inside x-master to full width when the sidebar is hidden
+            document.body.style.overflowY = 'hidden'; // Hide the body scrollbar
+            document.body.style.overflowX = 'auto'; // Allow horizontal scrolling in the body
+        } else {
+            toggleSidebarBtn.style.left = '235px'; // Slide the button back to its original position
+            mainContent.style.width = ''; // Reset the width of the main content to its default value
+            divInsideMaster.style.width = ''; // Reset the width of the div inside x-master to its default value
+            document.body.style.overflowY = 'auto'; // Allow scrolling in the body
+            document.body.style.overflowX = 'hidden'; // Hide horizontal scrolling in the body
+        }
+    });
+});
+
+    </script>
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
 </body>
 

@@ -6,7 +6,7 @@
 <x-master title="emplois_formateurs">
 
 
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;">
+    <div style="max-height: 85vh;">
         @include('includes.tableFormateurs')
     </div>
 </x-master>

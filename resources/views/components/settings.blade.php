@@ -24,12 +24,9 @@
                             </a>
                         </li>
                     @endforeach
-                    <li class="list-group-item border-0">
-                        <button type="button" class="btn btn-dark" name="Autre" style="width: 100%;">Autre</button>
-                    </li>
-                    <li class="list-group-item border-0">
+                    {{-- <li class="list-group-item border-0">
                         <button type="button" class="btn btn-danger" name="Reinistialiser" style="width: 100%;">Réinitialiser</button>
-                    </li>
+                    </li> --}}
                     <!-- Add more buttons or content as needed -->
                 </ul>
             </div>

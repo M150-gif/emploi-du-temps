@@ -26,7 +26,7 @@ class masterController extends Controller
     {
         $latestEmploi = Emploi::latest('date_debu')->first();
         $selectedDate = $latestEmploi ? $latestEmploi->date_debu : null;
-
+        $filieres = filiere::all();
         $formateurs = Formateur::all();
         $emplois = Emploi::orderBy('date_debu','desc')->get();
         $groupes = Groupe::all();
@@ -48,6 +48,7 @@ class masterController extends Controller
 
         // Get the selected date from the request
         $selectedDate = $request->input('selected_date');
+        $filieres = filiere::all();
 
         // Store the selected date in the session
         Session::put('selected_date', $selectedDate);
@@ -85,7 +86,7 @@ class masterController extends Controller
         $emplois = Emploi::orderBy('date_debu', 'desc')->get();
 
         // Pass selected date and type to the view
-        return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType'));
+        return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType', 'filieres'));
     }
 
     // public function filterGroups(Request $request)
