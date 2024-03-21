@@ -8,6 +8,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {{-- bootstrap  --}}
+  <link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
+
   {{-- file excel --}}
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.css"/>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.js"></script>
@@ -277,10 +280,9 @@
     <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script>
-    <script></script>
-
-
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
+    <script src="{{asset('assets/bootstrap/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/popper.min.js')}}"></script>
+    <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
 </body>
-
 </html>

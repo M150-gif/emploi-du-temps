@@ -75,11 +75,19 @@
                                     <option value="2">Deuxième cycle</option>
                                     <option value="3">Troisième cycle</option>
                                 </select>
+                                <!-- HTML code: Add filiere select -->
+                                <select class="form-select filiereSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                    <option selected value="">Choose a filiere</option>
+                                    @foreach($filieres as $filier)
+                                        <option value="{{ $filier->id }}">{{ $filier->nom_filier }}</option>
+                                    @endforeach
+                                </select>
+
                                 <select name="id_groupe" class="form-select groupSelect" style="margin-bottom:10px;" aria-label="Default select example">
-                                    <option selected  value="">choisissez un groupe</option>
+                                    <option selected value="">choisissez un groupe</option>
                                     @foreach($groupes as $groupe)
                                     @php
-                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi','==',$id_emploi)->where('day', '==',$jour)->where('order_seance','==',$seance_order);
+                                    $groupe_deja_occupe= $groupe->seance->where('id_emploi',$id_emploi)->where('day', $jour)->where('order_seance',$seance_order);
                                     $groupe_has_no_seance = $groupe->seance->isEmpty();
                                     @endphp
                                     @if($groupe_deja_occupe->count()==0 || $groupe_has_no_seance)
@@ -87,6 +95,7 @@
                                     @endif
                                     @endforeach
                                 </select>
+
                                 <select name="id_salle" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
                                     <option selected value="">choisissez la salle</option>
                                     @foreach($salles as $salle)

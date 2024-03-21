@@ -23,18 +23,17 @@ use App\Http\Controllers\FormateurController;
 | be assigned to the "web" middleware group. Make something great!
 |formateursa jouter_groupe modifier_seance
 */
-Route::get("/",[pages::class,'home']);
-Route::get("/groupes",[pages::class,'groupes'])->name('groupes');
-Route::get("/formateurs",[pages::class,'afficher_formateurs']);
-Route::post("/ajouter_formateur",[FormateurController::class,'ajouter_formateur'])->name('ajouter_formateur');
-Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
-Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
-Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
-Route::post("/modifier_seance_groupe",[gerer_seance::class,'modifier_seance_groupe'])->name('modifier_seance_groupe');
-Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
-Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
-Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
-Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher_emploi');
+// Route::get("/",[pages::class,'home']);
+// Route::get("/groupes",[pages::class,'groupes'])->name('groupes');
+// Route::get("/formateurs",[pages::class,'afficher_formateurs']);
+// Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
+// Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
+// Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
+// Route::post("/modifier_seance_groupe",[gerer_seance::class,'modifier_seance_groupe'])->name('modifier_seance_groupe');
+// Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
+// Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
+// Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
+// Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher_emploi');
 
 // -------------------------------------------
 // -------------------------------------------
@@ -139,6 +138,8 @@ Route::controller(masterController::class)->group(function(){
             Route::get('/','home')->name('home');
             Route::get('/backup','showBackUp')->name('showBackUp');
             Route::match(['get', 'post'],'/bp','backup')->name('backup');
+            Route::get('/filter-groups','filterGroups')->name('filter.groups');
+
             Route::prefix('/settings')->group(function(){
 
             });
