@@ -39,11 +39,7 @@ class masterController extends Controller
         // Store the selected date in the session
         session(['selected_date' => $selectedDate]);
 
-<<<<<<< HEAD
         return view('backup', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType','filieres'));
-=======
-        return view('backup', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType', 'filieres'));
->>>>>>> 43c3d593536f6e182cd65ed38ed9ffcd63b8d918
     }
 
 
@@ -92,7 +88,6 @@ class masterController extends Controller
         $emplois = Emploi::orderBy('date_debu', 'desc')->get();
 
         // Pass selected date and type to the view
-<<<<<<< HEAD
         return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType','filieres'));
     }
     public function filterGroups(Request $request)
@@ -112,68 +107,8 @@ class masterController extends Controller
             $query->where('filiere_id', $filiere);
         } elseif ($schoolYear) {
             $query->where('Niveau', $schoolYear);
-=======
         return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType', 'filieres'));
     }
 
-    // public function filterGroups(Request $request)
-    // {
-    //     // Retrieve the school year from the request
-    //     $schoolYear = $request->input('school_year');
-
-    //     // Query the database to retrieve groups based on the provided school year
-    //     $query = Groupe::query()->where('Niveau', $schoolYear);
-
-    //     // Retrieve the filtered groups
-    //     $filteredGroups = $query->get();
-
-    //     // Return the filtered groups as JSON response
-    //     return response()->json($filteredGroups);
-    // }
-    // public function newFormateur(){
-    //     $formateurs = formateur::paginate(1111111);
-    //     return view('newFormateur',compact('formateurs'));
-    // }
-
-
-
-
-
-
-
-    public function filterGroups(Request $request)
-    {
-        // Validate the request
-        $request->validate([
-            'school_year' => 'required|string', // Adjust the validation rule based on your expected format
-        ]);
-
-        // Retrieve the school year from the request
-        $schoolYear = $request->input('school_year');
-
-        // Query the database to retrieve groups based on the provided school year
-        $query = Groupe::query()->where('Niveau', $schoolYear);
-
-        // Retrieve the filtered groups
-        $filteredGroups = $query->get();
-
-        // Check if any groups are found
-        if ($filteredGroups->isEmpty()) {
-            // If no groups are found, return an empty array or an appropriate response
-            return response()->json([]);
->>>>>>> 43c3d593536f6e182cd65ed38ed9ffcd63b8d918
-        }
-
-        // Add additional conditions for checking if groupe is already occupied
-        // $query->whereDoesntHave('seance', function($query) use ($id_emploi, $jour, $seance_order) {
-        //     $query->where('id_emploi', $id_emploi)
-        //           ->where('day', $jour)
-        //           ->where('order_seance', $seance_order);
-        // });
-
-        $filteredGroups = $query->get();
-
-        return response()->json($filteredGroups);
     }
-
 }
