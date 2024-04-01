@@ -140,4 +140,8 @@ class masterController extends Controller
         return response()->json($filteredGroups);
     }
 
+
+    public function exporter() {
+        return view('exporter');
+    }
 }

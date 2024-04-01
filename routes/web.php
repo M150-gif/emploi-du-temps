@@ -156,7 +156,7 @@ Route::controller(masterController::class)->group(function () {
             Route::get('/backup', 'showBackUp')->name('showBackUp');
             Route::match(['get', 'post'], '/bp', 'backup')->name('backup');
             Route::get('/filter-groups', 'filterGroups')->name('filter.groups');
-
+            Route::get('/exporter','exporter')->name('exporter');
             Route::prefix('/settings')->group(function () {
             });
         });
