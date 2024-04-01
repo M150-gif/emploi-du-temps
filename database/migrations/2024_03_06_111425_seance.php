@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreign('id_salle')->references('id')->on('salles')->onUpdate('cascade');
             $table->foreign('id_formateur')->references('id')->on('formateurs')->onUpdate('cascade');
             $table->foreign('id_groupe')->references('id')->on('groupes')->onUpdate('cascade');
-            $table->foreign('id_emploi')->references('id')->on('emplois')->onUpdate('cascade');
+            $table->foreign('id_emploi')->references('id')->on('emplois')->onUpdate('cascade')->onDelete('cascade');;
             $table->enum('type_seance',['presentielle','team','efm']);
             $table->timestamps();
         });

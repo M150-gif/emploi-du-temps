@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\module;
 use App\Models\formateur;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,8 @@ class gerer_formateur extends Controller
 {
     public function showGererFormateur(){
         $formateurs = formateur::paginate(121111111);
-        return view('gererFormateur',compact('formateurs'));
+        $modules = module::paginate(111111112);
+        return view('gererFormateur',compact('formateurs','modules'));
     }
     public function addFormateur(Request $request){
     // Validate the incoming request data
@@ -44,5 +46,6 @@ class gerer_formateur extends Controller
         return redirect()->route('showGereFormateur');
     }
 
+   
 
 }

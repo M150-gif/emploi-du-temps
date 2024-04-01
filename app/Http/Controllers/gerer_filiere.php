@@ -18,7 +18,9 @@ class gerer_filiere extends Controller
     public function addFiliere(Request $request){
          // Validate the incoming request data
     $validatedData = $request->validate([
-        'nom_filier' => 'required|string|max:255', // Adjust validation rules as needed
+        'nom_filier' => 'required|string|max:255',
+        'niveau_formation' => 'required|string|max:255', // Adjust validation rules as needed
+        'mode_formation' => 'required|string|max:255'
         // Add more validation rules for other form fields if necessary
     ]);
 
@@ -35,7 +37,9 @@ class gerer_filiere extends Controller
     }
     public function updateFiliere(Request $request,filiere $filiere){
         $validatedData = $request->validate([
-            'nom_filier' => 'required', // Adjust validation rules as needed
+            'nom_filier' => 'required',
+            'niveau_formation' => 'required|string|max:255', // Adjust validation rules as needed
+            'mode_formation' => 'required|string|max:255' // Adjust validation rules as needed
             // Add more validation rules for other form fields if necessary
         ]);
         $filiere->fill($validatedData)->save();

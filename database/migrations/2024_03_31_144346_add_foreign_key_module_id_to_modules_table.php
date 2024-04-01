@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('seances', function (Blueprint $table) {
-            $table->dropForeign(['id_emploi']);
-            $table->foreign('id_emploi')
-          ->references('id')->on('emplois')
-          ->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('module_id')->nullable();
+
+            $table->foreign('module_id')
+                  ->references('id')
+                  ->on('modules')
+                  ->onDelete('set null'); // Define the desired foreign key behavior
         });
     }
 
@@ -25,7 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('seances', function (Blueprint $table) {
-            //
+            $table->dropForeign(['module_id']);
+            $table->dropColumn('module_id');
         });
     }
 };

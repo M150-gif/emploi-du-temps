@@ -11,6 +11,8 @@ class filiere extends Model
     use HasFactory;
     protected $fillable=[
         'nom_filier',
+        'niveau_formation',
+        'mode_formation',
         'id'
     ];
     public function groupe():HasMany

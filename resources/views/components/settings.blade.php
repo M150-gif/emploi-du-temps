@@ -1,4 +1,4 @@
-@props(['widthUser','widthFormateur','widthFiliere','widthGroupe','widthSemaine','widthSalle'])
+@props(['widthUser','widthFormateur','widthFiliere','widthGroupe','widthSemaine','widthSalle','widthModule','widthFM'])
 <div class="container" style="background-color: white; border-radius: 13px">
     <div class="row p-3">
         <!-- Sidebar -->
@@ -14,6 +14,8 @@
                             ['route' => 'gererGroupe', 'name' => 'GererGroupes', 'text' => 'Gérer les groupes', 'width' => $widthGroupe ?? '100%'],
                             ['route' => 'gererSemaine', 'name' => 'GererSemaines', 'text' => 'Gérer les semaines', 'width' => $widthSemaine ?? '100%'],
                             ['route' => 'gererSalle', 'name' => 'GererSalles', 'text' => 'Gérer les salles', 'width' => $widthSalle ?? '100%'],
+                            ['route' => 'gererModule', 'name' => 'GererModules', 'text' => 'Gérer les modules', 'width' => $widthModule ?? '100%'],
+                            ['route' => 'gererFormateurModule', 'name' => 'GererFormateurModules', 'text' => 'Gérer les formateurs - modules', 'width' => $widthFM ?? '100%'],
                         ];
                     @endphp
                     @foreach ($buttons as $button)

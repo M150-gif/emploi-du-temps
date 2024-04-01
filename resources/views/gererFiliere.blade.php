@@ -9,6 +9,8 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Niveau de formation</th>
+                                    <th scope="col">Mode de formation</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -17,6 +19,8 @@
                                 <tr>
                                     <th scope="row">{{$filiere->id}}</th>
                                     <td>{{$filiere->nom_filier}}</td>
+                                    <td>{{$filiere->niveau_formation}}</td>
+                                    <td>{{$filiere->mode_formation}}</td>
                                     <td>
                                         <div class="d-flex">
                                             <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#updateModal{{$filiere->id}}">Update</button>
@@ -58,7 +62,24 @@
                         <label for="nom_filier{{$filiere->id}}" class="form-label">Nom de filière</label>
                         <input type="text" class="form-control border" style="padding: 5px;" id="nom_filier{{$filiere->id}}" name="nom_filier" value="{{$filiere->nom_filier}}">
                     </div>
+                    <select class="form-select border mb-3"  style="padding:5px" aria-label="Select niveau de formation" name="niveau_formation">
+                       <option value="{{$filiere->niveau_formation}}">{{$filiere->niveau_formation}}</option>
+                       <option value="TS">TECHNICIEN SPECIALISE</option>
+                       <option value="T">TECHNICIEN</option>
+                       <option value="Q">QUALIFICATION</option>
+                       <option value="BP">BAC PRO</option>
+                       <!-- Add options dynamically from your data source -->
+                   </select>
+                   <!-- Add select for mode de formation -->
+                   <select class="form-select border me-2" style="padding:5px"  aria-label="Select mode de formation" name="mode_formation">
+                       <option value="{{$filiere->mode_formation}}">{{$filiere->mode_formation}}</option>
+                       <option value="FH">FORMATION HYBRIDE</option>
+                       <option value="FR">FORMATION RESIDENTIELLE</option>
+                       <option value="FPA">FORMATION PAR ALTERNANCE</option>
+                       <!-- Add options dynamically from your data source -->
+                   </select>
                 </div>
+                 <!-- Add select for niveau de formation -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Save changes</button>
@@ -85,11 +106,29 @@
                     @csrf <!-- Include CSRF token for Laravel forms -->
                     <div class="input-group mb-3">
                         <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter nom de filière" aria-label="Enter nom de filière" aria-describedby="name-addon" name="nom_filier">
+                        <!-- Add select for niveau de formation -->
+                        <select class="form-select border me-2" style="height: 40px; width: 200px; padding: 5px;" aria-label="Select niveau de formation" name="niveau_formation">
+                            <option value="">Select niveau de formation</option>
+                            <option value="TS">TECHNICIEN SPECIALISE</option>
+                            <option value="T">TECHNICIEN</option>
+                            <option value="Q">QUALIFICATION</option>
+                            <option value="BP">BAC PRO</option>
+                            <!-- Add options dynamically from your data source -->
+                        </select>
+                        <!-- Add select for mode de formation -->
+                        <select class="form-select border me-2" style="height: 40px; width: 200px; padding: 5px;" aria-label="Select mode de formation" name="mode_formation">
+                            <option value="">Select mode de formation</option>
+                            <option value="FH">FORMATION HYBRIDE</option>
+                            <option value="FR">FORMATION RESIDENTIELLE</option>
+                            <option value="FPA">FORMATION PAR ALTERNANCE</option>
+                            <!-- Add options dynamically from your data source -->
+                        </select>
                         <button style="border-top-left-radius:5px;border-bottom-left-radius:5px" class="btn btn-success me-2" type="submit" id="button-addon2">Ajouter</button>
                         <button class="btn btn-danger" style="border-top-left-radius:5px;border-bottom-left-radius:5px;" type="button" id="cancelButton">Cancel</button>
                     </div>
                 </form>
             `);
+
 
             // Add event listener to the cancel button
             document.getElementById("cancelButton").addEventListener("click", function() {

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\salle;
 use App\Models\emploi;
 use App\Models\groupe;
+use App\Models\module;
 use App\Models\seance;
 use App\Models\filiere;
 use App\Models\formateur;
 use Illuminate\Http\Request;
+use App\Models\FormateurModule;
 
 class gerer_emploi extends Controller
 {
@@ -43,7 +45,6 @@ class gerer_emploi extends Controller
             foreach($seances as $seance){
                 seance::create([
                     "day"=>$seance->day,
-                    "partie_jour"=>$seance->partie_jour,
                     "order_seance"=>$seance->order_seance,
                     "date_debut"=>$seance->date_debut,
                     "date_fin"=>$seance->date_fin,
@@ -63,11 +64,13 @@ class gerer_emploi extends Controller
         $emplois= emploi::orderBy('date_debu','desc')->get();
         $groupes=groupe::all();
         $salles=salle::all();
-        $filieres = filiere::all();
-        $id_emploi=$derniereEmploi->id;
+        $id_emploi="";
+        if($derniereEmploi){
+            $id_emploi =$derniereEmploi->id;
+        }
         $seances = seance::where('id_emploi', $id_emploi)->get();
-        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles','filieres'));
-
+        $filieres = filiere::all();
+        return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles', 'filieres'));
     }
     public function afficher_emploi_par_groupes(){
         $derniereEmploi = emploi::latest()->first();
@@ -75,14 +78,21 @@ class gerer_emploi extends Controller
         $emplois= emploi::orderBy('date_debu','desc')->get();
         $groupes=groupe::all();
         $salles=salle::all();
-        $id_emploi=$derniereEmploi->id;
+        $id_emploi="";
+        if($derniereEmploi){
+            $id_emploi =$derniereEmploi->id;
+        }
         $seances = seance::where('id_emploi', $id_emploi)->get();
         return view('emplois_groupes',compact("formateurs",'emplois','id_emploi','seances','groupes','salles'));
     }
     public function afficher_emploi_par_formateur(Request $request){
+        $filieres = filiere::all();
         $formateurId = $request->input('formateur_id');
         $derniereEmploi = emploi::latest()->first();
-        $id_emploi = $derniereEmploi->id;
+        $id_emploi="";
+        if($derniereEmploi){
+            $id_emploi =$derniereEmploi->id;
+        }
         $groupes = groupe::all();
         $formateurs = formateur::all();
         $salles = salle::all();
@@ -98,16 +108,25 @@ class gerer_emploi extends Controller
         if ($selectedFormateur) {
             $seances = seance::where('id_emploi', $id_emploi)
                 ->where('id_formateur', $formateurId)
+                ->with('module')
                 ->get();
+                $modules = FormateurModule::where('formateur_id', $selectedFormateur->id)
+                ->where('status', 'oui')
+                ->with('module')
+                ->get();
+        }else{
+            $modules = [];
         }
-
-        return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur'));
+        return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur','filieres','modules'));
     }
     public function afficher_emploi_par_groupe(Request $request)
 {
     $groupeId = $request->input('groupe_id');
     $derniereEmploi = emploi::latest()->first();
-    $id_emploi = $derniereEmploi->id;
+    $id_emploi="";
+        if($derniereEmploi){
+            $id_emploi =$derniereEmploi->id;
+        }
     $groupes = groupe::all();
     $formateurs = formateur::all();
     $salles = salle::all();
@@ -142,6 +161,43 @@ class gerer_emploi extends Controller
         $emploi->delete(); // Delete the emploi
         return redirect()->route('gererSemaine'); // Redirect to the desired route
     }
+
+    public function afficher_emploi_par_filiere(Request $request){
+        $filieres = Filiere::all();
+        $derniereEmploi = Emploi::latest()->first();
+        $formateurs = Formateur::all();
+        $emplois = Emploi::orderBy('date_debu','desc')->get();
+        $salles = Salle::all();
+        $niveaux = Groupe::select('niveau')->distinct()->pluck('niveau');
+
+        // Filter groups based on the selected filiere
+        $filiere_id = $request->input('filiere_id');
+        $niveau = $request->input('niveau');
+        if ($filiere_id && $niveau) {
+            $groupes = Groupe::where('filiere_id', $filiere_id)
+                             ->where('niveau', $niveau)
+                             ->get();
+        } elseif ($filiere_id) {
+            $groupes = Groupe::where('filiere_id', $filiere_id)
+                             ->get();
+        } elseif ($niveau) {
+            $groupes = Groupe::where('niveau', $niveau)
+                             ->get();
+        } else {
+            $groupes = Groupe::all();
+        }
+
+        $id_emploi = $derniereEmploi->id;
+        $seances = Seance::where('id_emploi', $id_emploi)->get();
+
+        $selectedFiliereId = $request->input('filiere_id');
+        $selectedNiveauId = $request->input('niveau');
+        return view('emploi_filiere', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'filieres', 'niveaux', 'selectedFiliereId', 'selectedNiveauId'));
+
+
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */

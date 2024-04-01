@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('seances', function (Blueprint $table) {
-            $table->dropForeign(['id_emploi']);
-            $table->foreign('id_emploi')
-          ->references('id')->on('emplois')
-          ->onDelete('cascade');
+        Schema::table('filieres', function (Blueprint $table) {
+            $table->string('mode_formation')->nullable();
         });
     }
 
@@ -24,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('seances', function (Blueprint $table) {
-            //
+        Schema::table('filieres', function (Blueprint $table) {
+            $table->dropColumn('mode_formation');
         });
     }
 };

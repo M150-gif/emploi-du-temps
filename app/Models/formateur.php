@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\seance;
@@ -20,8 +20,10 @@ class formateur extends Model
     {
        return $this->hasMany(seance::class, 'id_formateur', 'id');
     }
-    public function modules():HasMany
+    public function modules(): BelongsToMany
     {
-        $this->hasMany(modules::class);
+        return $this->belongsToMany(Module::class)
+            ->withPivot('status') // Include the pivot column 'status'
+            ->withTimestamps();   // Include the pivot timestamps (if needed)
     }
 }

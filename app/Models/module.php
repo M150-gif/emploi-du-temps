@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\seance;
+use App\Models\formateur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class module extends Model
 {
@@ -11,11 +14,24 @@ class module extends Model
     protected $fillable=[
         'nom_module',
         'intitule',
-        'masse horaire',
+        'masse_horaire',
         'formateur_id',
+        'active',
     ];
     public function formateur():BelongsTo
     {
-        $this->belongsTo(formateur::class);
+        return $this->belongsTo(formateur::class);
     }
+    public function seance(): HasMany
+    {
+        return $this->hasMany(Seance::class);
+    }
+
+    public function formateurs(): BelongsToMany
+    {
+        return $this->belongsToMany(Formateur::class)
+            ->withPivot('status')  // Include the pivot column 'status'
+            ->withTimestamps();    // Include the pivot timestamps (if needed)
+    }
+    
 }

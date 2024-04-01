@@ -39,8 +39,8 @@ $seances_order=['s1','s2','s3','s4'];
                 @foreach ($jours as $jour)
                     @foreach ($seances_order as $seance_order)
                         @php
-                            $seance = $seances->first(function($item) use ($jour, $part, $seance_order, $groupe) {
-                                return $item->day === $jour && $item->partie_jour === $part && $item->order_seance === $seance_order && $item->id_groupe == $groupe->id;
+                            $seance = $seances->first(function($item) use ($jour, $seance_order, $groupe) {
+                                return $item->day === $jour && $item->order_seance === $seance_order && $item->id_groupe == $groupe->id;
                             });
                         @endphp
                         @php

@@ -15,20 +15,26 @@ class gerer_seance extends Controller
      */
     public function ajouter_seance(Request $request)
 {
-    $validate = $request->validate([
+    // dd($request);
+    // Validate the incoming request data
+    $validatedData = $request->validate([
         "day" => "required",
-        "partie_jour" => "required",
         "order_seance" => "required",
         "type_seance" => "required",
         "id_salle" => "required",
         "id_groupe" => "required",
         "id_emploi" => "required",
         "id_formateur" => "required",
+        "module_id" => "", // Ensure module_id exists in the modules table
     ]);
 
-    $seance = Seance::create($validate);
-    return back()->with('success', 'Séance créée avec succès');
+    // Create a new Seance instance with the validated data
+    $seance = Seance::create($validatedData);
+
+    // Redirect back with success message
+    return back();
 }
+
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +45,8 @@ class gerer_seance extends Controller
                 "seance_id"=>"required",
                 "id_groupe"=>"required",
                 "id_salle"=>"required",
-                "type_seance"=>"required"
+                "type_seance"=>"required",
+                "module_id" => "",
         ]);
         $seance=seance::find($request->seance_id);
         if(!$seance){
@@ -53,6 +60,9 @@ class gerer_seance extends Controller
         }
         if($seance->type_seance != $request->type_seance){
             $seance->type_seance = $request->type_seance;
+        }
+        if($seance->module_id != $request->module_id){
+            $seance->module_id = $request->module_id;
         }
         $seance->save();
         return back()->with("success update!");

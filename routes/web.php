@@ -1,16 +1,18 @@
 <?php
 
+use App\Models\module;
 use App\Http\Controllers\pages;
 use App\Http\Controllers\gerer_user;
 use App\Http\Controllers\gerer_salle;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\gerer_emploi;
 use App\Http\Controllers\gerer_groupe;
+use App\Http\Controllers\gerer_module;
 use App\Http\Controllers\gerer_seance;
-
 use App\Http\Controllers\gerer_filiere;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\gerer_formateur;
+use App\Http\Controllers\gerer_formateur_module;
 use App\Http\Controllers\masterController;
 /*
 |--------------------------------------------------------------------------
@@ -23,20 +25,17 @@ use App\Http\Controllers\masterController;
 |formateursa jouter_groupe modifier_seance
 */
 
-// Route::get("/",[pages::class,'home']);
-// Route::get("/groupes",[pages::class,'groupes'])->name('groupes');
-// Route::get("/formateurs",[pages::class,'afficher_formateurs']);
-// Route::post("/ajouter_emploi",[gerer_emploi::class,'ajouter_emploi'])->name('ajouter_emploi');
-// Route::post("/ajouter_seance",[gerer_seance::class,'ajouter_seance'])->name('ajouter_seance');
-// Route::post("/modifier_seance",[gerer_seance::class,'modifier_seance'])->name('modifier_seance');
-// Route::post("/modifier_seance_groupe",[gerer_seance::class,'modifier_seance_groupe'])->name('modifier_seance_groupe');
-// Route::post("/supprimer_seance",[gerer_seance::class,'supprimer_seance'])->name('supprimer_seance');
-// Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
-// Route::post("/ajouter_groupe",[gerer_groupe::class,'ajouter_groupe'])->name('ajouter_groupe');
-// Route::post("/afficher_emploi",[pages::class,'afficher_emploi'])->name('afficher_emploi');
-
-
-
+Route::get("/", [pages::class, 'home']);
+Route::get("/groupes", [pages::class, 'groupes'])->name('groupes');
+Route::get("/formateurs", [pages::class, 'afficher_formateurs']);
+Route::post("/ajouter_emploi", [gerer_emploi::class, 'ajouter_emploi'])->name('ajouter_emploi');
+Route::post("/ajouter_seance", [gerer_seance::class, 'ajouter_seance'])->name('ajouter_seance');
+Route::post("/modifier_seance", [gerer_seance::class, 'modifier_seance'])->name('modifier_seance');
+Route::post("/modifier_seance_groupe", [gerer_seance::class, 'modifier_seance_groupe'])->name('modifier_seance_groupe');
+Route::post("/supprimer_seance", [gerer_seance::class, 'supprimer_seance'])->name('supprimer_seance');
+Route::get('/afficher-afficher_emploi_par_id/{id_emploi}', [pages::class, 'afficher_emploi_par_id'])->name('afficher_emploi_par_id');
+Route::post("/ajouter_groupe", [gerer_groupe::class, 'ajouter_groupe'])->name('ajouter_groupe');
+Route::post("/afficher_emploi", [pages::class, 'afficher_emploi'])->name('afficher_emploi');
 
 // -------------------------------------------
 // -------------------------------------------
@@ -52,6 +51,19 @@ Route::middleware('auth')->group(function () {
         Route::post("/modifier_seance_groupe", 'modifier_seance_groupe')->name('modifier_seance_groupe');
         Route::post("/supprimer_seance", 'supprimer_seance')->name('supprimer_seance');
     });
+
+    // MODULES ///////////////////////////////////////////////////////////////////////////////////
+
+    Route::controller(gerer_module::class)->group(function () {
+
+        Route::prefix('/gererModule')->group(function(){
+            Route::get('/','gererModule')->name('gererModule');
+            Route::post('/addModule','addModule')->name('addModule');
+            Route::delete('/{module}','deleteModule')->name('deleteModule');
+            Route::post('/{module}/activate','activate')->name('module.activate');
+            Route::post('/{module}/deactivate','deactivate')->name('module.deactivate');
+        });
+    });
     // FORMATEUR ///////////////////////////////////////////////////////////////////////////////////
     Route::controller(gerer_formateur::class)->group(function () {
 
@@ -61,6 +73,17 @@ Route::middleware('auth')->group(function () {
             Route::post('/addFormateur', 'addFormateur')->name('addFormateur');
             Route::delete('/{formateur}', 'deleteFormateur')->name('deleteFormateur');
             Route::put('/updateFormateur/{formateur}', 'updateFormateur')->name('updateFormateur');
+        });
+    });
+    // gerer_formateur_module ///////////////////////////////////////////////////////////////////////////////////
+
+    Route::controller(gerer_formateur_module::class)->group(function(){
+        Route::prefix('gerer_formateur_module')->group(function(){
+            Route::get('/','gererFormateurModule')->name('gererFormateurModule');
+            Route::post('/assign-modules', 'assignModules')->name('assignModules');
+            Route::get('/statusModules','statusModules')->name('statusModules');
+            Route::post('formateur-module/{id}/status', 'changeStatus')->name('formateurModule.changeStatus');
+
         });
     });
     // SALLE ///////////////////////////////////////////////////////////////////////////////////
@@ -120,11 +143,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/emplois_groupes', 'afficher_emploi_par_groupes')->name('emplois_groupes');
         Route::get('/emplois_formateur', 'afficher_emploi_par_formateur')->name('emploi_formateur');
         Route::get('/emploi_groupe', 'afficher_emploi_par_groupe')->name('emploi_groupe');
+        Route::get('/emploi_filiere', 'afficher_emploi_par_filiere')->name('emploi_filiere');
+        Route::get('/fetch-groups','fetchGroups')->name('fetch-groups');
+
+
     });
 });
-
-
-
 Route::controller(masterController::class)->group(function () {
     Route::middleware('auth')->group(function () {
         Route::prefix('/')->group(function () {
@@ -132,7 +156,6 @@ Route::controller(masterController::class)->group(function () {
             Route::get('/backup', 'showBackUp')->name('showBackUp');
             Route::match(['get', 'post'], '/bp', 'backup')->name('backup');
             Route::get('/filter-groups', 'filterGroups')->name('filter.groups');
-
 
             Route::prefix('/settings')->group(function () {
             });
@@ -157,3 +180,12 @@ Route::controller(authController::class)->group(function () {
 });
 // -------------------------------------------
 // -------------------------------------------
+// api_get
+Route::controller(api_get_gerer_emploi::class)->group(function(){
+    Route::prefix('api_get')->group(function () {
+        Route::get('/emplois_formateur', 'afficher_emploi_par_formateur')->name('api_get_emplois_formateur');
+        Route::get('/afficher_message', 'afficher_message')->name('afficher_message');
+
+    });
+
+});

@@ -7,12 +7,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  {{-- file excel --}}
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.css"/>
-  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.js"></script>
-  {{-- file excel --}}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{-- file excel --}}
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.css" />
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.js"></script>
+    {{-- file excel --}}
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/masterAssets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/masterAssets/img/favicon.png') }}">
@@ -36,6 +38,7 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+
     <style>
         /* Custom CSS for buttons */
         .modal-content button {
@@ -138,6 +141,15 @@
                         <span class="nav-link-text ms-1 ">Par Groupe</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-info {{ $path == '/emploi_filiere' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_filiere') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10 text-info"></i>
+                        </div>
+                        <span class="nav-link-text ms-1 ">Par Filiere</span>
+                    </a>
+                </li>
+
                 <hr class="horizontal light mt-0 mb-2">
                 <div class="sidenav-footer  w-100">
                     <div class="mx-3">
@@ -190,13 +202,37 @@
     <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script>
-    <script></script>
+        <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const sidebar = document.getElementById('sidenav-main');
+    const mainContent = document.querySelector('.main-content');
+    const divInsideMaster = document.querySelector('x-master > div');
 
+    toggleSidebarBtn.addEventListener('click', function () {
+        sidebar.classList.toggle('toggle-sidebar');
+        if (sidebar.classList.contains('toggle-sidebar')) {
+            toggleSidebarBtn.style.left = '-20px'; // Slide the button to the left when the sidebar is toggled
+            mainContent.style.width = '100%'; // Expand the main content to full width when the sidebar is hidden
+            divInsideMaster.style.width = '100%'; // Expand the div inside x-master to full width when the sidebar is hidden
+            document.body.style.overflowY = 'hidden'; // Hide the body scrollbar
+            document.body.style.overflowX = 'auto'; // Allow horizontal scrolling in the body
+        } else {
+            toggleSidebarBtn.style.left = '235px'; // Slide the button back to its original position
+            mainContent.style.width = ''; // Reset the width of the main content to its default value
+            divInsideMaster.style.width = ''; // Reset the width of the div inside x-master to its default value
+            document.body.style.overflowY = 'auto'; // Allow scrolling in the body
+            document.body.style.overflowX = 'hidden'; // Hide horizontal scrolling in the body
+        }
+    });
+});
+
+    </script>
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
-    <script src="{{asset('assets/bootstrap/jquery.min.js')}}"></script>
-    <script src="{{asset('assets/bootstrap/popper.min.js')}}"></script>
-    <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
 </body>
+
 </html>
 
