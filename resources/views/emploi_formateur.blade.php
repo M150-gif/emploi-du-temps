@@ -3,7 +3,7 @@ $jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 $seances_order = ['s1', 's2', 's3', 's4'];
 @endphp
 <x-master title="emplois_formateurs">
-    <div style="overflow-x: auto; overflow-y: auto; max-height: 85vh;border-radius:10px">
+    <div style=" max-height: 85vh;border-radius:10px">
         <select id="formateurSelect" class="form-select mb-3" aria-label="Default select example">
             <option value="">Choisissez un formateur</option>
             @foreach($formateurs as $formateur)
@@ -12,25 +12,28 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                 </option>
             @endforeach
         </select>
-
+<style>
+    .s{
+        border-bottom: 1px solid black !important;
+    }
+</style>
 
         <!-- Display the selected formateur's row -->
         @if($selectedFormateur)
-        <table class="table table-dark table-striped-columns">
+        <table class="table border border-dark  border-4">
             <tr>
-                <th style="text-align:center">Heure</th>
-                <th rowspan="2"></th>
+                <th class="text-black border-4" style="text-align:center" colspan="2" >Heure</th>
                 @foreach ($seances_order as $seance_order)
-                    <th rowspan="2">{{ $seance_order }}</th>
+                    <th rowspan="2" class="border border-dark bg-grey text-black border-4">{{ $seance_order }}</th>
                 @endforeach
             </tr>
-            <tr>
-                <th style="text-align:center">Jour</th>
+            <tr class="border-4">
+                <th style="text-align:center"  class="border border-dark bg-grey text-black border-4">Jour</th>
             </tr>
             @foreach ($jours as $jour)
-                <tr>
-                    <th rowspan="3">{{ $jour }}</th>
-                    <th>Groupe</th>
+                <tr >
+                    <th rowspan="3" class="border border-dark bg-grey text-black border-4">{{ $jour }}</th>
+                    <th class="s border-end boredr-start border-bottom-0 border-dark bg-grey text-black border-4">Groupe</th>
                     @foreach ($seances_order as $seance_order)
                         @php
                             $seance = $seances->first(function($item) use ($jour, $seance_order, $selectedFormateur) {
@@ -40,17 +43,17 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                             $modalId_ajouter = $jour.'_'. $seance_order . '_' .$selectedFormateur->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                            <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                            <td class="cellule border-end border-dark bg-grey text-black" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                 <span>{{ $seance->groupe->nom_groupe }}</span>
                             </td>
                         @else
-                            <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                            <td class="cellule border-end border-start border-bottom-0 border-dark bg-grey text-black border-4" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
                     @endforeach
                 </tr>
                 <tr>
-                    <th>Module</th>
+                    <th class="s border border-top-0 border-bottom-0 border-dark bg-grey text-black border-4">Module</th>
                     @foreach ($seances_order as $seance_order)
                         @php
                             $seance = $seances->first(function($item) use ($jour, $seance_order, $selectedFormateur) {
@@ -60,22 +63,22 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                             $modalId_ajouter = $jour.'_'. $seance_order . '_' .$selectedFormateur->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                            <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                            <td class="cellule border border-dark bg-grey text-black" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                 @if ($seance->module_id)
-                                    <span>{{$seance->module->intitule}}</span>
+                                    <span class="border border-dark bg-grey text-black">{{$seance->module->intitule}}</span>
                                 @else
                                     <span>M</span>
                                 @endif
                                 {{-- <span>{{$seance->type_seance}}</span> --}}
                             </td>
                         @else
-                            <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                            <td class="cellule border-end border-start border-top-0 border-bottom-0  border-dark bg-grey text-black border-4" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
                     @endforeach
                 </tr>
                 <tr>
-                    <th>Salle</th>
+                    <th class="border-end border-start border-top-0 border-bottom-0 border-dark bg-grey text-black border-4">Salle</th>
                     @foreach ($seances_order as $seance_order)
                         @php
                             $seance = $seances->first(function($item) use ($jour, $seance_order, $selectedFormateur) {
@@ -85,11 +88,11 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                             $modalId_ajouter = $jour.'_'. $seance_order . '_' .$selectedFormateur->id.'_'."ajouter";
                         @endphp
                         @if($seance)
-                            <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                            <td class="cellule border border-dark bg-grey text-black" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                 <span>{{ $seance->salle->nom_salle }}</span>
                             </td>
                         @else
-                            <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                            <td class="cellule border-end boredr-start border-top-0 border-dark bg-grey text-black border-4" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
 
@@ -280,4 +283,23 @@ $seances_order = ['s1', 's2', 's3', 's4'];
             window.location.href = "{{route('emploi_formateur')}}" + "?formateur_id=" + formateurId;
         }
     });
+</script>
+<script>
+function saveScrollPosition(event) {
+    // Get the coordinates of the clicked TD element
+    const tdRect = event.target.getBoundingClientRect();
+    const tdTop = tdRect.top + window.pageYOffset;
+
+    // Store the coordinates in localStorage
+    localStorage.setItem('scrollPosition', tdTop);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if there are saved coordinates in localStorage
+    const scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+        // Scroll to the saved position
+        window.scrollTo(0, scrollPosition);
+    }
+});
 </script>

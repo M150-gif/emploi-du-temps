@@ -229,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
     </script>
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
 </body>
