@@ -20,24 +20,33 @@
                 @endforeach
             </select>
         </form>
+        <style>
+            .s{
+                border-bottom: 1px solid black !important;
+            }
+            .d{
+                border-bottom:  4px solid #344767 !important;
+
+            }
+        </style>
     </div>
-    <table id="emploiTable" class="table table-dark table-striped-columns">
+    <table id="emploiTable" class="table border border-dark  border-4">
         <tr>
-            <th colspan="2">HEURE</th>
+            <th class="text-black  border-4" style="text-align:center" colspan="2" >HEURE</th>
             @foreach ($seances_order as $time)
-                <th rowspan="2">{{$time}}</th>
+                <th rowspan="2" class="border border-dark bg-grey text-black border-4">{{$time}}</th>
             @endforeach
         </tr>
         <tr>
-            <th>JOUR</th>
-            <th>GROUPE</th>
+            <th class="border border-dark bg-grey text-black border-4">JOUR</th>
+            <th class="border border-dark bg-grey text-black border-4">GROUPE</th>
         </tr>
         @foreach ($jours as $jour)
             <tr>
-                <th rowspan="{{ count($groupes) + 1 }}">{{$jour}}</th>
+                <th rowspan="{{ count($groupes) + 1 }}" class="border border-dark bg-grey text-black border-4">{{$jour}}</th>
                 @foreach ($groupes as $groupe)
                     <tr>
-                        <td>{{$groupe->nom_groupe}}</td>
+                        <td class="s border-end border-start border-top-0 border-dark bg-grey text-black border-4 {{ $loop->last ? 'd' : '' }}">{{$groupe->nom_groupe}}</td>
                         @foreach ($seances_order as $seance_order)
                             @php
                                 $seance = $seances->first(function($item) use ($jour, $seance_order, $groupe) {
@@ -49,13 +58,14 @@
                                 $modalId_ajouter = $jour.'_'. $seance_order . '_' .$groupe->id.'_'."ajouter";
                             @endphp
                             @if($seance)
-                                <td class="cellule" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
+                                <td class="cellule text-black border border-dark" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_update}}">
                                     <span>{{ $seance->formateur->name }} {{ $seance->formateur->prenom }}</span> /
                                     {{-- <span>{{ $seance->type_seance }}</span> <br> --}}
                                     <span>{{ $seance->salle->nom_salle }}</span>
                                 </td>
                             @else
-                                <td class="cellule" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'gray' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                                <td class="cellule text-black border border-dark {{  $loop->parent->last? 'd' : '' }}" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+
                                 </td>
                             @endif
                             <!-- form_qui_ajouter_un_seance -->

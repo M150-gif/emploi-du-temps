@@ -46,6 +46,16 @@ class gerer_formateur extends Controller
         return redirect()->route('showGereFormateur');
     }
 
-   
+    public function changeStatusFormateur(Request $request, $id)
+    {
+        $formateur = formateur::findOrFail($id);
+
+        // Toggle the status
+        $formateur->status = $formateur->status === 'oui' ? 'non' : 'oui';
+        $formateur->save();
+
+        return redirect()->back()->with('success', 'Status updated successfully.');
+    }
+
 
 }

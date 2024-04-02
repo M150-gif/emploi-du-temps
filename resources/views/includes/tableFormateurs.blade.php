@@ -8,7 +8,7 @@
         cursor: pointer;
     }
 </style>
-<table class="table border border-info ">
+<table class="table border border-dark ">
     <thead>
         <tr>
             <th rowspan="3" class="border border-info bg-grey text-black">Formateur</th>

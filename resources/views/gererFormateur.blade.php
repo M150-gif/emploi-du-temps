@@ -19,7 +19,19 @@
                                 <th scope="row">{{$formateur->id}}</th>
                                 <td>{{$formateur->name}}</td>
                                 <td>{{$formateur->prenom}}</td>
-                                <td><button type="button" class="btn btn-success">Active</button></td>
+                                <td>
+                                    @if ($formateur->status === 'oui')
+                                        <form action="{{ route('formateur.changeStatus', $formateur->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Deactivate</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('formateur.changeStatus', $formateur->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Activate</button>
+                                        </form>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex">
                                         <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#updateModal{{$formateur->id}}">Update</button>

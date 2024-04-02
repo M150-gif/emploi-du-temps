@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Models\seance;
 use App\Models\formateur;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class module extends Model
 {
@@ -33,5 +35,5 @@ class module extends Model
             ->withPivot('status')  // Include the pivot column 'status'
             ->withTimestamps();    // Include the pivot timestamps (if needed)
     }
-    
+
 }
