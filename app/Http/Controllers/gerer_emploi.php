@@ -168,7 +168,7 @@ class gerer_emploi extends Controller
         $formateurs = Formateur::all();
         $emplois = Emploi::orderBy('date_debu','desc')->get();
         $salles = Salle::all();
-        $niveaux = Groupe::select('niveau')->distinct()->pluck('niveau');
+        $niveaux = Groupe::select('Niveau')->distinct()->pluck('Niveau');
 
         // Filter groups based on the selected filiere
         $filiere_id = $request->input('filiere_id');

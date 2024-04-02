@@ -17,7 +17,6 @@ class seance extends Model
     use HasFactory;
     protected $fillable=[
         'day',
-        'partie_jour',
         'order_seance',
         'id_salle',
         'id_formateur',

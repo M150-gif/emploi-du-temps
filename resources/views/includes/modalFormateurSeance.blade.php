@@ -45,12 +45,12 @@
                                 $groupe_has_no_seance = $groupe->seance->isEmpty();
                             @endphp
                             @if ($groupe_deja_occupe->count() == 0 || $groupe_has_no_seance)
-                                <option value="{{ $groupe->id }}">{{ $groupe->nom_groupe }}
+                                <option value="{{ $groupe->id }}">
+                                    {{ $groupe->nom_groupe }}       
                                 </option>
                             @endif
                         @endforeach
                     </select>
-
                     <select name="id_salle" class="form-select" style="margin-bottom:10px;"
                         aria-label="Default select example">
                         <option selected value="">choisissez la salle</option>
@@ -82,7 +82,7 @@
     </div>
 </div>
 <!--form_qui_update-->
-@if ($seance)
+@if($seance)
     <div class="modal fade" id="{{ $modalId_update }}" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

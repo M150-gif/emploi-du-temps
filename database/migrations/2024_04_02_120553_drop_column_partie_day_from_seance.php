@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->string('active')->nullable();
+        Schema::table('seances', function (Blueprint $table) {
+            $table->dropColumn('partie_jour');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->dropColumn('active');
+        Schema::table('seance', function (Blueprint $table) {
+            //
         });
     }
 };

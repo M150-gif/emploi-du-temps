@@ -14,6 +14,8 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\gerer_formateur;
 use App\Http\Controllers\gerer_formateur_module;
 use App\Http\Controllers\masterController;
+use App\Http\Controllers\api_get\api_get_gerer_emploi;
+use App\Http\Controllers\api_get\filtrer_seance;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,9 +91,7 @@ Route::middleware('auth')->group(function () {
     // SALLE ///////////////////////////////////////////////////////////////////////////////////
 
     Route::controller(gerer_salle::class)->group(function () {
-
         Route::prefix('/gererSalle')->group(function () {
-
             Route::get('/', 'gererSalle')->name('gererSalle');
             Route::post('/addSalle', 'addSalle')->name('addSalle');
             Route::delete('/{salle}', 'deleteSalle')->name('deleteSalle');
@@ -145,8 +145,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/emploi_groupe', 'afficher_emploi_par_groupe')->name('emploi_groupe');
         Route::get('/emploi_filiere', 'afficher_emploi_par_filiere')->name('emploi_filiere');
         Route::get('/fetch-groups','fetchGroups')->name('fetch-groups');
-
-
     });
 });
 Route::controller(masterController::class)->group(function () {
@@ -183,9 +181,13 @@ Route::controller(authController::class)->group(function () {
 // api_get
 Route::controller(api_get_gerer_emploi::class)->group(function(){
     Route::prefix('api_get')->group(function () {
-        Route::get('/emplois_formateur', 'afficher_emploi_par_formateur')->name('api_get_emplois_formateur');
+        Route::get('/emplois_formateur', 'afficher_emploi_par_formateur')->name('afficher_seance_par_formateur');
         Route::get('/afficher_message', 'afficher_message')->name('afficher_message');
-
     });
-
+});
+Route::controller(filtrer_seance::class)->group(function(){
+    Route::prefix('api_get')->group(function () {
+        Route::get('/filtrer_seance', 'afficher_seance_par_formateur')->name('afficher_seance_par_formateur');
+        Route::get('/afficher_message', 'afficher_message')->name('afficher_message');
+    });
 });
