@@ -60,7 +60,8 @@ class gerer_emploi extends Controller
     }
     public function afficher_emploi_par_formateurs(){
         $derniereEmploi = emploi::latest()->first();
-        $formateurs=formateur::all();
+        // $formateurs=formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $emplois= emploi::orderBy('date_debu','desc')->get();
         $groupes=groupe::all();
         $salles=salle::all();
@@ -74,7 +75,8 @@ class gerer_emploi extends Controller
     }
     public function afficher_emploi_par_groupes(){
         $derniereEmploi = emploi::latest()->first();
-        $formateurs=formateur::all();
+        // $formateurs=formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $emplois= emploi::orderBy('date_debu','desc')->get();
         $groupes=groupe::all();
         $salles=salle::all();
@@ -94,7 +96,8 @@ class gerer_emploi extends Controller
             $id_emploi =$derniereEmploi->id;
         }
         $groupes = groupe::all();
-        $formateurs = formateur::all();
+        // $formateurs = formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $salles = salle::all();
 
         // Get the selected formateur
@@ -128,7 +131,8 @@ class gerer_emploi extends Controller
             $id_emploi =$derniereEmploi->id;
         }
     $groupes = groupe::all();
-    $formateurs = formateur::all();
+    // $formateurs = formateur::all();
+    $formateurs = formateur::where('status', 'oui')->get();
     $salles = salle::all();
 
     // Initialize selected groupe variable
@@ -165,7 +169,8 @@ class gerer_emploi extends Controller
     public function afficher_emploi_par_filiere(Request $request){
         $filieres = Filiere::all();
         $derniereEmploi = Emploi::latest()->first();
-        $formateurs = Formateur::all();
+        // $formateurs = Formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $emplois = Emploi::orderBy('date_debu','desc')->get();
         $salles = Salle::all();
         $niveaux = Groupe::select('niveau')->distinct()->pluck('niveau');

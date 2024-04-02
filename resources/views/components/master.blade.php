@@ -153,7 +153,7 @@
                 <hr class="horizontal light mt-0 mb-2">
                 <div class="sidenav-footer  w-100">
                     <div class="mx-3">
-                        <a class="btn btn-outline-info mt-1 w-100 text-info" href={{ route('exporter') }} type="button ">Validé et Exporter</a>
+                        <a class="btn btn-outline-info mt-1 w-100 text-info" href="#" type="button ">Validé et Exporter</a>
                         <a class="btn text-white bg-info w-100" href="{{ route('gererUser') }}"
                             type="button">Settings</a>
                         <!-- Modal -->
