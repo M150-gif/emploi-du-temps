@@ -27,7 +27,8 @@ class masterController extends Controller
         $latestEmploi = Emploi::latest('date_debu')->first();
         $selectedDate = $latestEmploi ? $latestEmploi->date_debu : null;
         $filieres = filiere::all();
-        $formateurs = Formateur::all();
+        // $formateurs = Formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $emplois = Emploi::orderBy('date_debu','desc')->get();
         $groupes = Groupe::all();
         $salles = Salle::all();
@@ -68,7 +69,8 @@ class masterController extends Controller
         }
 
         // Fetch formateurs, groupes, salles
-        $formateurs = Formateur::all();
+        // $formateurs = Formateur::all();
+        $formateurs = formateur::where('status', 'oui')->get();
         $groupes = Groupe::all();
         $salles = Salle::all();
 
@@ -140,8 +142,4 @@ class masterController extends Controller
         return response()->json($filteredGroups);
     }
 
-
-    public function exporter() {
-        return view('exporter');
-    }
 }
