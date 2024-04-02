@@ -111,7 +111,7 @@
                             @endphp
                             @if ($groupe_deja_occupe->count() == 0 || $groupe_has_no_seance)
                                 <option value="{{ $groupe->id }}">
-                                    {{ $groupe->nom_groupe }}       
+                                    {{ $groupe->nom_groupe }}
                                 </option>
                             @endif
                         @endforeach

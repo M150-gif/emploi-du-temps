@@ -109,7 +109,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="modeFormation" class="form-label">Mode de Formation</label>
-                                    <input type="text" name="Mode_de_formation" class="form-control border" id="modeFormation" aria-describedby="emailHelp" placeholder="Enter le mode de formation">
+                                    <select name="Mode_de_formation" class="form-select border" id="modeFormation" aria-label="Default select example">
+                                        <option value="CDJ">CDJ</option>
+                                        <option value="CDS">CDS</option>
+                                    </select>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="niveau" class="form-label">Niveau</label>
@@ -150,7 +154,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateModeFormation" class="form-label">Mode de Formation</label>
-                                    <input type="text" name="Mode_de_formation" class="form-control border" id="updateModeFormation" aria-describedby="emailHelp" placeholder="Enter le mode de formation">
+                                    <select name="Mode_de_formation" class="form-select border" id="updateModeFormation" aria-label="Default select example">
+                                        <option value="CDJ">CDJ</option>
+                                        <option value="CDS">CDS</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateNiveau" class="form-label">Niveau</label>
