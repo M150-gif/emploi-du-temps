@@ -73,6 +73,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/addFormateur', 'addFormateur')->name('addFormateur');
             Route::delete('/{formateur}', 'deleteFormateur')->name('deleteFormateur');
             Route::put('/updateFormateur/{formateur}', 'updateFormateur')->name('updateFormateur');
+            Route::post('formateur/{id}/status', 'changeStatusFormateur')->name('formateur.changeStatus');
+
         });
     });
     // gerer_formateur_module ///////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +158,7 @@ Route::controller(masterController::class)->group(function () {
             Route::get('/backup', 'showBackUp')->name('showBackUp');
             Route::match(['get', 'post'], '/bp', 'backup')->name('backup');
             Route::get('/filter-groups', 'filterGroups')->name('filter.groups');
-            Route::get('/exporter','exporter')->name('exporter');
+
             Route::prefix('/settings')->group(function () {
             });
         });
