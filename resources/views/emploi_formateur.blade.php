@@ -3,7 +3,7 @@ $jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 $seances_order = ['s1', 's2', 's3', 's4'];
 @endphp
 <x-master title="emplois_formateurs">
-    <div style=" max-height: 85vh;border-radius:10px">
+    <div style=" max-height: 85vh;border-radius:10px;">
         <select id="formateurSelect" class="form-select mb-3" aria-label="Default select example">
             <option value="">Choisissez un formateur</option>
             @foreach($formateurs as $formateur)

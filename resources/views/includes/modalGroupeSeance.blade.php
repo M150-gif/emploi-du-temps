@@ -48,6 +48,11 @@
                         <option value="team">team</option>
                         <option value="efm">efm</option>
                     </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="{{$modalId_ajouter}}-stage" onclick="toggleTrClass(this)"/>
+                        <label class="form-check-label" for="{{$modalId_ajouter}}-stage"> Stage </label>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">ajouter seance</button>
                 </form>
             </div>

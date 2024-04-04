@@ -64,3 +64,25 @@ $seances_order=['s1','s2','s3','s4'];
         @endforeach
     </tbody>
 </table>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const main = document.querySelector('.main-content');
+
+    // Check if scroll position is stored in localStorage
+    const storedScrollPosition = JSON.parse(localStorage.getItem('scrollPosition'));
+
+    // Scroll to the stored position if available
+    if (storedScrollPosition) {
+        main.scrollTo(storedScrollPosition.x, storedScrollPosition.y);
+    }
+
+    // Store scroll position when the scroll event occurs
+    main.addEventListener('scroll', function () {
+        const scrollPosition = {
+            x: main.scrollLeft,
+            y: main.scrollTop
+        };
+        localStorage.setItem('scrollPosition', JSON.stringify(scrollPosition));
+    });
+});
+</script>

@@ -6,9 +6,9 @@
 <x-master title="emplois_formateurs">
 
 
-    <div style="max-height: 85vh;">
+    {{-- <div style="max-height: 85vh;overflow:hidden"> --}}
         @include('includes.tableFormateurs')
-    </div>
+    {{-- </div> --}}
 </x-master>
 
 

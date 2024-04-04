@@ -65,7 +65,7 @@
         display: none !important;
     }
     #toggleSidebarBtn{
-        left: 235px;
+        left: 225px;
         top: 50%;
         z-index: 1000;
         rotate: -180deg;
@@ -81,7 +81,7 @@
     <button id="toggleSidebarBtn" class="btn  m-0 position-absolute" ><i class="fs-3 fa-solid fa-arrow-left text-info"></i></button>
 <body class="g-sidenav-show  bg-white-200">
     <aside
-        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-light bg-opacity-50"
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start    bg-gradient-light bg-opacity-50"
         id="sidenav-main">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -164,7 +164,7 @@
                 </div>
             </ul>
     </aside>
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <main class="main-content position-relative max-height-vh-100 max-width-vw-100 h-100 border-radius-lg">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0  shadow-none border-radius-xl fixed-top w-100" id="navbarBlur"
             data-scroll="true" >
@@ -216,20 +216,22 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebar.classList.toggle('toggle-sidebar');
         if (sidebar.classList.contains('toggle-sidebar')) {
             toggleSidebarBtn.style.left = '-20px'; // Slide the button to the left when the sidebar is toggled
-            mainContent.style.width = '100%'; // Expand the main content to full width when the sidebar is hidden
+            mainContent.style.marginLeft = '30px'; // Set the margin-left of main content to 0
             divInsideMaster.style.width = '100%'; // Expand the div inside x-master to full width when the sidebar is hidden
             document.body.style.overflowY = 'hidden'; // Hide the body scrollbar
             document.body.style.overflowX = 'auto'; // Allow horizontal scrolling in the body
         } else {
-            toggleSidebarBtn.style.left = '235px'; // Slide the button back to its original position
-            mainContent.style.width = ''; // Reset the width of the main content to its default value
+            toggleSidebarBtn.style.left = '225px'; // Slide the button back to its original position
+            mainContent.style.marginLeft = '270px'; // Set the margin-left of main content to 235px
             divInsideMaster.style.width = ''; // Reset the width of the div inside x-master to its default value
             document.body.style.overflowY = 'auto'; // Allow scrolling in the body
             document.body.style.overflowX = 'hidden'; // Hide horizontal scrolling in the body
         }
     });
 });
-    </script>
+</script>
+
+
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
 </body>
 
