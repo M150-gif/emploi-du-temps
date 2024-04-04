@@ -26,4 +26,8 @@ class formateur extends Model
             ->withPivot('status') // Include the pivot column 'status'
             ->withTimestamps();   // Include the pivot timestamps (if needed)
     }
+    public function groupes(): BelongsToMany
+    {
+        return $this->belongsToMany(Groupe::class);
+    }
 }

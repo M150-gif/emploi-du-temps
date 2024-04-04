@@ -1,5 +1,5 @@
-<!-- form_qui_ajouter_un_seance -->
-<div class="modal fade" id="{{$modalId_ajouter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- form_qui_ajouter_un_seance -->
+ <div class="modal fade" id="{{$modalId_ajouter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

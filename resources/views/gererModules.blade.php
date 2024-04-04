@@ -10,7 +10,6 @@
                                     <th scope="col">#</th>
                                     <th scope="col">nom</th>
                                     <th scope="col">intitule</th>
-                                    <th scope="col">Masse horaire</th>
                                     {{-- <th scope="col">Formateur</th> --}}
                                     {{-- <th scope="col">Status</th> --}}
                                     <th scope="col">Actions</th>
@@ -22,7 +21,6 @@
                                     <th scope="row">{{$module->id}}</th>
                                     <td>{{$module->nom_module}}</td>
                                     <td>{{$module->intitule}}</td>
-                                    <td>{{$module->masse_horaire}} Heures</td>
                                     {{-- <td>{{$module->formateur_id ? $module->formateur->name : 'N/A'}}</td> --}}
                                     <td>
                                         <div class="d-flex">
@@ -71,7 +69,6 @@
                     <div class="input-group mb-3">
                         <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter nom de Module" aria-label="Enter nom de module" aria-describedby="name-addon" name="nom_module">
                         <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter Intitule" aria-label="Enter Intitule" aria-describedby="name-addon" name="intitule">
-                        <input type="number" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter la masse horaire" aria-label="Enter la masse horaire" aria-describedby="name-addon" name="masse_horaire">
                         <!-- Add select for niveau de formation -->
 
                             <!-- Add options dynamically from your data source -->

@@ -20,7 +20,6 @@ class gerer_module extends Controller
        $validatedData = $request->validate([
            'nom_module' => 'required|string|max:255',
            'intitule' => 'required|string|max:255', // Adjust validation rules as needed
-           'masse_horaire' => 'required|string|max:255',
         //    'formateur_id' => 'required'
            // Add more validation rules for other form fields if necessary
        ]);

@@ -200,15 +200,21 @@
             <!-- Button trigger modal -->
         </div>
     </main>
+
+    <script src="{{ asset('assets/masterAssets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script>
     <!--   Core JS Files   -->
-    <script src="{{asset('bootstrap/jquery.min.js')}}"></script>
+    {{-- <script src="{{asset('bootstrap/jquery.min.js')}}"></script>
     <script src="{{asset('bootstrap/popper.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- <script src="{{ asset('assets/masterAssets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script> -->
+    <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script> --> --}}
         <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script>

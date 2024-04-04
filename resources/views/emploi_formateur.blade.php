@@ -115,40 +115,38 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                                                 value="{{ $seance_order }}">
                                             <input name="id_formateur" type="text" hidden
                                                 value="{{ $selectedFormateur->id }}">
-                                            {{-- <select class="form-select schoolYearSelect" style="margin-bottom:10px;"
-                                                aria-label="Default select example">
-                                                <option selected value="">choisissez une année</option>
-                                                <option value="1">Premier cycle</option>
-                                                <option value="2">Deuxième cycle</option>
-                                                <option value="3">Troisième cycle</option>
-                                            </select> --}}
-                                            <!-- HTML code: Add filiere select -->
-                                            {{-- <select class="form-select filiereSelect" style="margin-bottom:10px;"
-                                                aria-label="Default select example">
-                                                <option selected value="">Choose a filiere</option>
-                                                @foreach ($filieres as $filier)
-                                                    <option value="{{ $filier->id }}">{{ $filier->nom_filier }}
-                                                    </option>
-                                                @endforeach
-                                            </select> --}}
+                                                <select class="form-select filiereSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                                    <option selected value="">Choose a filiere</option>
+                                                    @foreach ($filieres as $filiere)
+                                                        <option value="{{ $filiere->id }}">{{ $filiere->nom_filier }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <select class="form-select schoolYearSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                                    <option selected value="">choisissez une année</option>
+                                                    <option value="1">Premier cycle</option>
+                                                    <option value="2">Deuxième cycle</option>
+                                                    <option value="3">Troisième cycle</option>
+                                                </select>
 
-                                            <select name="id_groupe" class="form-select groupSelect"
-                                                style="margin-bottom:10px;" aria-label="Default select example">
-                                                <option selected value="">choisissez un groupe</option>
-                                                @foreach ($groupes as $groupe)
-                                                    @php
-                                                        $groupe_deja_occupe = $groupe->seance
-                                                            ->where('id_emploi', $id_emploi)
-                                                            ->where('day', $jour)
-                                                            ->where('order_seance', $seance_order);
-                                                        $groupe_has_no_seance = $groupe->seance->isEmpty();
-                                                    @endphp
-                                                    @if ($groupe_deja_occupe->count() == 0 || $groupe_has_no_seance)
-                                                        <option value="{{ $groupe->id }}">{{ $groupe->nom_groupe }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                                <!-- HTML code: Add filiere select -->
+
+                                                <!-- Existing select for groupes -->
+                                                <select name="id_groupe" class="form-select groupSelect" style="margin-bottom:10px;" aria-label="Default select example">
+                                                    <option selected value="">choisissez un groupe</option>
+                                                    @foreach ($groupes as $formateurGroupe)
+                                                        @php
+                                                            $groupe_deja_occupe = $formateurGroupe->groupe->seances
+                                                                ->where('id_emploi', $id_emploi)
+                                                                ->where('day', $jour)
+                                                                ->where('order_seance', $seance_order);
+                                                            $groupe_has_no_seance = $formateurGroupe->groupe->seances->isEmpty();
+                                                        @endphp
+                                                        @if ($groupe_deja_occupe->count() == 0 || $groupe_has_no_seance)
+                                                            <option value="{{ $formateurGroupe->groupe->id }}">{{ $formateurGroupe->groupe->nom_groupe }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+
 
                                             <select name="id_salle" class="form-select" style="margin-bottom:10px;"
                                                 aria-label="Default select example">
@@ -187,86 +185,6 @@ $seances_order = ['s1', 's2', 's3', 's4'];
                                 </div>
                             </div>
                         </div>
-                        {{-- forme qui update --}}
-                        @if ($seance)
-                            <div class="modal fade" id="{{ $modalId_update }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $seance_order }}
-                                            </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('modifier_seance') }}" method="post">
-                                                @csrf
-                                                <input type="text" name="seance_id" value="{{ $seance->id }}" hidden>
-                                                <select name="id_groupe" class="form-select" style="margin-bottom:10px;" aria-label="Default select example">
-                                                    <option selected value="{{ $seance->groupe->id }}">{{ $seance->groupe->nom_groupe }}</option>
-                                                    @foreach ($groupes as $groupe)
-                                                        @php
-                                                            $groupe_deja_occupe = $groupe->seance
-                                                                ->where('id_emploi', '==', $id_emploi)
-                                                                ->where('day', '==', $jour)
-                                                                ->where('order_seance', '==', $seance_order);
-                                                            $groupe_has_no_seance = $groupe->seance->isEmpty();
-                                                        @endphp
-                                                        @if ($groupe_deja_occupe->count() == 0 || $groupe_has_no_seance)
-                                                            <option value="{{ $groupe->id }}">
-                                                                {{ $groupe->nom_groupe }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                <select name="id_salle" class="form-select"
-                                                    style="margin-bottom:10px;" aria-label="Default select example">
-                                                    <option selected value="{{ $seance->salle->id }}">
-                                                        {{ $seance->salle->nom_salle }}</option>
-                                                    @foreach ($salles as $salle)
-                                                        @php
-                                                            $salle_occupe = $salle->seance
-                                                                ->where('id_emploi', '==', $id_emploi)
-                                                                ->where('day', '==', $jour)
-                                                                ->where('order_seance', '==', $seance_order);
-                                                            $salle_has_no_seance = $salle->seance->isEmpty();
-                                                        @endphp
-                                                        @if ($salle_occupe->count() === 0 || $salle_has_no_seance)
-                                                            <option value="{{ $salle->id }}">
-                                                                {{ $salle->nom_salle }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                <select class="form-control" id="module_id" name="module_id">
-                                                    @if (isset($seance->module))
-                                                        <option selected value="{{ $seance->module->id }}">{{ $seance->module->nom_module }}</option>
-                                                    @else
-                                                        <option value="">M</option>
-                                                    @endif
-                                                    <!-- Populate options dynamically based on available modules -->
-                                                    @foreach ($modules as $module)
-                                                        @if (!isset($seance->module) || $module->module_id != $seance->module->id)
-                                                            <option value="{{ $module->module_id }}">{{ $module->module->nom_module }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                <select name="type_seance" class="form-select"
-                                                    style="margin-bottom:10px;" aria-label="Default select example">
-                                                    <option value="presentielle">presentielle</option>
-                                                    <option value="team">team</option>
-                                                    <option value="efm">efm</option>
-                                                </select>
-                                                <button type="submit" class="btn btn-success">update</button>
-                                            </form>
-                                            <form action="{{ route('supprimer_seance') }}" method="post">
-                                                @csrf
-                                                <input type="text" name="seance_id" value="{{ $seance->id }}"
-                                                    hidden>
-                                                <button type="submit" class="btn btn-danger">supprimer</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                     @endforeach
                 </tr>
             @endforeach
@@ -283,23 +201,4 @@ $seances_order = ['s1', 's2', 's3', 's4'];
             window.location.href = "{{route('emploi_formateur')}}" + "?formateur_id=" + formateurId;
         }
     });
-</script>
-<script>
-function saveScrollPosition(event) {
-    // Get the coordinates of the clicked TD element
-    const tdRect = event.target.getBoundingClientRect();
-    const tdTop = tdRect.top + window.pageYOffset;
-
-    // Store the coordinates in localStorage
-    localStorage.setItem('scrollPosition', tdTop);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if there are saved coordinates in localStorage
-    const scrollPosition = localStorage.getItem('scrollPosition');
-    if (scrollPosition) {
-        // Scroll to the saved position
-        window.scrollTo(0, scrollPosition);
-    }
-});
 </script>

@@ -85,10 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('gerer_formateur_module')->group(function(){
             Route::get('/','gererFormateurModule')->name('gererFormateurModule');
             Route::post('/assign-modules', 'assignModules')->name('assignModules');
+            Route::post('/assign-groupes', 'assignGroupes')->name('assignGroupes');
             Route::get('/statusModules','statusModules')->name('statusModules');
             Route::post('formateur-module/{id}/status', 'changeStatus')->name('formateurModule.changeStatus');
+            Route::post('/assign-groupes-modules', 'assignGroupesModules')->name('assignGroupesModules');
 
         });
+        Route::get('/get-modules/{groupeId}', 'getModules');
+        Route::get('/get-all-modules','getAllModules');
+
     });
     // SALLE ///////////////////////////////////////////////////////////////////////////////////
 

@@ -10,6 +10,7 @@ use App\Models\seance;
 use App\Models\filiere;
 use App\Models\formateur;
 use Illuminate\Http\Request;
+use App\Models\FormateurGroupe;
 use App\Models\FormateurModule;
 
 class gerer_emploi extends Controller
@@ -70,6 +71,7 @@ class gerer_emploi extends Controller
             $id_emploi =$derniereEmploi->id;
         }
         $seances = seance::where('id_emploi', $id_emploi)->get();
+        // $seances = $id_emploi ? seance::where('id_emploi', $id_emploi)->get() : collect();
         $filieres = filiere::all();
         return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles', 'filieres'));
     }
@@ -95,7 +97,7 @@ class gerer_emploi extends Controller
         if($derniereEmploi){
             $id_emploi =$derniereEmploi->id;
         }
-        $groupes = groupe::all();
+        // $groupes = groupe::all();
         // $formateurs = formateur::all();
         $formateurs = formateur::where('status', 'oui')->get();
         $salles = salle::all();
@@ -105,9 +107,9 @@ class gerer_emploi extends Controller
         if ($formateurId) {
             $selectedFormateur = formateur::findOrFail($formateurId);
         }
-
         // Get seances data based on selected formateur
         $seances = [];
+        // $seances = seance::all();
         if ($selectedFormateur) {
             $seances = seance::where('id_emploi', $id_emploi)
                 ->where('id_formateur', $formateurId)
@@ -117,9 +119,14 @@ class gerer_emploi extends Controller
                 ->where('status', 'oui')
                 ->with('module')
                 ->get();
+                $groupes = FormateurGroupe::where('formateur_id', $selectedFormateur->id)
+                ->with('groupe')
+                ->get();
         }else{
             $modules = [];
+            $groupes = [];
         }
+        // dd($groupes);
         return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur','filieres','modules'));
     }
     public function afficher_emploi_par_groupe(Request $request)

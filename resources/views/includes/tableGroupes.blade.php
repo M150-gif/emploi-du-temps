@@ -57,15 +57,11 @@ $seances_order=['s1','s2','s3','s4'];
                             <td class="cellule text-info border border-info" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
-<<<<<<< HEAD
+
                           <!-- models -->
-                  @include('includes.modalGroupeSeance')
-=======
-                        @include('includes.modalGroupeSeance')
+                      @include('includes.modalGroupeSeance')
                     @endforeach
->>>>>>> 6aeec6f06ff555f42f8c38e3033b66e99b0492ea
                 @endforeach
-            @endforeach
         </tr>
         @endforeach
     </tbody>

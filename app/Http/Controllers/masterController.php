@@ -91,30 +91,6 @@ class masterController extends Controller
         return view('backup', compact('formateurs', 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'selectedDate', 'selectedType', 'filieres'));
     }
 
-    // public function filterGroups(Request $request)
-    // {
-    //     // Retrieve the school year from the request
-    //     $schoolYear = $request->input('school_year');
-
-    //     // Query the database to retrieve groups based on the provided school year
-    //     $query = Groupe::query()->where('Niveau', $schoolYear);
-
-    //     // Retrieve the filtered groups
-    //     $filteredGroups = $query->get();
-
-    //     // Return the filtered groups as JSON response
-    //     return response()->json($filteredGroups);
-    // }
-    // public function newFormateur(){
-    //     $formateurs = formateur::paginate(1111111);
-    //     return view('newFormateur',compact('formateurs'));
-    // }
-
-
-
-
-
-
 
     public function filterGroups(Request $request)
     {

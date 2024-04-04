@@ -13,18 +13,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class module extends Model
 {
     use HasFactory;
-    protected $fillable=[
+
+    protected $fillable = [
         'nom_module',
         'intitule',
-        'masse_horaire',
         'formateur_id',
-        'active',
     ];
-    public function formateur():BelongsTo
+
+    public function formateur(): BelongsTo
     {
-        return $this->belongsTo(formateur::class);
+        return $this->belongsTo(Formateur::class);
     }
-    public function seance(): HasMany
+
+    public function seances(): HasMany
     {
         return $this->hasMany(Seance::class);
     }
@@ -34,6 +35,11 @@ class module extends Model
         return $this->belongsToMany(Formateur::class)
             ->withPivot('status')  // Include the pivot column 'status'
             ->withTimestamps();    // Include the pivot timestamps (if needed)
+    }
+
+    public function groupes(): BelongsToMany
+    {
+        return $this->belongsToMany(Groupe::class, 'groupe_module');
     }
 
 }
