@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('nom_module')->unique();
             $table->string('intitule');
             $table->string('masse horaire');
-            $table->unsignedBigInteger('formateur_id');
-            $table->foreign('formateur_id')->references('id')->on('formateurs')->onUpdate('cascade');
             $table->timestamps();
         });
     }

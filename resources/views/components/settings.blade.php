@@ -15,7 +15,7 @@
                             ['route' => 'gererSemaine', 'name' => 'GererSemaines', 'text' => 'Gérer les semaines', 'width' => $widthSemaine ?? '100%'],
                             ['route' => 'gererSalle', 'name' => 'GererSalles', 'text' => 'Gérer les salles', 'width' => $widthSalle ?? '100%'],
                             ['route' => 'gererModule', 'name' => 'GererModules', 'text' => 'Gérer les modules', 'width' => $widthModule ?? '100%'],
-                            ['route' => 'gererFormateurModule', 'name' => 'GererFormateurModules', 'text' => 'Gérer les formateurs - modules', 'width' => $widthFM ?? '100%'],
+                            ['route' => 'GroupeModule', 'name' => 'GererFormateurModules', 'text' => 'Gérer les Affectations', 'width' => $widthFM ?? '100%'],
                         ];
                     @endphp
                     @foreach ($buttons as $button)

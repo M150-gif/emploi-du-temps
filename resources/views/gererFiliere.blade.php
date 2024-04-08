@@ -39,6 +39,8 @@
 
                 </div>
                 <div class="col-md-12 text-center mt-3"> <!-- Added Bootstrap classes for centering -->
+                    <a href="{{route('statusFilieres')}}" type="button" class="btn btn-info me-2">Status des Filieres</a> <br>
+                        <!-- Button to open Add Groupe modal -->
                     <a class="btn btn-success col-md-12 ajouter">Ajouter Filière</a> {{--{{route('showAddSalle')}}--}}
                 </div>
             </div>

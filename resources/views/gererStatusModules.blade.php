@@ -4,41 +4,53 @@
             <div class="row">
                 <div style="width: 100%; height: 60vh; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">nom module</th>
-                                    <th scope="col">formateur</th>
-                                    {{-- <th scope="col">Masse horaire</th> --}}
-                                    {{-- <th scope="col">Formateur</th> --}}
-                                    <th scope="col">Status</th>
-                                    {{-- <th scope="col">Actions</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($FormateurModules as $formateurModule)
-                                    <tr>
-                                        <td><strong>{{ $formateurModule->module->nom_module }}</strong></td>
-                                        <td>{{ $formateurModule->formateur->name }}</td>
-                                        <td>
-                                            @if ($formateurModule->status === 'oui')
-                                                <form action="{{ route('formateurModule.changeStatus', $formateurModule->id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger">Deactivate</button>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('formateurModule.changeStatus', $formateurModule->id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success">Activate</button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            <!-- Display Groups Related to Formateur -->
+                            <h6>MODULES:</h6>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Formateur</th>
+                                            <th>Module</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($FormateurModules->groupBy('formateur_id') as $formateurId => $modules)
+                                            @php
+                                                $formateur = $modules->first()->formateur;
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $formateur->name }}</td>
+                                                <td>
+                                                    @foreach ($modules as $module)
+                                                        <div class="d-flex" style="height: 3vh">
+                                                            <div style="width:30vw">
+                                                                {{ $module->module->nom_module }}
+                                                            </div>
+                                                            @if ($module->status === 'oui')
+                                                                <form style="margin-left:20px" action="{{ route('formateurModule.changeStatus', $module->id) }}" method="POST">
+                                                                    @csrf
+                                                                    <button style="width: 110px;height:35px;" type="submit" class="btn btn-danger">Deactivate</button>
+                                                                </form>
+                                                            @else
+                                                                <form style="margin-left:20px" action="{{ route('formateurModule.changeStatus', $module->id) }}" method="POST">
+                                                                    @csrf
+                                                                    <button style="width: 110px;height:35px;" type="submit" class="btn btn-success">Activate</button>
+                                                                </form>
+                                                            @endif
+                                                            <form style="margin-left:20px" action="{{ route('formateurModule.delete', $module->id) }}" method="POST">
 
-                            </tbody>
-
-                        </table>
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button style="width: 85px;height:35px;" type="submit" onclick="return confirm('Voulez-Vous vraiment supprimer le module {{$module->module->nom_module}} de {{$formateur->name}}')" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                        <br>
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                     </div>
 
                 </div>

@@ -17,7 +17,6 @@ class seance extends Model
     use HasFactory;
     protected $fillable=[
         'day',
-        'partie_jour',
         'order_seance',
         'id_salle',
         'id_formateur',
@@ -38,7 +37,7 @@ public function formateur():BelongsTo
         }
         public function emploi():BelongsTo
         {
-            $this->belongsTo(emploi::class,"id_emploi");
+            return $this->belongsTo(emploi::class,"id_emploi");
         }
         public function groupe():BelongsTo
         {

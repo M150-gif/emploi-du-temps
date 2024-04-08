@@ -71,6 +71,17 @@
                                     <td>{{ $groupe->filiere->nom_filier }}</td>
                                     <td>
                                         <div class="d-flex">
+                                            @if ($groupe->stage === 'non')
+                                                <form action="{{ route('groupe.changeStage', $groupe->id) }}" method="POST">
+                                                @csrf
+                                                    <button  type="submit" class="btn btn-success me-2">STAGE</button>
+                                                    </form>
+                                            @else
+                                                <form action="{{ route('groupe.changeStage', $groupe->id) }}" method="POST">
+                                                @csrf
+                                                    <button  type="submit" class="btn btn-danger me-2">NOSTAGE</button>
+                                                    </form>
+                                            @endif
                                             <button onclick="openUpdateModal({{ $groupe->id }}, '{{ $groupe->nom_groupe }}', '{{ $groupe->Mode_de_formation }}', '{{ $groupe->Niveau }}', {{ $groupe->filiere->id }})" type="button" class="btn btn-info me-2 open-update-modal">Update</button>
                                             <form action="{{ route('deleteGroupe') }}" method="post">
                                                 @csrf
@@ -85,8 +96,9 @@
                     </table>
                 </div>
                 <div class="col-md-12 text-center mt-3">
+                    <a href="{{route('statusGroupes')}}" type="button" class="btn btn-info me-2">Status des Groupes</a> <br>
                     <!-- Button to open Add Groupe modal -->
-                    <button id="openAddGroupeModalButton" type="button" class="btn btn-success">
+                    <button id="openAddGroupeModalButton" type="button" style="width: 100%" class="btn btn-success">
                         Ajouter Groupe
                     </button>
                 </div>
@@ -109,7 +121,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="modeFormation" class="form-label">Mode de Formation</label>
-                                    <input type="text" name="Mode_de_formation" class="form-control border" id="modeFormation" aria-describedby="emailHelp" placeholder="Enter le mode de formation">
+                                    <select name="Mode_de_formation" class="form-select border" id="modeFormation" aria-label="Default select example">
+                                        <option value="CDJ">CDJ</option>
+                                        <option value="CDS">CDS</option>
+                                    </select>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="niveau" class="form-label">Niveau</label>
@@ -150,7 +166,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateModeFormation" class="form-label">Mode de Formation</label>
-                                    <input type="text" name="Mode_de_formation" class="form-control border" id="updateModeFormation" aria-describedby="emailHelp" placeholder="Enter le mode de formation">
+                                    <select name="Mode_de_formation" class="form-select border" id="updateModeFormation" aria-label="Default select example">
+                                        <option value="CDJ">CDJ</option>
+                                        <option value="CDS">CDS</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateNiveau" class="form-label">Niveau</label>
@@ -165,7 +184,10 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-info">Save</button>
+                                <div class="d-flex">
+                                    <button type="submit" class="btn btn-info" style="width: 48%;margin-right:4%">Save</button>
+                                    <button id="closeUpdateGroupeModalButton" style="width: 48%" class="btn btn-danger" aria-label="Close">close</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -175,60 +197,60 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Code for opening and closing the Add Groupe Modal
-    const openAddGroupeModalButton = document.getElementById("openAddGroupeModalButton");
-    const closeAddGroupeModalButton = document.getElementById("closeAddGroupeModalButton");
-    const addGroupeModal = document.getElementById("addGroupeModal");
+        document.addEventListener("DOMContentLoaded", function() {
+            // Code for opening and closing the Add Groupe Modal
+            const openAddGroupeModalButton = document.getElementById("openAddGroupeModalButton");
+            const closeAddGroupeModalButton = document.getElementById("closeAddGroupeModalButton");
+            const addGroupeModal = document.getElementById("addGroupeModal");
 
-    openAddGroupeModalButton.addEventListener("click", function() {
-        addGroupeModal.style.display = "block";
-    });
+            openAddGroupeModalButton.addEventListener("click", function() {
+                addGroupeModal.style.display = "block";
+            });
 
-    closeAddGroupeModalButton.addEventListener("click", function() {
-        addGroupeModal.style.display = "none";
-    });
+            closeAddGroupeModalButton.addEventListener("click", function() {
+                addGroupeModal.style.display = "none";
+            });
 
-    window.addEventListener("click", function(event) {
-        if (event.target === addGroupeModal) {
-            addGroupeModal.style.display = "none";
-        }
-    });
+            window.addEventListener("click", function(event) {
+                if (event.target === addGroupeModal) {
+                    addGroupeModal.style.display = "none";
+                }
+            });
 
-    // Code for opening and closing the Update Groupe Modal
-    const openUpdateGroupeModalButtons = document.querySelectorAll(".open-update-modal");
-    const closeUpdateGroupeModalButton = document.getElementById("closeUpdateGroupeModalButton");
-    const updateGroupeModal = document.getElementById("updateGroupeModal");
+            // Code for opening and closing the Update Groupe Modal
+            const openUpdateGroupeModalButtons = document.querySelectorAll(".open-update-modal");
+            const closeUpdateGroupeModalButton = document.getElementById("closeUpdateGroupeModalButton");
+            const updateGroupeModal = document.getElementById("updateGroupeModal");
 
-    openUpdateGroupeModalButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            updateGroupeModal.style.display = "block";
+            openUpdateGroupeModalButtons.forEach(function(button) {
+                button.addEventListener("click", function() {
+                    updateGroupeModal.style.display = "block";
+                });
+            });
+
+            closeUpdateGroupeModalButton.addEventListener("click", function() {
+                updateGroupeModal.style.display = "none";
+            });
+
+            window.addEventListener("click", function(event) {
+                if (event.target === updateGroupeModal && !updateGroupeModal.contains(event.target)) {
+                    // Check if the click target is outside the modal
+                    updateGroupeModal.style.display = "none";
+                }
+            });
         });
-    });
 
-    closeUpdateGroupeModalButton.addEventListener("click", function() {
-        updateGroupeModal.style.display = "none";
-    });
+        function openUpdateModal(id, nom_groupe, Mode_de_formation, Niveau, filiere_id) {
+            document.getElementById('updateGroupeId').value = id;
+            document.getElementById('updateNomGroupe').value = nom_groupe;
+            document.getElementById('updateModeFormation').value = Mode_de_formation;
+            document.getElementById('updateNiveau').value = Niveau;
+            document.getElementById('updateFiliere').value = filiere_id;
+            document.getElementById('updateGroupeModal').style.display = "block";
 
-    window.addEventListener("click", function(event) {
-        if (event.target === updateGroupeModal && !updateGroupeModal.contains(event.target)) {
-            // Check if the click target is outside the modal
-            updateGroupeModal.style.display = "none";
+            // Set the form action URL dynamically with the group ID
+            document.getElementById('updateGroupeForm').action = "{{ route('updateGroupe', ['groupe' => ':id']) }}".replace(':id', id);
         }
-    });
-});
-
-function openUpdateModal(id, nom_groupe, Mode_de_formation, Niveau, filiere_id) {
-    document.getElementById('updateGroupeId').value = id;
-    document.getElementById('updateNomGroupe').value = nom_groupe;
-    document.getElementById('updateModeFormation').value = Mode_de_formation;
-    document.getElementById('updateNiveau').value = Niveau;
-    document.getElementById('updateFiliere').value = filiere_id;
-    document.getElementById('updateGroupeModal').style.display = "block";
-
-    // Set the form action URL dynamically with the group ID
-    document.getElementById('updateGroupeForm').action = "{{ route('updateGroupe', ['groupe' => ':id']) }}".replace(':id', id);
-}
 </script>
 
     </x-settings>

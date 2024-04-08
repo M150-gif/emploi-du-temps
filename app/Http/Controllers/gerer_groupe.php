@@ -56,6 +56,19 @@ class gerer_groupe extends Controller
         return redirect()->route('gererGroupe')->with('success', 'Groupe updated successfully');
     }
 
+    public function changeStage(Request $request, $id)
+    {
+        $groupe = groupe::findOrFail($id);
+
+        // Toggle the status
+        $groupe->stage = $groupe->stage === 'stage' ? 'non' : 'stage';
+        $groupe->save();
+
+        return redirect()->back()->with('success', 'Status updated successfully.');
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      */

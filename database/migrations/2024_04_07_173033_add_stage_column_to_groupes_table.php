@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->dropColumn('active');
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->string('stage')->default('non')->after('filiere_id');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->boolean('active')->default(true);
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->dropColumn('stage');
         });
     }
 };

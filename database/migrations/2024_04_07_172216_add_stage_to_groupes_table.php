@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->dropColumn('formateur_id');
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->string('stage')->nullable();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            $table->foreignId('formateur_id')->constrained()->onDelete('cascade');
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->dropColumn('stage');
         });
     }
 };

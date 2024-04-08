@@ -54,35 +54,15 @@ $seances_order=['s1','s2','s3','s4'];
                                 <span>{{ $seance->salle->nom_salle }}</span>
                             </td>
                         @else
-                            <td class="cellule text-info border border-info" id="#{{$modalId_ajouter}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
+                            <td class="cellule text-info border border-info" id="#{{$modalId_update}}" style="background-color: {{ $seance ? 'white' : '' }}; text-align:center;" data-bs-toggle="modal" data-bs-target="#{{$modalId_ajouter}}">
                             </td>
                         @endif
-                        @include('includes.modalGroupeSeance')
+
+                          <!-- models -->
+                      @include('includes.modalGroupeSeance')
                     @endforeach
                 @endforeach
-            </tr>
+        </tr>
         @endforeach
     </tbody>
 </table>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const main = document.querySelector('.main-content');
-
-    // Check if scroll position is stored in localStorage
-    const storedScrollPosition = JSON.parse(localStorage.getItem('scrollPosition'));
-
-    // Scroll to the stored position if available
-    if (storedScrollPosition) {
-        main.scrollTo(storedScrollPosition.x, storedScrollPosition.y);
-    }
-
-    // Store scroll position when the scroll event occurs
-    main.addEventListener('scroll', function () {
-        const scrollPosition = {
-            x: main.scrollLeft,
-            y: main.scrollTop
-        };
-        localStorage.setItem('scrollPosition', JSON.stringify(scrollPosition));
-    });
-});
-</script>

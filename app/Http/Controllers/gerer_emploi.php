@@ -10,7 +10,9 @@ use App\Models\seance;
 use App\Models\filiere;
 use App\Models\formateur;
 use Illuminate\Http\Request;
+use App\Models\FormateurGroupe;
 use App\Models\FormateurModule;
+use Illuminate\Support\Facades\DB;
 
 class gerer_emploi extends Controller
 {
@@ -34,7 +36,7 @@ class gerer_emploi extends Controller
                 "date_debu"=>$request->date_debu,
                 "date_fin"=>$request->date_fin,
             ]);
-            return to_route('emplois_formateurs');
+            return to_route('emploi_formateur');
             // return redirect(route('home'))->with('success_emploi', 'Emploi créé avec succès.');
         }
         // creer nouveau emploi base sur ancienne
@@ -55,7 +57,7 @@ class gerer_emploi extends Controller
                     "type_seance"=>$seance->type_seance,
                 ]);
             };
-            return to_route('emplois_formateurs');
+            return to_route('emploi_formateur');
         }
     }
     public function afficher_emploi_par_formateurs(){
@@ -70,6 +72,7 @@ class gerer_emploi extends Controller
             $id_emploi =$derniereEmploi->id;
         }
         $seances = seance::where('id_emploi', $id_emploi)->get();
+        // $seances = $id_emploi ? seance::where('id_emploi', $id_emploi)->get() : collect();
         $filieres = filiere::all();
         return view('emplois_formateurs',compact("formateurs",'emplois','id_emploi','seances','groupes','salles', 'filieres'));
     }
@@ -95,7 +98,7 @@ class gerer_emploi extends Controller
         if($derniereEmploi){
             $id_emploi =$derniereEmploi->id;
         }
-        $groupes = groupe::all();
+        // $groupes = groupe::all();
         // $formateurs = formateur::all();
         $formateurs = formateur::where('status', 'oui')->get();
         $salles = salle::all();
@@ -105,22 +108,32 @@ class gerer_emploi extends Controller
         if ($formateurId) {
             $selectedFormateur = formateur::findOrFail($formateurId);
         }
-
         // Get seances data based on selected formateur
         $seances = [];
+        // $seances = seance::all();
         if ($selectedFormateur) {
             $seances = seance::where('id_emploi', $id_emploi)
                 ->where('id_formateur', $formateurId)
                 ->with('module')
                 ->get();
+
                 $modules = FormateurModule::where('formateur_id', $selectedFormateur->id)
                 ->where('status', 'oui')
                 ->with('module')
                 ->get();
+                $groupes = FormateurGroupe::whereHas('groupe', function ($query) {
+                    $query->where('stage', 'non');
+                })
+                ->where('formateur_id', $selectedFormateur->id)
+                ->with('groupe')
+                ->get();
         }else{
             $modules = [];
+            $groupes = [];
         }
-        return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur','filieres','modules'));
+        $TypeEmploi = $request->input('TypeEmploi');
+        // dd($groupes);
+        return view('emploi_formateur', compact("formateurs", 'id_emploi', 'seances', 'groupes', 'salles', 'selectedFormateur','filieres','modules','TypeEmploi'));
     }
     public function afficher_emploi_par_groupe(Request $request)
 {
@@ -167,40 +180,47 @@ class gerer_emploi extends Controller
     }
 
     public function afficher_emploi_par_filiere(Request $request){
+        $filiere_id = $request->input('filiere_id');
         $filieres = Filiere::all();
         $derniereEmploi = Emploi::latest()->first();
         // $formateurs = Formateur::all();
         $formateurs = formateur::where('status', 'oui')->get();
         $emplois = Emploi::orderBy('date_debu','desc')->get();
         $salles = Salle::all();
-        $niveaux = Groupe::select('niveau')->distinct()->pluck('niveau');
+        $niveaux = Groupe::select('Niveau')->distinct()->pluck('Niveau');
 
         // Filter groups based on the selected filiere
-        $filiere_id = $request->input('filiere_id');
         $niveau = $request->input('niveau');
         if ($filiere_id && $niveau) {
             $groupes = Groupe::where('filiere_id', $filiere_id)
                              ->where('niveau', $niveau)
                              ->get();
+            $formateurs = Formateur::whereHas('filieres', function ($query) use ($filiere_id) {
+                            $query->where('filiere_id', $filiere_id);
+                            })->where('status', 'oui')->get();
         } elseif ($filiere_id) {
             $groupes = Groupe::where('filiere_id', $filiere_id)
                              ->get();
+            $formateurs = Formateur::whereHas('filieres', function ($query) use ($filiere_id) {
+                                $query->where('filiere_id', $filiere_id);
+                            })->where('status', 'oui')->get();
         } elseif ($niveau) {
             $groupes = Groupe::where('niveau', $niveau)
                              ->get();
+            $formateurs = Formateur::where('status', 'oui')->get();
+
         } else {
             $groupes = Groupe::all();
+            $formateurs = Formateur::where('status', 'oui')->get();
+
         }
 
         $id_emploi = $derniereEmploi->id;
         $seances = Seance::where('id_emploi', $id_emploi)->get();
-
+        $selectTypeEmploi = $request->input('TypeEmploi');
         $selectedFiliereId = $request->input('filiere_id');
         $selectedNiveauId = $request->input('niveau');
-        return view('emploi_filiere', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'filieres', 'niveaux', 'selectedFiliereId', 'selectedNiveauId'));
-
-
-
+        return view('emploi_filiere', compact("formateurs", 'emplois', 'id_emploi', 'seances', 'groupes', 'salles', 'filieres', 'niveaux', 'selectedFiliereId', 'selectedNiveauId','selectTypeEmploi'));
     }
 
     /**

@@ -10,7 +10,9 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Prenom</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">CDS</th>
                                 <th scope="col">Actions</th>
+                                <th scope="col">M & G</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +35,19 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if ($formateur->CDS === 'oui')
+                                        <form action="{{ route('formateur.changeCDS', $formateur->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">OUI</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('formateur.changeCDS', $formateur->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">NON</button>
+                                        </form>
+                                    @endif
+                                </td>
+                                <td>
                                     <div class="d-flex">
                                         <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#updateModal{{$formateur->id}}">Update</button>
                                         <form action="{{route('deleteFormateur',$formateur->id)}}" method="post">
@@ -41,6 +56,9 @@
                                             <button onclick="return confirm('Voulez Vous vraiment Supprimer ce formateur?')" type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ModalMG{{$formateur->id}}">M & G & F</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -55,36 +73,188 @@
     </x-settings>
 </x-master>
 
-<!-- Modal for updating a formateur -->
+<!-- Modal for show Modules & Groupe for a formateur -->
 @foreach ($formateurs as $formateur)
-<div class="modal fade" id="updateModal{{$formateur->id}}" tabindex="-1" aria-labelledby="updateModalLabel{{$formateur->id}}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal fade" id="ModalMG{{$formateur->id}}" tabindex="-1" aria-labelledby="ModalLabel{{$formateur->id}}" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 60%;">
+        <div class="modal-content" style="max-height: 95%; overflow-y: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel{{$formateur->id}}">Update Formateur</h5>
+                <!-- Modal title -->
+                <h5 class="modal-title" id="ModalLabel{{$formateur->id}}">Formateur Details ( {{$formateur->name}} )</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{route('updateFormateur', $formateur->id)}}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="name{{$formateur->id}}" class="form-label">Name</label>
-                        <input type="text" class="form-control border" style="padding: 5px;" id="name{{$formateur->id}}" name="name" value="{{$formateur->name}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="prenom{{$formateur->id}}" class="form-label">Prenom</label>
-                        <input type="text" class="form-control border" style="padding: 5px;" id="prenom{{$formateur->id}}" name="prenom" value="{{$formateur->prenom}}">
+            <div class="modal-body" style="max-height: 650px;">
+                <!-- Display Groups Related to Formateur -->
+                <h6>Groups:</h6>
+                <div style="border: 1px solid grey; border-radius:5px" >
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Filière</th>
+                                    <th>Groupe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $printedFilieres = [];
+                                @endphp
+                                @foreach ($FormateurGroupes->where('formateur_id', $formateur->id) as $FormateurGroupe)
+                                    @php
+                                        $filiereId = $FormateurGroupe->groupe->filiere->id;
+                                    @endphp
+                                    @if (!in_array($filiereId, $printedFilieres))
+                                        <tr>
+                                            <td>
+                                                {{ $FormateurGroupe->groupe->filiere->nom_filier }}
+                                            </td>
+                                            <td>
+                                                @foreach ($FormateurGroupes->where('formateur_id', $formateur->id)->where('groupe.filiere.id', $filiereId) as $subGroupe)
+                                                    <div class="d-flex" style="margin-bottom: -20px">
+                                                        {{ $subGroupe->groupe->nom_groupe }}
+                                                        <form action="{{ route('formateurGroupe.delete', $subGroupe->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button style="font-size:10px;width:60px;height:25px;padding:0px;margin-left:10px" type="submit" onclick="return confirm('Voulez-Vous vraiment supprimer {{$subGroupe->groupe->nom_groupe}} de {{$subGroupe->formateur->name}}')" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                    <br>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $printedFilieres[] = $filiereId;
+                                        @endphp
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save changes</button>
+                <!-- Display Modules Related to Formateur -->
+                <h6>Modules:</h6>
+                <div style="border: 1px solid grey; border-radius:5px" >
+                    <div style="max-height: 250px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($FormateurModules->where('formateur_id', $formateur->id) as $formateurModule)
+                                    <tr>
+                                        <td>{{ $formateurModule->module->nom_module }}</td>
+                                        <td>
+                                            @if ($formateurModule->status === 'oui')
+                                                <form action="{{ route('formateurModule.changeStatus', $formateurModule->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">Deactivate</button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('formateurModule.changeStatus', $formateurModule->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success">Activate</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        <td> <!-- Added this column for delete button -->
+                                            <form action="{{ route('formateurModule.delete', $formateurModule->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Voulez-Vous vraiment supprimer {{$formateurModule->module->nom_module}} de {{$formateurModule->formateur->name}}')" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </form>
+
+                <h6>Filieres : </h6>
+                <div style="border: 1px solid grey; border-radius:5px; margin-bottom:10px;">
+                    <div style="max-height: 230px; overflow-y: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Formateur</th>
+                                    <th>FILIERE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $firstIteration = true;
+                                @endphp
+                                @foreach ($FormateurFilieres->where('formateur_id', $formateur->id) as $FF)
+                                    <tr>
+                                        <td>
+                                            @if ($firstIteration)
+                                                {{ $formateur->name }}
+                                                @php
+                                                    $firstIteration = false;
+                                                @endphp
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="d-flex" style="height: 3vh">
+                                                <div style="width:30vw">
+                                                    {{ $FF->filiere->nom_filier }}
+                                                </div>
+                                                <form style="margin-left:20px" action="{{ route('formateurFiliere.delete', $FF->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button style="width: 85px;height:35px;" type="submit" onclick="return confirm('Voulez-Vous vraiment supprimer la filière {{$FF->filiere->nom_filier}} de {{$formateur->name}}')" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>
+
+@endforeach
+<!-- Modal for updating a formateur -->
+@foreach ($formateurs as $formateur)
+    <div class="modal fade" id="updateModal{{$formateur->id}}" tabindex="-1" aria-labelledby="updateModalLabel{{$formateur->id}}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel{{$formateur->id}}">Update Formateur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{route('updateFormateur', $formateur->id)}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name{{$formateur->id}}" class="form-label">Name</label>
+                            <input type="text" class="form-control border" style="padding: 5px;" id="name{{$formateur->id}}" name="name" value="{{$formateur->name}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="prenom{{$formateur->id}}" class="form-label">Prenom</label>
+                            <input type="text" class="form-control border" style="padding: 5px;" id="prenom{{$formateur->id}}" name="prenom" value="{{$formateur->prenom}}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endforeach
 
 <script>

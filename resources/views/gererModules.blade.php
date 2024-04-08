@@ -10,9 +10,6 @@
                                     <th scope="col">#</th>
                                     <th scope="col">nom</th>
                                     <th scope="col">intitule</th>
-                                    <th scope="col">Masse horaire</th>
-                                    {{-- <th scope="col">Formateur</th> --}}
-                                    {{-- <th scope="col">Status</th> --}}
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -20,10 +17,8 @@
                                 @foreach ($modules as $module)
                                 <tr>
                                     <th scope="row">{{$module->id}}</th>
-                                    <td>{{$module->nom_module}}</td>
+                                    <td >{{$module->nom_module}}</td>
                                     <td>{{$module->intitule}}</td>
-                                    <td>{{$module->masse_horaire}} Heures</td>
-                                    {{-- <td>{{$module->formateur_id ? $module->formateur->name : 'N/A'}}</td> --}}
                                     <td>
                                         <div class="d-flex">
                                             <button type="button" class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#updateModal{{$module->id}}">Update</button>
@@ -37,19 +32,47 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-
                         </table>
                     </div>
-
                 </div>
                 <div class="col-md-12 text-center mt-3"> <!-- Added Bootstrap classes for centering -->
-                    <a href="{{route('statusModules')}}" type="button" class="btn btn-info me-2" >Status des Modules</a>
-                    <a class="btn btn-success col-md-12 ajouter">Ajouter Filière</a> {{--{{route('showAddSalle')}}--}}
+                    <a href="{{route('statusModules')}}" type="button" class="btn btn-info me-2">Status des Modules</a>
+                    <a class="btn btn-success col-md-12 ajouter">Ajouter Module</a>
                 </div>
             </div>
         </div>
     </x-settings>
 </x-master>
+@foreach ($modules as $module)
+    <div class="modal fade" id="updateModal{{$module->id}}" tabindex="-1" aria-labelledby="updateModalLabel{{$module->id}}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel{{$module->id}}">Update Module</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{route('updateModule', $module->id)}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nom_module{{$module->id}}" class="form-label">Nom de Module</label>
+                            <input type="text" class="form-control border" style="padding: 5px;" id="nom_module{{$module->id}}" name="nom_module" value="{{$module->nom_module}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="intitule{{$module->id}}" class="form-label">intitule</label>
+                            <input type="text" class="form-control border" style="padding: 5px;" id="intitule{{$module->id}}" name="intitule" value="{{$module->intitule}}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelector("a.ajouter").addEventListener("click", function(event) {
@@ -71,7 +94,6 @@
                     <div class="input-group mb-3">
                         <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter nom de Module" aria-label="Enter nom de module" aria-describedby="name-addon" name="nom_module">
                         <input type="text" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter Intitule" aria-label="Enter Intitule" aria-describedby="name-addon" name="intitule">
-                        <input type="number" class="form-control border me-2" style="height: 40px; width: 200px; padding: 5px;" placeholder="Enter la masse horaire" aria-label="Enter la masse horaire" aria-describedby="name-addon" name="masse_horaire">
                         <!-- Add select for niveau de formation -->
 
                             <!-- Add options dynamically from your data source -->

@@ -20,7 +20,6 @@ class gerer_module extends Controller
        $validatedData = $request->validate([
            'nom_module' => 'required|string|max:255',
            'intitule' => 'required|string|max:255', // Adjust validation rules as needed
-           'masse_horaire' => 'required|string|max:255',
         //    'formateur_id' => 'required'
            // Add more validation rules for other form fields if necessary
        ]);
@@ -30,6 +29,16 @@ class gerer_module extends Controller
 
        // Redirect to the appropriate route after creating the formateur
        return redirect()->route('gererModule');
+    }
+
+    public function updateModule(Request $request,module $module){
+        $validatedData = $request->validate([
+            'nom_module' => 'required|string|max:255',
+            'intitule' => 'required|string|max:255', // Adjust validation rules as needed
+            // Add more validation rules for other form fields if necessary
+        ]);
+        $module->fill($validatedData)->save();
+        return redirect()->route('gererModule');
     }
 
     public function deleteModule(module $module){

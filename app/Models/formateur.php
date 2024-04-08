@@ -14,7 +14,8 @@ class formateur extends Model
     protected $fillable=[
         'name',
         'prenom',
-        'id'
+        'id',
+        'CDS'
     ];
     public function seance():HasMany
     {
@@ -25,5 +26,13 @@ class formateur extends Model
         return $this->belongsToMany(Module::class)
             ->withPivot('status') // Include the pivot column 'status'
             ->withTimestamps();   // Include the pivot timestamps (if needed)
+    }
+    public function groupes(): BelongsToMany
+    {
+        return $this->belongsToMany(Groupe::class);
+    }
+    public function filieres(): BelongsToMany
+    {
+        return $this->belongsToMany(Filiere::class, 'filiere_formateur');
     }
 }

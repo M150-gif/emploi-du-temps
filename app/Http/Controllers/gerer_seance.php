@@ -13,7 +13,34 @@ class gerer_seance extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function ajouter_seance(Request $request)
+    public function ajouter_seanceFomFormateur(Request $request)
+{
+    $rules = [
+        "day" => "required",
+        "order_seance" => "required",
+        "type_seance" => "required",
+        "id_salle" => "required",
+        "id_emploi" => "required",
+        "id_formateur" => "required",
+        "module_id" => "", // Ensure module_id exists in the modules table
+    ];
+
+    // Validate the incoming request data
+    foreach ($request->id_groupe as $groupe) {
+        $validatedData = $request->validate($rules);
+
+        // Set the id_groupe field dynamically
+        $validatedData['id_groupe'] = $groupe;
+
+        // Create a new Seance instance with the validated data
+        $seance = Seance::create($validatedData);
+    }
+
+    // Redirect back with success message
+    return back();
+}
+
+public function ajouter_seance(Request $request)
 {
     // dd($request);
     // Validate the incoming request data
@@ -34,6 +61,7 @@ class gerer_seance extends Controller
     // Redirect back with success message
     return back();
 }
+
 
 
     /**
@@ -98,16 +126,26 @@ class gerer_seance extends Controller
      */
     public function supprimer_seance(Request $request)
     {
-        $validate=$request->validate([
-            "seance_id"=>"required"
-        ]);
-        $seance=seance::find($request->seance_id);
-    if(!$seance){
-        return back()->with("error", "La séance n'existe pas.");
-        }else{
-            $seance->delete();
-            return back()->with("la seance a supprimer");
-        }
+        seance::where('id_emploi',$request->id_emploi)
+        ->where('day',$request->day)
+        ->where('order_seance',$request->order_seance)
+        ->where('id_formateur',$request->id_formateur)
+        ->delete();
+
+
+        return back();
+
+    }
+    public function supprimer_seanceFiliere(Request $request)
+    {
+        seance::where('id_emploi',$request->id_emploi)
+        ->where('day',$request->day)
+        ->where('order_seance',$request->order_seance)
+        ->where('id_groupe',$request->groupe)
+        ->delete();
+
+        return back();
+
     }
 
     /**

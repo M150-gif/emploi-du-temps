@@ -19,4 +19,8 @@ class filiere extends Model
     {
         $this->hasMany(groupe::class);
     }
+    public function formateurs(): BelongsToMany
+    {
+        return $this->belongsToMany(Formateur::class, 'filiere_formateur');
+    }
 }

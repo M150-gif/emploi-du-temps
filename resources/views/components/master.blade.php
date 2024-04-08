@@ -15,6 +15,7 @@
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.5/b-2.0.1/b-html5-2.0.1/datatables.min.js"></script>
     {{-- file excel --}}
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/masterAssets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/masterAssets/img/favicon.png') }}">
@@ -35,6 +36,8 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/masterAssets/css/material-dashboard.css?v=3.1.0') }}"
         rel="stylesheet" />
+    <Link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}"></Link>
+    <!-- <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}"> -->
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
@@ -65,7 +68,7 @@
         display: none !important;
     }
     #toggleSidebarBtn{
-        left: 225px;
+        left: 235px;
         top: 50%;
         z-index: 1000;
         rotate: -180deg;
@@ -74,16 +77,17 @@
     #toggleSidebarBtn {
     transition: left 0.3s ease; /* Add a transition effect to the left property */
 }
-
-    </style>
-
+</style>
 </head>
     <button id="toggleSidebarBtn" class="btn  m-0 position-absolute" ><i class="fs-3 fa-solid fa-arrow-left text-info"></i></button>
 <body class="g-sidenav-show  bg-white-200">
     <aside
-        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start    bg-gradient-light bg-opacity-50"
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-light bg-opacity-50"
         id="sidenav-main">
         <div class="sidenav-header">
+        @if($dates->isEmpty())
+                 <input class="must_add_emploi" hidden>
+        @endif
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="{{ route('afficher_ajouter_emploi') }}">
@@ -110,7 +114,7 @@
 
                 <li class="nav-item">
                     <!-- emploi_formateurs -->
-                    <a class="nav-link decoration-blue-950 text-info {{ $path == '/emplois_formateurs' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emplois_formateurs') }}">
+                    <a class="nav-link decoration-blue-950 text-info {{ $path == '/emplois_formateurs' ? 'active  bg-gradient-info text-white' : '' }} nav-link-routing" href="{{ route('emplois_formateurs') }}">
                         <div class="text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10 text-info"></i>
                         </div>
@@ -118,7 +122,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-info {{ $path == '/emplois_groupes' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emplois_groupes') }}">
+                    <a class="nav-link text-info {{ $path == '/emplois_groupes' ? 'active  bg-gradient-info text-white' : '' }} nav-link-routing" href="{{ route('emplois_groupes') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10 text-info"></i>
                         </div>
@@ -126,7 +130,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-info {{ $path == '/emplois_formateur' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_formateur') }}">
+                    <a class="nav-link text-info {{ $path == '/emplois_formateur' ? 'active  bg-gradient-info text-white' : '' }} nav-link-routing" href="{{ route('emploi_formateur') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10 text-info"></i>
                         </div>
@@ -134,7 +138,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-info {{ $path == '/emploi_groupe' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_groupe') }}">
+                    <a class="nav-link text-info {{ $path == '/emploi_groupe' ? 'active  bg-gradient-info text-white' : '' }} nav-link-routing" href="{{ route('emploi_groupe') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10 text-info"></i>
                         </div>
@@ -142,7 +146,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-info {{ $path == '/emploi_filiere' ? 'active  bg-gradient-info text-white' : '' }}" href="{{ route('emploi_filiere') }}">
+                    <a class="nav-link text-info {{ $path == '/emploi_filiere' ? 'active  bg-gradient-info text-white' : '' }} nav-link-routing" href="{{ route('emploi_filiere') }}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10 text-info"></i>
                         </div>
@@ -157,14 +161,14 @@
                         <a class="btn text-white bg-info w-100" href="{{ route('gererUser') }}"
                             type="button">Settings</a>
                         <!-- Modal -->
-                        {{-- <x-modalSettings>
+                        {{--<x-modalSettings>
         MASTER CALL
       </x-modalSettings> --}}
                     </div>
                 </div>
             </ul>
     </aside>
-    <main class="main-content position-relative max-height-vh-100 max-width-vw-100 h-100 border-radius-lg">
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0  shadow-none border-radius-xl fixed-top w-100" id="navbarBlur"
             data-scroll="true" >
@@ -194,45 +198,65 @@
         <!-- End Navbar -->
         <div class="container-fluid">
             {{ $slot }}
+            <!-- Button trigger modal -->
         </div>
     </main>
-    <!--   Core JS Files   -->
+
     <script src="{{ asset('assets/masterAssets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script>
+    <!--   Core JS Files   -->
+    {{-- <script src="{{asset('bootstrap/jquery.min.js')}}"></script>
+    <script src="{{asset('bootstrap/popper.min.js')}}"></script>
+    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- <script src="{{ asset('assets/masterAssets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/masterAssets/js/plugins/chartjs.min.js') }}"></script> --> --}}
         <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-
-<script>
+    <script>
 document.addEventListener('DOMContentLoaded', function () {
     const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
     const sidebar = document.getElementById('sidenav-main');
     const mainContent = document.querySelector('.main-content');
     const divInsideMaster = document.querySelector('x-master > div');
-
     toggleSidebarBtn.addEventListener('click', function () {
         sidebar.classList.toggle('toggle-sidebar');
         if (sidebar.classList.contains('toggle-sidebar')) {
             toggleSidebarBtn.style.left = '-20px'; // Slide the button to the left when the sidebar is toggled
-            mainContent.style.marginLeft = '30px'; // Set the margin-left of main content to 0
+            mainContent.style.width = '100%'; // Expand the main content to full width when the sidebar is hidden
             divInsideMaster.style.width = '100%'; // Expand the div inside x-master to full width when the sidebar is hidden
             document.body.style.overflowY = 'hidden'; // Hide the body scrollbar
             document.body.style.overflowX = 'auto'; // Allow horizontal scrolling in the body
         } else {
-            toggleSidebarBtn.style.left = '225px'; // Slide the button back to its original position
-            mainContent.style.marginLeft = '270px'; // Set the margin-left of main content to 235px
+            toggleSidebarBtn.style.left = '235px'; // Slide the button back to its original position
+            mainContent.style.width = ''; // Reset the width of the main content to its default value
             divInsideMaster.style.width = ''; // Reset the width of the div inside x-master to its default value
             document.body.style.overflowY = 'auto'; // Allow scrolling in the body
             document.body.style.overflowX = 'hidden'; // Hide horizontal scrolling in the body
         }
     });
 });
-</script>
-
-
+    </script>
     <script src="{{ asset('assets/masterAssets/js/material-dashboard.min.js?v=3.1.0') }}"></script>
+    <script>
+       const must_add_emloi = document.querySelector('.must_add_emploi');
+        const nav_link_routing = document.querySelectorAll('.nav-link-routing');
+        const alert_new_emploi=document.querySelector('.creer_emploi')
+        if (must_add_emloi) {
+            nav_link_routing.forEach((item)=>{
+                item.addEventListener('click', function (e) {
+                e.preventDefault();
+                alert("vous devez creer une emploi d'abord")
+            });
+            })
+        }
+
+</script>
 </body>
 
 </html>
